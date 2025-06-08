@@ -95,21 +95,26 @@ function mergeImages(image1Src, image2Src, resultElement) {
     const img1 = new Image();
     const img2 = new Image();
 
-    img1.onload = function() {
+    img1.src = image1Src;
+    img2.src = image2Src;
+
+    Promise.all([
+        new Promise((resolve) => { img1.onload = resolve; }),
+        new Promise((resolve) => { img2.onload = resolve; })
+    ]).then(() => {
         canvas.width = img1.width + img2.width;
         canvas.height = Math.max(img1.height, img2.height);
+
         ctx.drawImage(img1, 0, 0);
 
-        img2.onload = function() {
-            ctx.drawImage(img2, img1.width, 0);
-            resultElement.src = canvas.toDataURL();
-            resultElement.style.display = 'block';
-        };
+        ctx.drawImage(img2, img1.width, 0);
 
-        img2.src = image2Src;
-    };
-
-    img1.src = image1Src;
+        resultElement.src = canvas.toDataURL();
+        resultElement.style.display = 'block';
+    }).catch(error => {
+        console.error('Ошибка при загрузке изображений:', error);
+        showError('image-result', 'Ошибка при загрузке изображений');
+    });
 }
 
 function cropImage(imageSrc, shape, resultElement) {
