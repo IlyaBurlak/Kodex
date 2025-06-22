@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Погодный информер</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="container">
+  <header>
+    <h1><i class="fas fa-cloud-sun"></i> Погодный информер</h1>
+    <p>Узнайте текущую погоду в любом городе мира</p>
+  </header>
+
+  <section class="app-container">
+    <div class="app-section">
+      <h2 class="section-title"><i class="fas fa-cloud-sun-rain"></i> Текущая погода</h2>
+
+      <div class="input-group">
+        <input type="text" id="city-input" placeholder="Введите город...">
+        <button id="get-weather"><i class="fas fa-search"></i> Поиск</button>
+      </div>
+
+      <div class="loader" id="weather-loader">
+        <i class="fas fa-spinner"></i>
+      </div>
+
+      <div class="error" id="weather-error">
+        Город не найден. Попробуйте другой.
+      </div>
+
+      <div class="weather-card" id="weather-card">
+        <button class="unit-toggle" id="unit-toggle"><i class="fas fa-sync-alt"></i> °C/°F</button>
+        <h2 id="city-name">Москва</h2>
+        <div class="weather-icon">
+          <i id="weather-icon" class="fas fa-sun"></i>
+        </div>
+        <div class="temperature">
+          <span id="temp">25</span>
+          <span id="temp-unit">°C</span>
+        </div>
+        <div id="weather-desc">Солнечно</div>
+
+        <div class="weather-details">
+          <div class="detail-card">
+            <i class="fas fa-wind"></i>
+            <div>Ветер</div>
+            <div id="wind">5 м/с</div>
+          </div>
+          <div class="detail-card">
+            <i class="fas fa-tint"></i>
+            <div>Влажность</div>
+            <div id="humidity">65%</div>
+          </div>
+          <div class="detail-card">
+            <i class="fas fa-compress-alt"></i>
+            <div>Давление</div>
+            <div id="pressure">1015 гПа</div>
+          </div>
+          <div class="detail-card">
+            <i class="fas fa-eye"></i>
+            <div>Видимость</div>
+            <div id="visibility">10 км</div>
+          </div>
+        </div>
+
+        <div class="history-container" id="history-container">
+          <div class="history-title">
+            <i class="fas fa-history"></i> История запросов:
+          </div>
+          <div class="history-buttons" id="history-buttons">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Демонстрация работы с API на jQuery &copy; 2025 Ilya Burlak</p>
+  </footer>
+</main>
+
+<script src="main.js"></script>
+</body>
+</html>
