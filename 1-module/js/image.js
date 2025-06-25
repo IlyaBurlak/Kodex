@@ -6,15 +6,61 @@ document.getElementById('image2').addEventListener('change', function(e) {
     loadImage(e.target.files[0], 'preview2');
 });
 
+
+const ALLOWED_FORMATS = ['image/jpg', 'image/jpeg' , 'image/png', 'image/webp', 'image/gif'];
+
 function loadImage(file, previewId) {
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const preview = document.getElementById(previewId);
-            preview.src = event.target.result;
-            preview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
+    if (!file) return;
+
+    if (!ALLOWED_FORMATS.includes(file.type)) {
+        showError(previewId.replace('preview', 'image'),
+            `Недопустимый формат файла. Разрешены: ${ALLOWED_FORMATS.join(', ')}`);
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onerror = function() {
+        showError(previewId.replace('preview', 'image'),
+            'Ошибка при чтении файла. Попробуйте другой файл.');
+    };
+
+    reader.onload = function(event) {
+        const preview = document.getElementById(previewId);
+        if (!preview) return;
+
+        preview.src = event.target.result;
+        preview.style.display = 'block';
+
+        const errorElement = document.getElementById(`${previewId}-error`);
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
+    };
+
+    reader.readAsDataURL(file);
+}
+
+function showError(elementId, message) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+
+    let errorElement = document.getElementById(`${elementId}-error`);
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.id = `${elementId}-error`;
+        errorElement.style.color = 'red';
+        errorElement.style.marginTop = '5px';
+        element.parentNode.insertBefore(errorElement, element.nextSibling);
+    }
+
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+
+    const previewId = elementId.replace('image', 'preview');
+    const preview = document.getElementById(previewId);
+    if (preview) {
+        preview.style.display = 'none';
     }
 }
 
