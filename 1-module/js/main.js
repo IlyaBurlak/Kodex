@@ -11,15 +11,16 @@ document.querySelectorAll('.tab').forEach(tab => {
 
 function showError(containerId, message) {
     const container = document.getElementById(containerId);
+
+    const existingError = container.querySelector('.error-message');
+    if (existingError) existingError.remove();
+
+    const customError = document.getElementById(`${containerId}-error`);
+    if (customError) customError.remove();
+
     const errorElement = document.createElement('div');
     errorElement.className = 'error-message';
     errorElement.textContent = message;
-
-    const existingError = container.querySelector('.error-message');
-    if (existingError) {
-        existingError.remove();
-    }
-
     container.appendChild(errorElement);
     container.style.display = 'block';
 }

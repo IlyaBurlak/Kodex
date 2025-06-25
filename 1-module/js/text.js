@@ -5,6 +5,12 @@ function replaceText() {
     const resultContainer = document.getElementById('text-result');
     const resultContent = document.getElementById('text-result-content');
 
+    const existingError = resultContainer.querySelector('.error-message');
+    if (existingError) existingError.remove();
+
+    const customError = document.getElementById('text-result-error');
+    if (customError) customError.remove();
+
     if (!text) {
         showError('text-result', 'Введите текст');
         return;
@@ -17,5 +23,9 @@ function replaceText() {
 
     const result = text.replace(new RegExp(escapeRegExp(findChar), 'g'), replaceChar);
     resultContent.textContent = result;
+
+    resultContainer.querySelector('.error-message')?.remove();
+    document.getElementById('text-result-error')?.remove();
+
     resultContainer.style.display = 'block';
 }
