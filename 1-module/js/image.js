@@ -67,12 +67,18 @@ function showError(elementId, message) {
 function toggleShapeOptions() {
     const operation = document.getElementById('image-operation').value;
     const shapeOptions = document.getElementById('shape-options');
+    const image2Input = document.getElementById('image2').parentNode;
+    const preview2Container = document.querySelector('.image-container:nth-child(2)');
 
     if (operation === 'crop') {
         shapeOptions.style.display = 'block';
+        image2Input.classList.add('hidden');
+        preview2Container.classList.add('hidden');
         updateShapePreview();
     } else {
         shapeOptions.style.display = 'none';
+        image2Input.classList.remove('hidden');
+        preview2Container.classList.remove('hidden');
     }
 }
 
@@ -108,11 +114,11 @@ function updateShapePreview() {
 
 function processImage() {
     const operation = document.getElementById('image-operation').value;
-    const image1 = document.getElementById('preview1').src;
+    const preview1 = document.getElementById('preview1');
     const resultContainer = document.getElementById('image-result');
     const resultImage = document.getElementById('result-image');
 
-    if (!image1) {
+    if (!preview1.src || preview1.style.display === 'none') {
         showError('image-result', 'Загрузите хотя бы одно изображение');
         return;
     }
@@ -120,17 +126,17 @@ function processImage() {
     resultContainer.style.display = 'block';
 
     if (operation === 'merge') {
-        const image2 = document.getElementById('preview2').src;
+        const preview2 = document.getElementById('preview2');
 
-        if (!image2) {
+        if (!preview2.src || preview2.style.display === 'none') {
             showError('image-result', 'Загрузите второе изображение для объединения');
             return;
         }
 
-        mergeImages(image1, image2, resultImage);
+        mergeImages(preview1.src, preview2.src, resultImage);
     } else if (operation === 'crop') {
         const shape = document.getElementById('shape').value;
-        cropImage(image1, shape, resultImage);
+        cropImage(preview1.src, shape, resultImage);
     }
 }
 
