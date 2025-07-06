@@ -1,0 +1,35 @@
+{
+  "name": "ilyaburlak_dev-kit",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "settings": "src/CLI/cli.js",
+    "generate-test-data": "src/CLI/cli.js"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "validation",
+    "password",
+    "email",
+    "security"
+  ],
+  "author": "Ilya Burlak",
+  "license": "MIT",
+  "files": [
+    "src/**/*.js",
+    "index.js",
+    "config/validation-settings.json"
+
+  ],
+  "dependencies": {
+    "inquirer": "^8.2.6"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.0.4",
+    "jest": "^30.0.4"
+  }
+}
