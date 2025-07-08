@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "settings": "src/CLI/cli.js",
-    "generate-test-data": "src/CLI/cli.js"
+    "settings": "3-module/dev-utils/src/CLI/cli.js",
+    "generate-test-data": "3-module/dev-utils/src/CLI/cli.js"
   },
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "3-module/dev-utils/node_modules/.bin/jest",
+    "test:watch": "3-module/dev-utils/node_modules/.bin/jest --watch"
   },
   "keywords": [
     "validation",
@@ -22,7 +22,7 @@
   "files": [
     "src/**/*.js",
     "index.js",
-    "config/validation-settings.json"
+    "3-module/dev-utils/config/validation-settings.json"
 
   ],
   "dependencies": {
