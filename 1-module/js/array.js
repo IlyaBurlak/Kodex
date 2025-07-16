@@ -2,12 +2,12 @@ function generateArrayInputs() {
     const count = parseInt(document.getElementById('array-count').value);
 
     if (isNaN(count)) {
-        showError('array-result', 'Введите корректное количество элементов');
+        showToast('Введите корректное количество элементов');
         return;
     }
 
     if (count < 2 || count > 10) {
-        showError('array-result', 'Количество элементов должно быть от 2 до 10');
+        showToast('Количество элементов должно быть от 2 до 10');
         return;
     }
 
@@ -24,6 +24,7 @@ function generateArray(containerId, count) {
         input.type = 'number';
         input.className = 'array-input';
         input.placeholder = `Элемент ${i + 1}`;
+        input.required = true;
         container.appendChild(input);
     }
 }
@@ -33,12 +34,26 @@ function calculateArray() {
     const resultContainer = document.getElementById('array-result');
     const resultContent = document.getElementById('array-result-content');
 
+    let hasEmptyFields = false;
+    const allInputs = document.querySelectorAll('.array-input');
+
+    allInputs.forEach(input => {
+        if (input.value.trim() === '') {
+            hasEmptyFields = true;
+        }
+    });
+
+    if (hasEmptyFields) {
+        showToast('Заполните все поля в массивах');
+        return;
+    }
+
     if (operation === 'add') {
         const array1 = getArrayFromInputs('array1-inputs');
         const array2 = getArrayFromInputs('array2-inputs');
 
         if (array1.length !== array2.length) {
-            showError('array-result', 'Массивы должны быть одинаковой длины');
+            showToast('Массивы должны быть одинаковой длины');
             return;
         }
 

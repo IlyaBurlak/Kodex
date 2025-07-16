@@ -5,27 +5,27 @@ function replaceText() {
     const resultContainer = document.getElementById('text-result');
     const resultContent = document.getElementById('text-result-content');
 
-    const existingError = resultContainer.querySelector('.error-message');
-    if (existingError) existingError.remove();
-
-    const customError = document.getElementById('text-result-error');
-    if (customError) customError.remove();
-
-    if (!text) {
-        showError('text-result', 'Введите текст');
+    if (!text.trim()) {
+        showToast('Введите текст');
         return;
     }
 
     if (!findChar) {
-        showError('text-result', 'Введите символ для замены');
+        showToast('Введите символ для замены');
+        return;
+    }
+
+    if (findChar.length > 1) {
+        showToast('Введите только один символ для замены');
+        return;
+    }
+
+    if (replaceChar.length > 1) {
+        showToast('Введите только один символ замены');
         return;
     }
 
     const result = text.replace(new RegExp(escapeRegExp(findChar), 'g'), replaceChar);
     resultContent.textContent = result;
-
-    resultContainer.querySelector('.error-message')?.remove();
-    document.getElementById('text-result-error')?.remove();
-
     resultContainer.style.display = 'block';
 }

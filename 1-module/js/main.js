@@ -9,22 +9,25 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 });
 
-function showError(containerId, message) {
-    const container = document.getElementById(containerId);
-
-    const existingError = container.querySelector('.error-message');
-    if (existingError) existingError.remove();
-
-    const customError = document.getElementById(`${containerId}-error`);
-    if (customError) customError.remove();
-
-    const errorElement = document.createElement('div');
-    errorElement.className = 'error-message';
-    errorElement.textContent = message;
-    container.appendChild(errorElement);
-    container.style.display = 'block';
-}
-
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+
+function showToast(message, type = 'error') {
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+        <div class="toast-content">${message}</div>
+        <div class="toast-progress"></div>
+    `;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
 }

@@ -87,3 +87,58 @@ body {
     margin-top: 10px;
     font-weight: 500;
 }
+
+
+.toast {
+    position: relative;
+    background: white;
+    color: #333;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+    animation: slideIn 0.3s;
+}
+
+.toast-error {
+    border-left: 4px solid #e74c3c;
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: #f0f0f0;
+}
+
+.toast-progress::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: #e74c3c;
+    animation: progress 3s linear forwards;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes progress {
+    100% { width: 0; }
+}
+
+.toast.hide {
+    animation: slideOut 0.3s forwards;
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+}

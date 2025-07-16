@@ -6,6 +6,10 @@ function updateDisplay() {
 }
 
 function appendToDisplay(value) {
+    if (currentInput === 'Ошибка') {
+        currentInput = '0';
+    }
+
     if (currentInput === '0' && value !== '.') {
         currentInput = value;
     } else {
@@ -22,12 +26,18 @@ function clearDisplay() {
 function calculate() {
     try {
         const expression = currentInput.replace(/×/g, '*');
-        currentInput = eval(expression).toString();
+        const result = eval(expression);
+
+        if (isNaN(result) || !isFinite(result)) {
+            throw new Error('Недопустимая операция');
+        }
+
+        currentInput = result.toString();
         updateDisplay();
     } catch (error) {
-        currentInput = 'Ошибка';
+        currentInput = '0';
         updateDisplay();
-        setTimeout(clearDisplay, 1500);
+        showToast('Ошибка вычисления: ' + error.message);
     }
 }
 

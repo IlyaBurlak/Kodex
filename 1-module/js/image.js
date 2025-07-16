@@ -6,23 +6,20 @@ document.getElementById('image2').addEventListener('change', function(e) {
     loadImage(e.target.files[0], 'preview2');
 });
 
-
-const ALLOWED_FORMATS = ['image/jpg', 'image/jpeg' , 'image/png', 'image/webp', 'image/gif'];
+const ALLOWED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 function loadImage(file, previewId) {
     if (!file) return;
 
     if (!ALLOWED_FORMATS.includes(file.type)) {
-        showError(previewId.replace('preview', 'image'),
-            `Недопустимый формат файла. Разрешены: ${ALLOWED_FORMATS.join(', ')}`);
+        showToast(`Недопустимый формат файла. Разрешены: ${ALLOWED_FORMATS.join(', ')}`);
         return;
     }
 
     const reader = new FileReader();
 
     reader.onerror = function() {
-        showError(previewId.replace('preview', 'image'),
-            'Ошибка при чтении файла. Попробуйте другой файл.');
+        showToast('Ошибка при чтении файла. Попробуйте другой файл.');
     };
 
     reader.onload = function(event) {
@@ -39,29 +36,6 @@ function loadImage(file, previewId) {
     };
 
     reader.readAsDataURL(file);
-}
-
-function showError(elementId, message) {
-    const element = document.getElementById(elementId);
-    if (!element) return;
-
-    let errorElement = document.getElementById(`${elementId}-error`);
-    if (!errorElement) {
-        errorElement = document.createElement('div');
-        errorElement.id = `${elementId}-error`;
-        errorElement.style.color = 'red';
-        errorElement.style.marginTop = '5px';
-        element.parentNode.insertBefore(errorElement, element.nextSibling);
-    }
-
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
-
-    const previewId = elementId.replace('image', 'preview');
-    const preview = document.getElementById(previewId);
-    if (preview) {
-        preview.style.display = 'none';
-    }
 }
 
 function toggleShapeOptions() {
@@ -118,8 +92,32 @@ function processImage() {
     const resultContainer = document.getElementById('image-result');
     const resultImage = document.getElementById('result-image');
 
+    const file1 = document.getElementById('image1').files[0];
+    if (!file1) {
+        showToast('Загрузите изображение 1');
+        return;
+    }
+
+    if (!ALLOWED_FORMATS.includes(file1.type)) {
+        showToast('Недопустимый формат изображения 1');
+        return;
+    }
+
+    if (operation === 'merge') {
+        const file2 = document.getElementById('image2').files[0];
+        if (!file2) {
+            showToast('Загрузите изображение 2 для объединения');
+            return;
+        }
+
+        if (!ALLOWED_FORMATS.includes(file2.type)) {
+            showToast('Недопустимый формат изображения 2');
+            return;
+        }
+    }
+
     if (!preview1.src || preview1.style.display === 'none') {
-        showError('image-result', 'Загрузите хотя бы одно изображение');
+        showToast('Изображение 1 не загружено');
         return;
     }
 
@@ -127,12 +125,10 @@ function processImage() {
 
     if (operation === 'merge') {
         const preview2 = document.getElementById('preview2');
-
         if (!preview2.src || preview2.style.display === 'none') {
-            showError('image-result', 'Загрузите второе изображение для объединения');
+            showToast('Изображение 2 не загружено');
             return;
         }
-
         mergeImages(preview1.src, preview2.src, resultImage);
     } else if (operation === 'crop') {
         const shape = document.getElementById('shape').value;
@@ -158,14 +154,13 @@ function mergeImages(image1Src, image2Src, resultElement) {
         canvas.height = Math.max(img1.height, img2.height);
 
         ctx.drawImage(img1, 0, 0);
-
         ctx.drawImage(img2, img1.width, 0);
 
         resultElement.src = canvas.toDataURL();
         resultElement.style.display = 'block';
     }).catch(error => {
         console.error('Ошибка при загрузке изображений:', error);
-        showError('image-result', 'Ошибка при загрузке изображений');
+        showToast('Ошибка при обработке изображений');
     });
 }
 
@@ -179,7 +174,6 @@ function cropImage(imageSrc, shape, resultElement) {
         canvas.height = img.height;
 
         ctx.drawImage(img, 0, 0);
-
         ctx.globalCompositeOperation = 'destination-in';
 
         const centerX = img.width / 2;
