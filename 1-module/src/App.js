@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Calculator from './components/Calculator';
 import ArrayOperations from './components/ArrayOperations';
 import ImageOperations from './components/ImageOperations';
@@ -10,87 +10,70 @@ import './css/array.css';
 import './css/image.css';
 import './css/text.css';
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeTab: 'basic',
-            toasts: []
-        };
-    }
+const App = () => {
+    const [activeTab, setActiveTab] = useState('basic');
+    const [toasts, setToasts] = useState([]);
 
-    changeTab = (tabId) => {
-        this.setState({ activeTab: tabId });
-    };
-
-    showToast = (message, type = 'error') => {
+    const showToast = (message, type = 'error') => {
         const id = Date.now();
-        this.setState(prevState => ({
-            toasts: [...prevState.toasts, { id, message, type }]
-        }));
+        setToasts(prev => [...prev, { id, message, type }]);
 
         setTimeout(() => {
-            this.removeToast(id);
+            setToasts(prev => prev.filter(toast => toast.id !== id));
         }, 3000);
     };
 
-    removeToast = (id) => {
-        this.setState(prevState => ({
-            toasts: prevState.toasts.filter(toast => toast.id !== id)
-        }));
+    const removeToast = (id) => {
+        setToasts(prev => prev.filter(toast => toast.id !== id));
     };
 
-    render() {
-        const { activeTab, toasts } = this.state;
-
-        return (
-            <>
-                <Toast toasts={toasts} removeToast={this.removeToast} />
+    return (
+        <>
+            <Toast toasts={toasts} removeToast={removeToast} />
 
             <div className="app-container">
                 <div className="tabs">
                     <div
                         className={`tab ${activeTab === 'basic' ? 'active' : ''}`}
-                        onClick={() => this.changeTab('basic')}
+                        onClick={() => setActiveTab('basic')}
                     >
                         Калькулятор
                     </div>
                     <div
                         className={`tab ${activeTab === 'array' ? 'active' : ''}`}
-                        onClick={() => this.changeTab('array')}
+                        onClick={() => setActiveTab('array')}
                     >
                         Массивы
                     </div>
                     <div
                         className={`tab ${activeTab === 'image' ? 'active' : ''}`}
-                        onClick={() => this.changeTab('image')}
+                        onClick={() => setActiveTab('image')}
                     >
                         Изображения
                     </div>
                     <div
                         className={`tab ${activeTab === 'text' ? 'active' : ''}`}
-                        onClick={() => this.changeTab('text')}
+                        onClick={() => setActiveTab('text')}
                     >
                         Текст
                     </div>
                 </div>
 
                 <div className="tab-content" style={{ display: activeTab === 'basic' ? 'block' : 'none' }}>
-                    <Calculator showToast={this.showToast} />
+                    <Calculator showToast={showToast} />
                 </div>
                 <div className="tab-content" style={{ display: activeTab === 'array' ? 'block' : 'none' }}>
-                    <ArrayOperations showToast={this.showToast} />
+                    <ArrayOperations showToast={showToast} />
                 </div>
                 <div className="tab-content" style={{ display: activeTab === 'image' ? 'block' : 'none' }}>
-                    <ImageOperations showToast={this.showToast} />
+                    <ImageOperations showToast={showToast} />
                 </div>
                 <div className="tab-content" style={{ display: activeTab === 'text' ? 'block' : 'none' }}>
-                    <TextOperations showToast={this.showToast} />
+                    <TextOperations showToast={showToast} />
                 </div>
             </div>
-            </>
-        );
-    }
-}
+        </>
+    );
+};
 
 export default App;

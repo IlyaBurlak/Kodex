@@ -1,88 +1,74 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class Calculator extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentInput: '0'
-        };
-    }
+const Calculator = ({ showToast }) => {
+    const [currentInput, setCurrentInput] = useState('0');
 
-    appendToDisplay = (value) => {
-        this.setState(prevState => {
-            let currentInput = prevState.currentInput;
-            if (currentInput === 'Ошибка') {
-                currentInput = '0';
+    const appendToDisplay = (value) => {
+        setCurrentInput(prev => {
+            if (prev === 'Ошибка' || prev === '0') {
+                return value === '.' ? '0.' : value;
             }
-
-            if (currentInput === '0' && value !== '.') {
-                currentInput = value;
-            } else {
-                currentInput += value;
-            }
-            return { currentInput };
+            return prev + value;
         });
     };
 
-    clearDisplay = () => {
-        this.setState({ currentInput: '0' });
-    };
+    const clearDisplay = () => setCurrentInput('0');
 
-    calculate = () => {
+    const calculate = () => {
         try {
-            const expression = this.state.currentInput.replace(/×/g, '*');
-            const result = eval(expression);
+            const expression = currentInput
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/');
 
-            if (isNaN(result) || !isFinite(result)) {
+            const result = Function(`"use strict"; return (${expression})`)();
+
+            if (!isFinite(result)) {
                 throw new Error('Недопустимая операция');
             }
 
-            this.setState({ currentInput: result.toString() });
+            setCurrentInput(String(result));
         } catch (error) {
-            this.setState({ currentInput: '0' });
-            this.props.showToast('Ошибка вычисления: ' + error.message);
+            showToast('Ошибка вычисления: ' + error.message);
+            setCurrentInput('Ошибка');
         }
     };
 
-    render() {
-        return (
-            <div className="calculator">
-                <div className="display">
-                    <input
-                        type="text"
-                        id="result"
-                        readOnly
-                        value={this.state.currentInput}
-                    />
-                </div>
-                <div className="buttons">
-                    <button className="clear" onClick={this.clearDisplay}>C</button>
-                    <button onClick={() => this.appendToDisplay('(')}>(</button>
-                    <button onClick={() => this.appendToDisplay(')')}>)</button>
-                    <button className="operator" onClick={() => this.appendToDisplay('/')}>/</button>
-
-                    <button onClick={() => this.appendToDisplay('7')}>7</button>
-                    <button onClick={() => this.appendToDisplay('8')}>8</button>
-                    <button onClick={() => this.appendToDisplay('9')}>9</button>
-                    <button className="operator" onClick={() => this.appendToDisplay('*')}>×</button>
-
-                    <button onClick={() => this.appendToDisplay('4')}>4</button>
-                    <button onClick={() => this.appendToDisplay('5')}>5</button>
-                    <button onClick={() => this.appendToDisplay('6')}>6</button>
-                    <button className="operator" onClick={() => this.appendToDisplay('-')}>-</button>
-
-                    <button onClick={() => this.appendToDisplay('1')}>1</button>
-                    <button onClick={() => this.appendToDisplay('2')}>2</button>
-                    <button onClick={() => this.appendToDisplay('3')}>3</button>
-                    <button className="operator" onClick={() => this.appendToDisplay('+')}>+</button>
-
-                    <button onClick={() => this.appendToDisplay('0')}>0</button>
-                    <button onClick={() => this.appendToDisplay('.')}>.</button>
-                    <button className="equals" onClick={this.calculate}>=</button>
-                </div>
+    return (
+        <div className="calculator">
+            <div className="display">
+                <input
+                    type="text"
+                    value={currentInput}
+                    readOnly
+                />
             </div>
-        );
-    }
-}
+            <div className="buttons">
+                <button className="clear" onClick={clearDisplay}>C</button>
+                <button onClick={() => appendToDisplay('(')}>(</button>
+                <button onClick={() => appendToDisplay(')')}>)</button>
+                <button className="operator" onClick={() => appendToDisplay('/')}>÷</button>
+
+                <button onClick={() => appendToDisplay('7')}>7</button>
+                <button onClick={() => appendToDisplay('8')}>8</button>
+                <button onClick={() => appendToDisplay('9')}>9</button>
+                <button className="operator" onClick={() => appendToDisplay('*')}>×</button>
+
+                <button onClick={() => appendToDisplay('4')}>4</button>
+                <button onClick={() => appendToDisplay('5')}>5</button>
+                <button onClick={() => appendToDisplay('6')}>6</button>
+                <button className="operator" onClick={() => appendToDisplay('-')}>-</button>
+
+                <button onClick={() => appendToDisplay('1')}>1</button>
+                <button onClick={() => appendToDisplay('2')}>2</button>
+                <button onClick={() => appendToDisplay('3')}>3</button>
+                <button className="operator" onClick={() => appendToDisplay('+')}>+</button>
+
+                <button onClick={() => appendToDisplay('0')}>0</button>
+                <button onClick={() => appendToDisplay('.')}>.</button>
+                <button className="equals" onClick={calculate}>=</button>
+            </div>
+        </div>
+    );
+};
 
 export default Calculator;

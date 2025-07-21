@@ -1,105 +1,76 @@
-import React, { Component } from 'react';
-import { escapeRegExp } from '../utils/helpers';
+import React, { useState } from 'react';
 
-class TextOperations extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: '',
-            findChar: '',
-            replaceChar: '',
-            result: '',
-            showResult: false
-        };
-    }
+const TextOperations = ({ showToast }) => {
+    const [text, setText] = useState('');
+    const [findChar, setFindChar] = useState('');
+    const [replaceChar, setReplaceChar] = useState('');
+    const [result, setResult] = useState('');
+    const [showResult, setShowResult] = useState(false);
 
-    handleTextChange = (e) => {
-        this.setState({ text: e.target.value });
-    };
-
-    handleFindChange = (e) => {
-        this.setState({ findChar: e.target.value });
-    };
-
-    handleReplaceChange = (e) => {
-        this.setState({ replaceChar: e.target.value });
-    };
-
-    replaceText = () => {
-        const { text, findChar, replaceChar } = this.state;
-
+    const replaceText = () => {
         if (!text.trim()) {
-            this.props.showToast('Введите текст');
+            showToast('Введите текст');
             return;
         }
 
         if (!findChar) {
-            this.props.showToast('Введите символ для замены');
+            showToast('Введите символ для замены');
             return;
         }
 
         if (findChar.length > 1) {
-            this.props.showToast('Введите только один символ для замены');
+            showToast('Введите только один символ для замены');
             return;
         }
 
-        if (replaceChar.length > 1) {
-            this.props.showToast('Введите только один символ замены');
-            return;
-        }
+        const escapedFindChar = findChar.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(escapedFindChar, 'g');
 
-        const result = text.replace(new RegExp(escapeRegExp(findChar), 'g'), replaceChar);
-        this.setState({ result, showResult: true });
+        setResult(text.replace(regex, replaceChar));
+        setShowResult(true);
     };
 
-    render() {
-        const { text, findChar, replaceChar, result, showResult } = this.state;
-
-        return (
-            <div>
-                <div className="input-group">
-                    <label htmlFor="text-input">Исходный текст:</label>
-                    <textarea
-                        id="text-input"
-                        rows="5"
-                        value={text}
-                        onChange={this.handleTextChange}
-                    />
-                </div>
-
-                <div className="input-group">
-                    <label htmlFor="text-find">Символ для замены:</label>
-                    <input
-                        type="text"
-                        id="text-find"
-                        maxLength="1"
-                        value={findChar}
-                        onChange={this.handleFindChange}
-                    />
-                </div>
-
-                <div className="input-group">
-                    <label htmlFor="text-replace">Заменить на:</label>
-                    <input
-                        type="text"
-                        id="text-replace"
-                        maxLength="1"
-                        value={replaceChar}
-                        onChange={this.handleReplaceChange}
-                    />
-                </div>
-
-                <button className="replace-btn" onClick={this.replaceText}>Заменить</button>
-
-                {showResult && (
-                    <div className="result-container">
-                        <div className="result-title">Результат:</div>
-                        <div>{result}</div>
-                    </div>
-                )}
+    return (
+        <div>
+            <div className="input-group">
+                <label>Исходный текст:</label>
+                <textarea
+                    rows="5"
+                    value={text}
+                    onChange={e => setText(e.target.value)}
+                />
             </div>
-        );
-    }
-}
+
+            <div className="input-group">
+                <label>Символ для замены:</label>
+                <input
+                    type="text"
+                    maxLength="1"
+                    value={findChar}
+                    onChange={e => setFindChar(e.target.value)}
+                />
+            </div>
+
+            <div className="input-group">
+                <label>Заменить на:</label>
+                <input
+                    type="text"
+                    maxLength="1"
+                    value={replaceChar}
+                    onChange={e => setReplaceChar(e.target.value)}
+                />
+            </div>
+
+            <button onClick={replaceText}>Заменить</button>
+
+            {showResult && (
+                <div className="result-container">
+                    <label>Результат:</label>
+                    <div className="result-text">{result}</div>
+                </div>
+            )}
+        </div>
+    );
+};
 
 export default TextOperations;
