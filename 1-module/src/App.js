@@ -4,11 +4,6 @@ import ArrayOperations from './components/ArrayOperations';
 import ImageOperations from './components/ImageOperations';
 import TextOperations from './components/TextOperations';
 import Toast from './components/Toast';
-import './css/main.css';
-import './css/calculator.css';
-import './css/array.css';
-import './css/image.css';
-import './css/text.css';
 
 const App = () => {
     const [activeTab, setActiveTab] = useState('basic');

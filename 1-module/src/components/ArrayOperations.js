@@ -34,30 +34,24 @@ const ArrayOperations = ({ showToast }) => {
             return;
         }
 
-        if (operation === 'add' && array2.some(val => val === '')) {
+        if (array2.some(val => val === '')) {
             showToast('Заполните все поля в массиве 2');
             return;
         }
 
+        const arr1 = array1.map(Number);
+        const arr2 = array2.map(Number);
+
+        if (arr1.some(isNaN) || arr2.some(isNaN)) {
+            showToast('Все значения должны быть числами');
+            return;
+        }
+
         if (operation === 'add') {
-            const arr1 = array1.map(Number);
-            const arr2 = array2.map(Number);
-
-            if (arr1.some(isNaN) || arr2.some(isNaN)) {
-                showToast('Все значения должны быть числами');
-                return;
-            }
-
             setResult(arr1.map((num, i) => num + arr2[i]));
         } else {
-            const arr = array1.map(Number);
-
-            if (arr.some(isNaN)) {
-                showToast('Все значения должны быть числами');
-                return;
-            }
-
-            setResult((arr.reduce((acc, num) => acc + num, 0) / arr.length).toFixed(2));
+            const combinedArray = [...arr1, ...arr2];
+            setResult((combinedArray.reduce((acc, num) => acc + num, 0) / combinedArray.length).toFixed(2));
         }
 
         setShowResult(true);
@@ -68,6 +62,7 @@ const ArrayOperations = ({ showToast }) => {
             <div className="input-group">
                 <label>Количество элементов (2-10):</label>
                 <input
+                    className={'chooseInput'}
                     type="number"
                     min="2"
                     max="10"
@@ -85,6 +80,7 @@ const ArrayOperations = ({ showToast }) => {
                             key={`arr1-${index}`}
                             type="number"
                             value={value}
+                            className="array-input"
                             onChange={e => handleArrayChange(
                                 index,
                                 e.target.value,
@@ -103,12 +99,12 @@ const ArrayOperations = ({ showToast }) => {
                             key={`arr2-${index}`}
                             type="number"
                             value={value}
+                            className="array-input"
                             onChange={e => handleArrayChange(
                                 index,
                                 e.target.value,
                                 setArray2
                             )}
-                            disabled={operation === 'average'}
                         />
                     ))}
                 </div>
