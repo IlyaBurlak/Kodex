@@ -1,0 +1,32 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+.input-group {
+  margin-bottom: $spacing-20px;
+}
+
+label {
+  display: block;
+  margin-bottom: $spacing-8px;
+  font-weight: 500;
+  color: $text-color;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: $spacing-15px;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  transition: $transition;
+
+  &:focus {
+    @include focus-style;
+  }
+}
+
+textarea {
+  resize: vertical;
+}

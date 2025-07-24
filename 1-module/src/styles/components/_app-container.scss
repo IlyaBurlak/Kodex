@@ -1,0 +1,9 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+.app-container {
+  width: 100%;
+  max-width: $max-width;
+  @include card-style;
+  overflow: hidden;
+}

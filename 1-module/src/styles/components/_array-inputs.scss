@@ -1,0 +1,22 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+
+.array-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-8px;
+  margin-bottom: $spacing-15px;
+
+  .array-input {
+    flex: 1 0 auto;
+    min-width: 80px;
+    max-width: 120px;
+    width: auto;
+  }
+}
+
+.generate-btn {
+  margin: $spacing-8px 0;
+}
+

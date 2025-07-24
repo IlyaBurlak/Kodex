@@ -1,0 +1,42 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+.toast {
+  position: relative;
+  background: white;
+  color: #333;
+  padding: $spacing-15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: $spacing-8px;
+  overflow: hidden;
+  animation: slideIn 0.3s;
+
+  &.toast-error {
+    border-left: 4px solid $toast-error;
+  }
+
+  &.hide {
+    animation: slideOut 0.3s forwards;
+  }
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: #f0f0f0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: $toast-error;
+    animation: progress 3s linear forwards;
+  }
+}
