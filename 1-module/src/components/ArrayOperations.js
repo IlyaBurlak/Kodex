@@ -81,6 +81,7 @@ const ArrayOperations = ({ showToast }) => {
                             type="number"
                             value={value}
                             className="array-input"
+                            placeholder = {`Элемент ${index+ 1} `}
                             onChange={e => handleArrayChange(
                                 index,
                                 e.target.value,
@@ -100,6 +101,7 @@ const ArrayOperations = ({ showToast }) => {
                             type="number"
                             value={value}
                             className="array-input"
+                            placeholder = {`Элемент ${index+ 1} `}
                             onChange={e => handleArrayChange(
                                 index,
                                 e.target.value,
