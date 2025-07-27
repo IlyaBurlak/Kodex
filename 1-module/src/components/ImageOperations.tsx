@@ -1,36 +1,43 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-const ImageOperations = ({ showToast }) => {
-    const [preview1, setPreview1] = useState(null);
-    const [preview2, setPreview2] = useState(null);
-    const [operation, setOperation] = useState('merge');
-    const [shape, setShape] = useState('circle');
-    const [resultImage, setResultImage] = useState(null);
-    const canvasRef = useRef(null);
 
-    const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+interface ImageOperationsProps {
+    showToast: (message: string) => void;
+}
+
+const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
+    const [preview1, setPreview1] = useState<string | null>(null);
+    const [preview2, setPreview2] = useState<string | null>(null);
+    const [operation, setOperation] = useState<OperationType>('merge');
+    const [shape, setShape] = useState<ShapeType>('circle');
+    const [resultImage, setResultImage] = useState<string | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
         if (!canvasRef.current) {
-            canvasRef.current = document.createElement('canvas');
+            const canvas = document.createElement('canvas');
+            canvasRef.current = canvas;
         }
     }, []);
 
-    const handleImageUpload = (setPreview) => (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+    const handleImageUpload = (setPreview: React.Dispatch<React.SetStateAction<string | null>>) =>
+        (e: React.ChangeEvent<HTMLInputElement>): void => {
+            const file = e.target.files?.[0];
+            if (!file) return;
 
-        if (!ALLOWED_FORMATS.includes(file.type)) {
-            showToast(`Недопустимый формат. Разрешены: ${ALLOWED_FORMATS.join(', ')}`);
-            return;
-        }
+            if (!ALLOWED_FORMATS.includes(file.type)) {
+                showToast(`Недопустимый формат. Разрешены: ${ALLOWED_FORMATS.join(', ')}`);
+                return;
+            }
 
-        const reader = new FileReader();
-        reader.onload = (e) => setPreview(e.target.result);
-        reader.readAsDataURL(file);
-    };
+            const reader = new FileReader();
+            reader.onload = (e) => setPreview(e.target?.result as string);
+            reader.readAsDataURL(file);
+        };
 
-    const processImage = async () => {
+    const processImage = async (): Promise<void> => {
         if (!preview1) {
             showToast('Загрузите изображение 1');
             return;
@@ -60,11 +67,16 @@ const ImageOperations = ({ showToast }) => {
                 await cropImage(canvas, ctx, preview1, shape);
             }
         } catch (error) {
-            showToast(`Ошибка обработки изображения: ${error.message}`);
+            showToast(`Ошибка обработки изображения: ${(error as Error).message}`);
         }
     };
 
-    const mergeImages = (canvas, ctx, src1, src2) => {
+    const mergeImages = (
+        canvas: HTMLCanvasElement,
+        ctx: CanvasRenderingContext2D,
+        src1: string,
+        src2: string
+    ): Promise<void> => {
         return new Promise((resolve, reject) => {
             const img1 = new Image();
             const img2 = new Image();
@@ -94,7 +106,12 @@ const ImageOperations = ({ showToast }) => {
         });
     };
 
-    const cropImage = (canvas, ctx, src, shapeType) => {
+    const cropImage = (
+        canvas: HTMLCanvasElement,
+        ctx: CanvasRenderingContext2D,
+        src: string,
+        shapeType: ShapeType
+    ): Promise<void> => {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onerror = () => reject(new Error('Ошибка загрузки изображения'));
@@ -177,8 +194,7 @@ const ImageOperations = ({ showToast }) => {
                 <label>Операция:</label>
                 <select
                     value={operation}
-                    onChange={(e) => setOperation(e.target.value)}
-                >
+                    onChange={(e) => setOperation(e.target.value as OperationType)}>
                     <option value="merge">Объединение</option>
                     <option value="crop">Обрезка</option>
                 </select>
@@ -189,15 +205,13 @@ const ImageOperations = ({ showToast }) => {
                     <label>Форма:</label>
                     <select
                         value={shape}
-                        onChange={(e) => setShape(e.target.value)}
-                    >
+                        onChange={(e) => setShape(e.target.value as ShapeType)}>
                         <option value="circle">Круг</option>
                         <option value="square">Квадрат</option>
                         <option value="triangle">Треугольник</option>
                     </select>
                 </div>
             )}
-
             <button onClick={processImage}>Обработать</button>
 
             {resultImage && (

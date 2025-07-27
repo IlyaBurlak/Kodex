@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
 import Calculator from './components/Calculator';
 import ArrayOperations from './components/ArrayOperations';
 import ImageOperations from './components/ImageOperations';
 import TextOperations from './components/TextOperations';
 import Toast from './components/Toast';
+import React, { useState } from 'react';
 
-const App = () => {
-    const [activeTab, setActiveTab] = useState('basic');
-    const [toasts, setToasts] = useState([]);
 
-    const showToast = (message, type = 'error') => {
+type ToastType = {
+    id: number;
+    message: string;
+    type: 'error' | 'success' | 'info' | 'warning';
+};
+
+type TabType = 'basic' | 'array' | 'image' | 'text';
+
+const App: React.FC = () => {
+    const [activeTab, setActiveTab] = useState<TabType>('basic');
+    const [toasts, setToasts] = useState<ToastType[]>([]);
+
+    const showToast = (message: string, type: ToastType['type'] = 'error'): void => {
         const id = Date.now();
         setToasts(prev => [...prev, { id, message, type }]);
 
@@ -18,7 +27,7 @@ const App = () => {
         }, 3000);
     };
 
-    const removeToast = (id) => {
+    const removeToast = (id: number): void => {
         setToasts(prev => prev.filter(toast => toast.id !== id));
     };
 

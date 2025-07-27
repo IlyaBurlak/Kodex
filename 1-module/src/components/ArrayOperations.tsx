@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, {ChangeEvent, useState} from 'react';
 
-const ArrayOperations = ({ showToast }) => {
-    const [arrayCount, setArrayCount] = useState(2);
-    const [array1, setArray1] = useState(Array(2).fill(''));
-    const [array2, setArray2] = useState(Array(2).fill(''));
-    const [operation, setOperation] = useState('add');
-    const [result, setResult] = useState(null);
-    const [showResult, setShowResult] = useState(false);
 
-    const generateArrayInputs = () => {
+const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
+    const [arrayCount, setArrayCount] = useState<number>(2);
+    const [array1, setArray1] = useState<string[]>(Array(2).fill(''));
+    const [array2, setArray2] = useState<string[]>(Array(2).fill(''));
+    const [operation, setOperation] = useState<'add' | 'average'>('add');
+    const [result, setResult] = useState<number[] | string | null>(null);
+    const [showResult, setShowResult] = useState<boolean>(false);
+
+    const generateArrayInputs = (): void => {
         if (arrayCount < 2 || arrayCount > 10) {
             showToast('Количество элементов должно быть от 2 до 10');
             return;
@@ -20,7 +21,7 @@ const ArrayOperations = ({ showToast }) => {
         setShowResult(false);
     };
 
-    const handleArrayChange = (index, value, arraySetter) => {
+    const handleArrayChange = (index: number, value: string, arraySetter: React.Dispatch<React.SetStateAction<string[]>>): void => {
         arraySetter(prev => {
             const newArray = [...prev];
             newArray[index] = value;
@@ -28,7 +29,7 @@ const ArrayOperations = ({ showToast }) => {
         });
     };
 
-    const calculateArray = () => {
+    const calculateArray = (): void => {
         if (array1.some(val => val === '')) {
             showToast('Заполните все поля в массиве 1');
             return;
@@ -55,6 +56,13 @@ const ArrayOperations = ({ showToast }) => {
         }
 
         setShowResult(true);
+    };
+
+    const handleOperationChange = (e: ChangeEvent<HTMLSelectElement>): void => {
+        const value = e.target.value;
+        if (value === 'add' || value === 'average') {
+            setOperation(value);
+        }
     };
 
     return (
@@ -116,7 +124,7 @@ const ArrayOperations = ({ showToast }) => {
                 <label>Операция:</label>
                 <select
                     value={operation}
-                    onChange={e => setOperation(e.target.value)}
+                    onChange={handleOperationChange}
                 >
                     <option value="add">Сложение массивов</option>
                     <option value="average">Среднее арифметическое</option>

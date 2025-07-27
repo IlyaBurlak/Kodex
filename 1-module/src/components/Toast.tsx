@@ -1,6 +1,15 @@
-import React from 'react';
+import * as React from "react";
 
-const Toast = ({ toasts, removeToast }) => (
+interface ToastProps {
+    toasts: Array<{
+        id: number;
+        message: string;
+        type: 'error' | 'success' | 'info' | 'warning';
+    }>;
+    removeToast: (id: number) => void;
+}
+
+const Toast: React.FC<ToastProps> = ({ toasts, removeToast }) => (
     <div className="toast-container">
         {toasts.map(toast => (
             <div

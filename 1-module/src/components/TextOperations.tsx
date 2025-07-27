@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 
-const TextOperations = ({ showToast }) => {
-    const [text, setText] = useState('');
-    const [findChar, setFindChar] = useState('');
-    const [replaceChar, setReplaceChar] = useState('');
-    const [result, setResult] = useState('');
-    const [showResult, setShowResult] = useState(false);
 
-    const replaceText = () => {
+interface TextOperationsProps {
+    showToast: (message: string) => void;
+}
+
+const TextOperations: React.FC<TextOperationsProps> = ({ showToast }) => {
+    const [text, setText] = useState<string>('');
+    const [findChar, setFindChar] = useState<string>('');
+    const [replaceChar, setReplaceChar] = useState<string>('');
+    const [result, setResult] = useState<string>('');
+    const [showResult, setShowResult] = useState<boolean>(false);
+
+    const replaceText = (): void => {
         if (!text.trim()) {
             showToast('Введите текст');
             return;
@@ -35,7 +40,7 @@ const TextOperations = ({ showToast }) => {
             <div className="input-group">
                 <label>Исходный текст:</label>
                 <textarea
-                    rows="5"
+                    rows={5}
                     value={text}
                     onChange={e => setText(e.target.value)}
                 />
@@ -45,7 +50,7 @@ const TextOperations = ({ showToast }) => {
                 <label>Символ для замены:</label>
                 <input
                     type="text"
-                    maxLength="1"
+                    maxLength={1}
                     value={findChar}
                     onChange={e => setFindChar(e.target.value)}
                 />
@@ -55,7 +60,7 @@ const TextOperations = ({ showToast }) => {
                 <label>Заменить на:</label>
                 <input
                     type="text"
-                    maxLength="1"
+                    maxLength={1}
                     value={replaceChar}
                     onChange={e => setReplaceChar(e.target.value)}
                 />

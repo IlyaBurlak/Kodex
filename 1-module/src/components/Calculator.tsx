@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-const Calculator = ({ showToast }) => {
-    const [currentInput, setCurrentInput] = useState('0');
+const Calculator: React.FC<CalculatorProps> = ({ showToast }) => {
+    const [currentInput, setCurrentInput] = useState<string>('0');
 
-    const appendToDisplay = (value) => {
+    const appendToDisplay = (value: string): void => {
         setCurrentInput(prev => {
             if (prev === 'Ошибка' || prev === '0') {
                 return value === '.' ? '0.' : value;
@@ -12,9 +12,9 @@ const Calculator = ({ showToast }) => {
         });
     };
 
-    const clearDisplay = () => setCurrentInput('0');
+    const clearDisplay = (): void => setCurrentInput('0');
 
-    const calculate = () => {
+    const calculate = (): void => {
         try {
             const expression = currentInput
                 .replace(/×/g, '*')
@@ -28,7 +28,7 @@ const Calculator = ({ showToast }) => {
 
             setCurrentInput(String(result));
         } catch (error) {
-            showToast('Ошибка вычисления: ' + error.message);
+            showToast('Ошибка вычисления: ' + (error as Error).message);
             setCurrentInput('Ошибка');
         }
     };
