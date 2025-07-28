@@ -1,5 +1,9 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, { useState } from 'react';
+import {withToast} from "./ToastContext";
 
+interface ArrayOperationsProps {
+    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
+}
 
 const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
     const [arrayCount, setArrayCount] = useState<number>(2);
@@ -19,6 +23,7 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
         setArray2(Array(arrayCount).fill(''));
         setResult(null);
         setShowResult(false);
+        showToast('Массивы сгенерированы!', 'info');
     };
 
     const handleArrayChange = (index: number, value: string, arraySetter: React.Dispatch<React.SetStateAction<string[]>>): void => {
@@ -49,20 +54,17 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
         }
 
         if (operation === 'add') {
-            setResult(arr1.map((num, i) => num + arr2[i]));
+            const resultArray = arr1.map((num, i) => num + arr2[i]);
+            setResult(resultArray);
+            showToast('Массивы успешно сложены!', 'success');
         } else {
             const combinedArray = [...arr1, ...arr2];
-            setResult((combinedArray.reduce((acc, num) => acc + num, 0) / combinedArray.length).toFixed(2));
+            const avg = (combinedArray.reduce((acc, num) => acc + num, 0) / combinedArray.length).toFixed(2);
+            setResult(avg);
+            showToast(`Среднее арифметическое: ${avg}`, 'success');
         }
 
         setShowResult(true);
-    };
-
-    const handleOperationChange = (e: ChangeEvent<HTMLSelectElement>): void => {
-        const value = e.target.value;
-        if (value === 'add' || value === 'average') {
-            setOperation(value);
-        }
     };
 
     return (
@@ -89,7 +91,7 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
                             type="number"
                             value={value}
                             className="array-input"
-                            placeholder = {`Элемент ${index+ 1} `}
+                            placeholder={`Элемент ${index+1}`}
                             onChange={e => handleArrayChange(
                                 index,
                                 e.target.value,
@@ -109,7 +111,7 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
                             type="number"
                             value={value}
                             className="array-input"
-                            placeholder = {`Элемент ${index+ 1} `}
+                            placeholder={`Элемент ${index+1}`}
                             onChange={e => handleArrayChange(
                                 index,
                                 e.target.value,
@@ -124,7 +126,7 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
                 <label>Операция:</label>
                 <select
                     value={operation}
-                    onChange={handleOperationChange}
+                    onChange={e => setOperation(e.target.value as 'add' | 'average')}
                 >
                     <option value="add">Сложение массивов</option>
                     <option value="average">Среднее арифметическое</option>
@@ -147,4 +149,4 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
     );
 };
 
-export default ArrayOperations;
+export default withToast(ArrayOperations);

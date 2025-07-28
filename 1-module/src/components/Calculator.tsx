@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import {withToast} from "./ToastContext";
+
+interface CalculatorProps {
+    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
+}
 
 const Calculator: React.FC<CalculatorProps> = ({ showToast }) => {
     const [currentInput, setCurrentInput] = useState<string>('0');
@@ -27,6 +32,7 @@ const Calculator: React.FC<CalculatorProps> = ({ showToast }) => {
             }
 
             setCurrentInput(String(result));
+            showToast('Вычисление выполнено успешно!', 'success');
         } catch (error) {
             showToast('Ошибка вычисления: ' + (error as Error).message);
             setCurrentInput('Ошибка');
@@ -71,4 +77,4 @@ const Calculator: React.FC<CalculatorProps> = ({ showToast }) => {
     );
 };
 
-export default Calculator;
+export default withToast(Calculator);

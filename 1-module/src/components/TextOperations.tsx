@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-
+import {withToast} from "./ToastContext";
 
 interface TextOperationsProps {
-    showToast: (message: string) => void;
+    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
 }
 
 const TextOperations: React.FC<TextOperationsProps> = ({ showToast }) => {
@@ -31,8 +31,10 @@ const TextOperations: React.FC<TextOperationsProps> = ({ showToast }) => {
         const escapedFindChar = findChar.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const regex = new RegExp(escapedFindChar, 'g');
 
-        setResult(text.replace(regex, replaceChar));
+        const newResult = text.replace(regex, replaceChar);
+        setResult(newResult);
         setShowResult(true);
+        showToast('Текст успешно преобразован!', 'success');
     };
 
     return (
@@ -78,4 +80,4 @@ const TextOperations: React.FC<TextOperationsProps> = ({ showToast }) => {
     );
 };
 
-export default TextOperations;
+export default withToast(TextOperations);

@@ -2,39 +2,16 @@ import Calculator from './components/Calculator';
 import ArrayOperations from './components/ArrayOperations';
 import ImageOperations from './components/ImageOperations';
 import TextOperations from './components/TextOperations';
-import Toast from './components/Toast';
 import React, { useState } from 'react';
-
-
-type ToastType = {
-    id: number;
-    message: string;
-    type: 'error' | 'success' | 'info' | 'warning';
-};
+import {ToastProvider} from "./components/ToastContext";
 
 type TabType = 'basic' | 'array' | 'image' | 'text';
 
 const App: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabType>('basic');
-    const [toasts, setToasts] = useState<ToastType[]>([]);
-
-    const showToast = (message: string, type: ToastType['type'] = 'error'): void => {
-        const id = Date.now();
-        setToasts(prev => [...prev, { id, message, type }]);
-
-        setTimeout(() => {
-            setToasts(prev => prev.filter(toast => toast.id !== id));
-        }, 3000);
-    };
-
-    const removeToast = (id: number): void => {
-        setToasts(prev => prev.filter(toast => toast.id !== id));
-    };
 
     return (
-        <>
-            <Toast toasts={toasts} removeToast={removeToast} />
-
+        <ToastProvider>
             <div className="app-container">
                 <div className="tabs">
                     <div
@@ -64,19 +41,19 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="tab-content" style={{ display: activeTab === 'basic' ? 'block' : 'none' }}>
-                    <Calculator showToast={showToast} />
+                    <Calculator />
                 </div>
                 <div className="tab-content" style={{ display: activeTab === 'array' ? 'block' : 'none' }}>
-                    <ArrayOperations showToast={showToast} />
+                    <ArrayOperations />
                 </div>
                 <div className="tab-content" style={{ display: activeTab === 'image' ? 'block' : 'none' }}>
-                    <ImageOperations showToast={showToast} />
+                    <ImageOperations />
                 </div>
                 <div className="tab-content" style={{ display: activeTab === 'text' ? 'block' : 'none' }}>
-                    <TextOperations showToast={showToast} />
+                    <TextOperations />
                 </div>
             </div>
-        </>
+        </ToastProvider>
     );
 };
 

@@ -9,3 +9,4 @@ interface ArrayOperationsProps {
 
 type ShapeType = 'circle' | 'square' | 'triangle';
 type OperationType = 'merge' | 'crop';
+

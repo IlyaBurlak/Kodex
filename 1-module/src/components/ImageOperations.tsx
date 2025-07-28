@@ -1,8 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import {withToast} from "./ToastContext";
 
+type OperationType = 'merge' | 'crop';
+type ShapeType = 'circle' | 'square' | 'triangle';
 
 interface ImageOperationsProps {
-    showToast: (message: string) => void;
+    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
 }
 
 const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
@@ -66,6 +69,7 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
             } else {
                 await cropImage(canvas, ctx, preview1, shape);
             }
+            showToast('Изображение успешно обработано!', 'success');
         } catch (error) {
             showToast(`Ошибка обработки изображения: ${(error as Error).message}`);
         }
@@ -224,4 +228,4 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
     );
 };
 
-export default ImageOperations;
+export default withToast(ImageOperations);
