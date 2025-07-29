@@ -51,10 +51,15 @@ export const useToast = () => {
     return context.showToast;
 };
 
-export const withToast = <P extends object>(Component: React.ComponentType<P>) => {
+export const withToast = <P extends { showToast?: ToastContextType['showToast'] }>(
+    Component: React.ComponentType<P>
+) => {
     const WithToast: React.FC<Omit<P, 'showToast'>> = (props) => {
         const showToast = useToast();
-        return <Component {...props as P} showToast={showToast} />;
+        return <Component {...(props as P)} showToast={showToast} />;
     };
-    return WithToast;
+
+    WithToast.displayName = `WithToast(${Component.displayName || Component.name || 'Component'})`;
+
+    return React.memo(WithToast);
 };
