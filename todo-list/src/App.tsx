@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TodoList from './components/TodoList';
 import AddTodo from './components/AddTodo';
+import TodoActions from './components/TodoActions';
 
 export interface Todo {
     id: string;
@@ -17,10 +18,6 @@ const App: React.FC = () => {
     ]);
 
     const [filter, setFilter] = useState<FilterType>('all');
-
-    const clearCompleted = () => {
-        setTodos(todos.filter(todo => !todo.completed));
-    }
 
     const addTodo = (text: string) => {
         const newTodo: Todo = {
@@ -43,50 +40,35 @@ const App: React.FC = () => {
         setTodos(todos.filter(todo => todo.id !== id));
     };
 
+    const clearCompleted = () => {
+        setTodos(todos.filter(todo => !todo.completed));
+    };
+
     const filteredTodos = todos.filter(todo => {
         if (filter === 'active') return !todo.completed;
         if (filter === 'completed') return todo.completed;
         return true;
-    })
+    });
 
     const count = {
         all: todos.length,
         active: todos.filter(t => !t.completed).length,
         completed: todos.filter(t => t.completed).length,
-    }
+    };
+
     return (
         <div className="app">
             <h1>To-Do List</h1>
             <AddTodo onAdd={addTodo} />
 
-            <div className="todo-actions">
-            <div className="todo-filter">
-                <button
-                    className={filter === 'all' ? 'active' : ''}
-                    onClick={() => setFilter('all')}
-                >
-                    Все ({count.all})
-                </button>
-                <button
-                    className={filter === 'active' ? 'active' : ''}
-                    onClick={() => setFilter('active')}
-                >
-                    В процессе ({count.active})
-                </button>
-                <button
-                    className={filter === 'completed' ? 'active' : ''}
-                    onClick={() => setFilter('completed')}
-                >
-                    Выполненные ({count.completed})
-                </button>
-            </div>
-                {count.completed > 0 && (
-                    <button className="clear-completed" onClick={clearCompleted}>
-                        Очистить выполненные
-                    </button>
-                )}
-            </div>
-                <TodoList
+            <TodoActions
+                filter={filter}
+                setFilter={setFilter}
+                count={count}
+                onClearCompleted={clearCompleted}
+            />
+
+            <TodoList
                 todos={filteredTodos}
                 onToggle={toggleTodo}
                 onDelete={deleteTodo}
