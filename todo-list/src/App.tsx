@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TodoList from './components/TodoList';
 import AddTodo from './components/AddTodo';
 import TodoActions from './components/TodoActions';
+import useLocalStorage from "./hooks/useLocalStorage";
 
 export interface Todo {
     id: string;
@@ -9,10 +10,12 @@ export interface Todo {
     completed: boolean;
 }
 
+const APP_STORAGE_KEY = 'todo-app-data';
+
 type FilterType = 'all' | 'active' | 'completed';
 
 const App: React.FC = () => {
-    const [todos, setTodos] = useState<Todo[]>([
+    const [todos, setTodos] = useLocalStorage<Todo[]>(APP_STORAGE_KEY, [
         { id: '1', text: 'Изучить TypeScript', completed: true },
         { id: '2', text: 'Создать To-Do приложение', completed: false },
     ]);
