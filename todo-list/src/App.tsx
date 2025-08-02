@@ -8,6 +8,7 @@ export interface Todo {
     completed: boolean;
 }
 
+type FilterType = 'all' | 'active' | 'completed';
 
 const App: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>([
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         { id: '2', text: 'Создать To-Do приложение', completed: false },
     ]);
 
+    const [filter, setFilter] = useState<FilterType>('all');
 
     const addTodo = (text: string) => {
         const newTodo: Todo = {
@@ -37,14 +39,38 @@ const App: React.FC = () => {
         setTodos(todos.filter(todo => todo.id !== id));
     };
 
-
+    const filteredTodos = todos.filter(todo => {
+        if (filter === 'active') return !todo.completed;
+        if (filter === 'completed') return todo.completed;
+        return true;
+    })
 
     return (
         <div className="app">
             <h1>To-Do List</h1>
             <AddTodo onAdd={addTodo} />
+            <div className="todo-filter">
+                <button
+                    className={filter === 'all' ? 'active' : ''}
+                    onClick={() => setFilter('all')}
+                >
+                    Все
+                </button>
+                <button
+                    className={filter === 'active' ? 'active' : ''}
+                    onClick={() => setFilter('active')}
+                >
+                    В процессе
+                </button>
+                <button
+                    className={filter === 'completed' ? 'active' : ''}
+                    onClick={() => setFilter('completed')}
+                >
+                    Выполненные
+                </button>
+            </div>
             <TodoList
-                todos={todos}
+                todos={filteredTodos}
                 onToggle={toggleTodo}
                 onDelete={deleteTodo}
             />

@@ -58,7 +58,6 @@ body {
     transition: background-color 0.3s;
 
     &:hover {
-      // Заменяем darken на color.adjust
       background-color: color.adjust($primary-color, $lightness: -10%);
     }
   }
@@ -101,6 +100,33 @@ body {
       &:hover {
         background-color: color.adjust($danger-color, $lightness: -10%);
       }
+    }
+  }
+}
+
+.todo-filter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+
+  button {
+    padding: 8px 16px;
+    background-color: $light-gray;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+
+    &:hover {
+      background-color: color.adjust($light-gray, 5%);
+    }
+
+    &.active {
+      background-color: $primary-color;
+      color: white;
+      border-color: $primary-color;
     }
   }
 }
