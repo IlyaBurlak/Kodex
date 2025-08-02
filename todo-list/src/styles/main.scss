@@ -120,7 +120,7 @@ body {
     font-size: 14px;
 
     &:hover {
-      background-color: color.adjust($light-gray, 5%);
+      background-color: $primary-color;
     }
 
     &.active {

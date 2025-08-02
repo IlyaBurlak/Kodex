@@ -45,28 +45,34 @@ const App: React.FC = () => {
         return true;
     })
 
+    const count = {
+        all: todos.length,
+        active: todos.filter(t => !t.completed).length,
+        completed: todos.filter(t => t.completed).length,
+    }
     return (
         <div className="app">
-            <h1>To-Do List</h1>
+            <h1>Мой To-Do List</h1>
             <AddTodo onAdd={addTodo} />
+
             <div className="todo-filter">
                 <button
                     className={filter === 'all' ? 'active' : ''}
                     onClick={() => setFilter('all')}
                 >
-                    Все
+                    Все ({count.all})
                 </button>
                 <button
                     className={filter === 'active' ? 'active' : ''}
                     onClick={() => setFilter('active')}
                 >
-                    В процессе
+                    В процессе ({count.active})
                 </button>
                 <button
                     className={filter === 'completed' ? 'active' : ''}
                     onClick={() => setFilter('completed')}
                 >
-                    Выполненные
+                    Выполненные ({count.completed})
                 </button>
             </div>
             <TodoList
