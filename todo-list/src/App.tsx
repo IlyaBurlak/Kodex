@@ -18,6 +18,10 @@ const App: React.FC = () => {
 
     const [filter, setFilter] = useState<FilterType>('all');
 
+    const clearCompleted = () => {
+        setTodos(todos.filter(todo => !todo.completed));
+    }
+
     const addTodo = (text: string) => {
         const newTodo: Todo = {
             id: Date.now().toString(),
@@ -52,9 +56,10 @@ const App: React.FC = () => {
     }
     return (
         <div className="app">
-            <h1>Мой To-Do List</h1>
+            <h1>To-Do List</h1>
             <AddTodo onAdd={addTodo} />
 
+            <div className="todo-actions">
             <div className="todo-filter">
                 <button
                     className={filter === 'all' ? 'active' : ''}
@@ -75,7 +80,13 @@ const App: React.FC = () => {
                     Выполненные ({count.completed})
                 </button>
             </div>
-            <TodoList
+                {count.completed > 0 && (
+                    <button className="clear-completed" onClick={clearCompleted}>
+                        Очистить выполненные
+                    </button>
+                )}
+            </div>
+                <TodoList
                 todos={filteredTodos}
                 onToggle={toggleTodo}
                 onDelete={deleteTodo}

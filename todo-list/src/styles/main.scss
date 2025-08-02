@@ -130,3 +130,28 @@ body {
     }
   }
 }
+
+.todo-actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+.clear-completed {
+  padding: 8px 16px;
+  background-color: $light-gray;
+  border: 1px solid $danger-color;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+
+  &:hover {
+    background-color: $danger-color;
+    color: white;
+  }
+}
