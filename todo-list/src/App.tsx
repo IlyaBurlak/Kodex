@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import TodoList from './components/TodoList';
-import AddTodo from './components/AddTodo';
 import TodoActions from './components/TodoActions';
 import useLocalStorage from "./hooks/useLocalStorage";
+import AddTodo from "./components/AddTodo";
 
 export interface Todo {
     id: string;
-    text: string;
+    title: string;
+    description: string;
     completed: boolean;
 }
 
@@ -16,16 +17,26 @@ type FilterType = 'all' | 'active' | 'completed';
 
 const App: React.FC = () => {
     const [todos, setTodos] = useLocalStorage<Todo[]>(APP_STORAGE_KEY, [
-        { id: '1', text: 'Изучить TypeScript', completed: true },
-        { id: '2', text: 'Создать To-Do приложение', completed: false },
+        {
+            id: '1',
+            title: 'Изучить TypeScript',
+            description: 'Освоить базовые концепты TS',
+            completed: true
+        },
+        {
+            id: '2',
+            title: 'Создать To-Do приложение',
+            description: 'Реализовать на React с TypeScript',
+            completed: false
+        },
     ]);
-
     const [filter, setFilter] = useState<FilterType>('all');
 
-    const addTodo = (text: string) => {
+    const addTodo = (title: string, description: string) => {
         const newTodo: Todo = {
             id: Date.now().toString(),
-            text,
+            title,
+            description,
             completed: false,
         };
         setTodos([...todos, newTodo]);

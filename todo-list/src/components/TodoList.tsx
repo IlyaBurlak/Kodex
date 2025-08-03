@@ -1,12 +1,9 @@
 import React from 'react';
-import TodoItem from './TodoItem';
+import { Todo } from '../App';
+import TodoItem from "./TodoItem";
 
 interface TodoListProps {
-    todos: {
-        id: string;
-        text: string;
-        completed: boolean;
-    }[];
+    todos: Todo[];
     onToggle: (id: string) => void;
     onDelete: (id: string) => void;
 }
