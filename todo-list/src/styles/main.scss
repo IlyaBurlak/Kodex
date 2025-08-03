@@ -27,7 +27,7 @@ body {
   h1 {
     text-align: center;
     margin-bottom: 30px;
-    color: darken($primary-color, 15%);
+    color: color.adjust($primary-color, $lightness: -15%);
     font-weight: 700;
     position: relative;
     padding-bottom: 15px;
@@ -199,7 +199,7 @@ body {
       h3 {
         margin: 0 0 8px 0;
         font-size: 1.2rem;
-        color: darken($text-color, 10%);
+        color: color.adjust($text-color, $lightness: -10%);
         font-weight: 600;
       }
 
@@ -292,6 +292,132 @@ body {
       color: white;
       border-color: $danger-color;
       box-shadow: 0 4px 10px rgba($danger-color, 0.2);
+    }
+  }
+}
+
+
+.todo-item {
+  .todo-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: 15px;
+
+    button {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .edit-btn {
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+
+      &:hover {
+        background: $primary-color;
+        color: white;
+      }
+    }
+
+    .delete-btn {
+      background: rgba($danger-color, 0.1);
+      color: $danger-color;
+
+      &:hover {
+        background: $danger-color;
+        color: white;
+      }
+    }
+  }
+
+  .todo-meta {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #8a9bb0;
+
+    .date {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+
+      &::before {
+        content: '';
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  &.editing {
+    padding: 20px;
+    background: #f8fbff;
+    border-left: 4px solid $primary-color;
+
+    .edit-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .edit-input, .edit-textarea {
+      padding: 12px 15px;
+      border: 1px solid #e1e8f0;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      background: white;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+      }
+    }
+
+    .edit-input {
+      font-weight: 600;
+    }
+
+    .edit-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .edit-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+
+      button {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .save-btn {
+        background: $secondary-color;
+        color: white;
+        border: none;
+
+        &:hover {
+          background: color.adjust($secondary-color, $lightness: -8%);
+          transform: translateY(-2px);
+        }
+      }
+
+      .cancel-btn {
+        background: transparent;
+        color: #7a8ca5;
+        border: 1px solid #e1e8f0;
+
+        &:hover {
+          background: #f1f5f9;
+        }
+      }
     }
   }
 }

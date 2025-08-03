@@ -1,14 +1,20 @@
 import React from 'react';
-import { Todo } from '../App';
+import {Todo} from '../App';
 import TodoItem from "./TodoItem";
 
 interface TodoListProps {
     todos: Todo[];
     onToggle: (id: string) => void;
     onDelete: (id: string) => void;
+    onEdit: (id: string, title: string, description: string) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete }) => {
+const TodoList: React.FC<TodoListProps> = ({
+                                               todos,
+                                               onToggle,
+                                               onDelete,
+                                               onEdit
+                                           }) => {
     return (
         <div className="todo-list">
             {todos.length === 0 ? (
@@ -20,6 +26,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete }) => {
                         todo={todo}
                         onToggle={onToggle}
                         onDelete={onDelete}
+                        onEdit={onEdit}
                     />
                 ))
             )}

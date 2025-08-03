@@ -9,6 +9,8 @@ export interface Todo {
     title: string;
     description: string;
     completed: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const APP_STORAGE_KEY = 'todo-app-data';
@@ -21,25 +23,47 @@ const App: React.FC = () => {
             id: '1',
             title: 'Изучить TypeScript',
             description: 'Освоить базовые концепты TS',
-            completed: true
+            completed: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
         },
         {
             id: '2',
             title: 'Создать To-Do приложение',
             description: 'Реализовать на React с TypeScript',
-            completed: false
+            completed: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
         },
     ]);
     const [filter, setFilter] = useState<FilterType>('all');
 
     const addTodo = (title: string, description: string) => {
+        const now = new Date();
         const newTodo: Todo = {
             id: Date.now().toString(),
             title,
             description,
             completed: false,
+            createdAt: now,
+            updatedAt: now
         };
         setTodos([...todos, newTodo]);
+    };
+
+    const editTodo = (id: string, newTitle: string, newDescription: string) => {
+        setTodos(
+            todos.map(todo =>
+                todo.id === id
+                    ? {
+                        ...todo,
+                        title: newTitle,
+                        description: newDescription,
+                        updatedAt: new Date()
+                    }
+                    : todo
+            )
+        );
     };
 
     const toggleTodo = (id: string) => {
@@ -86,6 +110,7 @@ const App: React.FC = () => {
                 todos={filteredTodos}
                 onToggle={toggleTodo}
                 onDelete={deleteTodo}
+                onEdit={editTodo}
             />
         </div>
     );
