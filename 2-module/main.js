@@ -3,20 +3,20 @@ $(document).ready(function() {
     let isCelsius = true;
     let weatherData = null;
     const searchHistory = JSON.parse(localStorage.getItem('weatherHistory')) || [];
+    const DEFAULT_CITY = 'Москва'
+    const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+    const HISTORY_LIMIT = 5;
 
     initApp();
 
     function initApp() {
         updateHistoryButtons();
 
-        if(searchHistory.length > 0) {
+        if(searchHistory.length) {
             $('#history-container').fadeIn();
-        }
-
-        if(searchHistory.length > 0) {
             loadWeather(searchHistory[0]);
         } else {
-            loadWeather('Москва');
+            loadWeather(DEFAULT_CITY);
         }
 
         $('#get-weather').click(getWeather);
@@ -50,7 +50,7 @@ $(document).ready(function() {
         $('#city-input').val(city);
 
         $.ajax({
-            url: `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=ru&appid=${WEATHER_API_KEY}`,
+            url: `${BASE_URL}?q=${city}&units=metric&lang=ru&appid=${WEATHER_API_KEY}`,
             method: 'GET',
             success: function(data) {
                 weatherData = data;
@@ -135,10 +135,9 @@ $(document).ready(function() {
 
         searchHistory.unshift(city);
 
-        if(searchHistory.length > 5) {
+        if(searchHistory.length > HISTORY_LIMIT) {
             searchHistory.pop();
         }
-
         localStorage.setItem('weatherHistory', JSON.stringify(searchHistory));
 
         updateHistoryButtons();
