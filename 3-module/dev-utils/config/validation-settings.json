@@ -6,7 +6,7 @@
     "validateFormat": false
   },
   "password": {
-    "minLength": 23,
+    "minLength": 12,
     "requireSpecial": false,
     "requireNumber": false,
     "requireUpper": false,

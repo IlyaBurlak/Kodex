@@ -22,10 +22,9 @@
     "src/**/*.js",
     "index.js",
     "config/validation-settings.json"
-
   ],
   "dependencies": {
-    "inquirer": "^8.2.6"
+    "inquirer": "^8.2.7"
   },
   "devDependencies": {
     "@jest/globals": "^30.0.4",
