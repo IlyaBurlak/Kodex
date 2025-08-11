@@ -7,6 +7,11 @@ const numberRegex = /\d/;
 const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
 const isEmailValid = (email) => {
+    if (typeof email !== 'string') {
+        console.error('Ошибка валидации: email должен быть строкой');
+        return false;
+    }
+
     const config = getConfig().email;
 
     if (config.validateFormat && !emailFormatRegex.test(email)) {
@@ -15,20 +20,25 @@ const isEmailValid = (email) => {
 
     if (config.allowedDomains.length > 0) {
         const domain = email.split('@')[1];
-        if (!config.allowedDomains.includes(domain)) return false;
+        if (!domain || !config.allowedDomains.includes(domain)) return false;
     }
 
     return true;
 };
 
 const isPasswordValid = (password) => {
+    if (typeof password !== 'string') {
+        console.error('Ошибка валидации: пароль должен быть строкой');
+        return false;
+    }
+
     const config = getConfig().password;
     const lowerPassword = password.toLowerCase();
 
     if (password.length < config.minLength) return false;
 
     if (config.forbiddenPatterns.some(pattern =>
-        lowerPassword.includes(pattern.toLowerCase()))) {
+        pattern && lowerPassword.includes(pattern.toLowerCase()))) {
         return false;
     }
 
