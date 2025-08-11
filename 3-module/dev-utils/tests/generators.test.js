@@ -12,6 +12,10 @@ const { getConfig } = require('../src/CLI/configManager');
 
 jest.mock('../src/CLI/configManager');
 
+const EMAIL_PATTERN = /^test-[a-zA-Z0-9]{8}@(test\.com|example\.org)$/;
+const LOGIN_PATTERN = /^user_[a-zA-Z0-9]{8}$/;
+const PASSWORD_SPECIAL_CHAR_PATTERN = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
 describe('Generators', () => {
     beforeEach(() => {
         getConfig.mockReturnValue({
@@ -34,7 +38,7 @@ describe('Generators', () => {
         expect(uniqueDomains).toEqual(expect.arrayContaining(['test.com', 'example.org']));
 
         emails.forEach(email => {
-            expect(email).toMatch(/^test-[a-zA-Z0-9]{8}@(test\.com|example\.org)$/);
+            expect(email).toMatch(EMAIL_PATTERN);
         });
     });
 
@@ -45,12 +49,12 @@ describe('Generators', () => {
         expect(password).toMatch(/[A-Z]/);
         expect(password).toMatch(/[a-z]/);
         expect(password).toMatch(/\d/);
-        expect(password).toMatch(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/);
+        expect(password).toMatch(PASSWORD_SPECIAL_CHAR_PATTERN);
     });
 
     test('Login has correct format', () => {
         const login = generateTestLogin();
-        expect(login).toMatch(/^user_[a-zA-Z0-9]{8}$/);
+        expect(login).toMatch(LOGIN_PATTERN);
     });
 
     describe('Batch Generators', () => {
@@ -74,7 +78,7 @@ describe('Generators', () => {
             const sets = generateMultipleSets(2);
             expect(sets).toHaveLength(2);
             sets.forEach(({ email, password }) => {
-                expect(email).toMatch(/^test-[a-zA-Z0-9]{8}@(test\.com|example\.org)$/);
+                expect(email).toMatch(EMAIL_PATTERN);
                 expect(password.length).toBeGreaterThanOrEqual(10);
             });
         });
