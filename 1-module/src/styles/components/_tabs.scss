@@ -1,0 +1,45 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+.tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tab {
+  padding: $spacing-15px $spacing-25px;
+  cursor: pointer;
+  font-weight: 500;
+  color: $text-color;
+  position: relative;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  &.active {
+    color: $primary-color;
+    font-weight: 600;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: $primary-color;
+      border-radius: 3px 3px 0 0;
+    }
+  }
+}
+
+.tab-content {
+  display: none;
+  padding: $spacing-25px;
+
+  &.active {
+    display: block;
+  }
+}
