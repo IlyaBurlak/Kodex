@@ -1,21 +1,23 @@
+@import '../../variables';
+
 .add-joke-dialog {
-  margin-top: 30px;
+  margin-top: $spacing-section;
   text-align: center;
 }
 
 .add-button {
-  background-color: #3897f0;
-  color: white;
+  background-color: $main-blue;
+  color: $white;
   border: none;
-  border-radius: 24px;
-  padding: 12px 24px;
+  border-radius: $border-radius-xxl;
+  padding: $spacing-md $spacing-xxl;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color $transition-medium;
 
   &:hover {
-    background-color: #2680d9;
+    background-color: $main-blue-dark;
   }
 }
 
@@ -33,40 +35,40 @@
 }
 
 .dialog-content {
-  background-color: white;
-  border-radius: 16px;
-  padding: 30px;
+  background-color: $white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-section;
   width: 90%;
   max-width: 600px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: $shadow-elevated;
 
   h2 {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: $spacing-xl;
     text-align: center;
   }
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: $spacing-xl;
 
   label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: $spacing-sm;
     font-weight: bold;
   }
 
   textarea, input, select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: $spacing-md;
+    border: 1px solid $border-light;
+    border-radius: $border-radius-sm;
     font-size: 1rem;
 
     &:focus {
       outline: none;
-      border-color: #3897f0;
-      box-shadow: 0 0 0 2px rgba(56, 151, 240, 0.2);
+      border-color: $main-blue;
+      box-shadow: 0 0 0 2px rgba($color: $main-blue, $alpha: 0.2);
     }
   }
 
@@ -78,7 +80,7 @@
 
 .form-row {
   display: flex;
-  gap: 20px;
+  gap: $spacing-xl;
 
   .form-group {
     flex: 1;
@@ -88,39 +90,39 @@
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
+  gap: $spacing-md;
+  margin-top: $spacing-xl;
 }
 
 .cancel-button, .submit-button {
-  padding: 10px 20px;
+  padding: $spacing-md $spacing-xl;
   border: none;
-  border-radius: 8px;
+  border-radius: $border-radius-sm;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all $transition-fast;
 }
 
 .cancel-button {
-  background-color: #f0f0f0;
+  background-color: $hover-lighter;
 
   &:hover {
-    background-color: #e0e0e0;
+    background-color: $hover-light;
   }
 }
 
 .submit-button {
-  background-color: #3897f0;
-  color: white;
+  background-color: $main-blue;
+  color: $white;
 
   &:hover {
-    background-color: #2680d9;
+    background-color: $main-blue-dark;
   }
 }
 
 .error-message {
-  color: #ff5252;
-  margin-top: 10px;
+  color: $error-red;
+  margin-top: $spacing-md;
   font-size: 0.9rem;
 }

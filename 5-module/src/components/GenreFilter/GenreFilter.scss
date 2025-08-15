@@ -1,29 +1,31 @@
+@import '../../variables';
+
 .genre-filter {
-  margin: 20px 0;
+  margin: $spacing-xl 0;
 }
 
 .genre-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: $spacing-md;
 }
 
 .genre-tag {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-xl;
+  border: 1px solid $border-light;
+  background-color: $hover-lighter;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all $transition-fast;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: $hover-light;
   }
 
   &.active {
-    background-color: #3897f0;
-    color: white;
-    border-color: #3897f0;
+    background-color: $main-blue;
+    color: $white;
+    border-color: $main-blue;
   }
 }
