@@ -1,0 +1,46 @@
+.tab-panel {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.tabs-container {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #3897f0;
+  }
+
+  &.active {
+    color: #3897f0;
+  }
+}
+
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  width: 50%;
+  background-color: #3897f0;
+  transition: transform 0.3s ease;
+
+  &.left {
+    transform: translateX(0);
+  }
+
+  &.right {
+    transform: translateX(100%);
+  }
+}
