@@ -1,4 +1,4 @@
-@import '../../variables';
+@use '../../variables' as *;
 
 .add-joke-dialog {
   margin-top: $spacing-section;
@@ -58,7 +58,9 @@
     font-weight: bold;
   }
 
-  textarea, input, select {
+  textarea,
+  input,
+  select {
     width: 100%;
     padding: $spacing-md;
     border: 1px solid $border-light;
@@ -94,7 +96,8 @@
   margin-top: $spacing-xl;
 }
 
-.cancel-button, .submit-button {
+.cancel-button,
+.submit-button {
   padding: $spacing-md $spacing-xl;
   border: none;
   border-radius: $border-radius-sm;

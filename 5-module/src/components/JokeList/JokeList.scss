@@ -1,4 +1,4 @@
-@import '../../variables';
+@use '../../variables' as *;
 
 .joke-list {
   display: grid;
@@ -36,11 +36,21 @@
   background-color: $hover-light;
 
   /* Цвета жанров */
-  &.programming { background-color: #e3f2fd; }
-  &.math { background-color: #e8f5e9; }
-  &.school { background-color: #fff3e0; }
-  &.student { background-color: #f3e5f5; }
-  &.family { background-color: #ffecb3; }
+  &.programming {
+    background-color: #e3f2fd;
+  }
+  &.math {
+    background-color: #e8f5e9;
+  }
+  &.school {
+    background-color: #fff3e0;
+  }
+  &.student {
+    background-color: #f3e5f5;
+  }
+  &.family {
+    background-color: #ffecb3;
+  }
 }
 
 .joke-text {
@@ -76,7 +86,8 @@
   gap: $spacing-md;
 }
 
-.like-btn, .dislike-btn {
+.like-btn,
+.dislike-btn {
   display: flex;
   align-items: center;
   gap: 5px;
