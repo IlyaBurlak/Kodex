@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from "react";
 import TodoList from './components/TodoList';
 import useLocalStorage from "./hooks/useLocalStorage";
 import { AddTodo } from "./components/AddTodo";
 import { TodoActions } from "./components/TodoActions";
+import { FilterType, Todo } from "./types/todo";
 
-export interface Todo {
-    id: string;
-    title: string;
-    description: string;
-    completed: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-}
 
 const APP_STORAGE_KEY = 'todo-app-data';
-
-type FilterType = 'all' | 'active' | 'completed';
 
 const App: React.FC = () => {
     const [todos, setTodos] = useLocalStorage<Todo[]>(APP_STORAGE_KEY, [
@@ -38,7 +29,7 @@ const App: React.FC = () => {
     ]);
     const [filter, setFilter] = useState<FilterType>('all');
 
-    const addTodo = (title: string, description: string) => {
+    const addTodo = useCallback((title: string, description: string) => {
         const now = new Date();
         const newTodo: Todo = {
             id: Date.now().toString(),
@@ -48,51 +39,53 @@ const App: React.FC = () => {
             createdAt: now,
             updatedAt: now
         };
-        setTodos([...todos, newTodo]);
-    };
+        setTodos(prevTodos => [...prevTodos, newTodo]);
+    }, []);
 
-    const editTodo = (id: string, newTitle: string, newDescription: string) => {
-        setTodos(
-            todos.map(todo =>
-                todo.id === id
-                    ? {
-                        ...todo,
-                        title: newTitle,
-                        description: newDescription,
-                        updatedAt: new Date()
-                    }
-                    : todo
-            )
+    const editTodo = useCallback((id: string, newTitle: string, newDescription: string) => {
+        setTodos(prevTodos =>
+          prevTodos.map(todo =>
+            todo.id === id
+              ? {
+                  ...todo,
+                  title: newTitle,
+                  description: newDescription,
+                  updatedAt: new Date()
+              }
+              : todo
+          )
         );
-    };
+    }, []);
 
-    const toggleTodo = (id: string) => {
-        setTodos(
-            todos.map(todo =>
-                todo.id === id ? { ...todo, completed: !todo.completed } : todo
-            )
+    const toggleTodo = useCallback((id: string) => {
+        setTodos(prevTodos =>
+          prevTodos.map(todo =>
+            todo.id === id ? { ...todo, completed: !todo.completed } : todo
+          )
         );
-    };
+    }, []);
 
-    const deleteTodo = (id: string) => {
-        setTodos(todos.filter(todo => todo.id !== id));
-    };
+    const deleteTodo = useCallback((id: string) => {
+        setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+    }, []);
 
-    const clearCompleted = () => {
-        setTodos(todos.filter(todo => !todo.completed));
-    };
+    const clearCompleted = useCallback(() => {
+        setTodos(prevTodos => prevTodos.filter(todo => !todo.completed));
+    }, []);
 
-    const filteredTodos = todos.filter(todo => {
-        if (filter === 'active') return !todo.completed;
-        if (filter === 'completed') return todo.completed;
-        return true;
-    });
+    const filteredTodos = useMemo(() => {
+        return todos.filter(todo => {
+            if (filter === 'active') return !todo.completed;
+            if (filter === 'completed') return todo.completed;
+            return true;
+        });
+    }, [todos, filter]);
 
-    const count = {
+    const count = useMemo(() => ({
         all: todos.length,
         active: todos.filter(t => !t.completed).length,
         completed: todos.filter(t => t.completed).length,
-    };
+    }), [todos]);
 
     return (
         <div className="app">
