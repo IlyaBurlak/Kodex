@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import {withToast} from "./ToastContext";
+import { withToast } from "./ToastContext";
+import { InputGroup } from './InputGroup';
+import { useArrayState } from "../hooks/useArrayState";
 
 interface ArrayOperationsProps {
     showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
@@ -7,8 +9,8 @@ interface ArrayOperationsProps {
 
 const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
     const [arrayCount, setArrayCount] = useState<number>(2);
-    const [array1, setArray1] = useState<string[]>(Array(2).fill(''));
-    const [array2, setArray2] = useState<string[]>(Array(2).fill(''));
+    const { array: array1, updateArray: updateArray1, resizeArray: resizeArray1 } = useArrayState(2);
+    const { array: array2, updateArray: updateArray2, resizeArray: resizeArray2 } = useArrayState(2);
     const [operation, setOperation] = useState<'add' | 'average'>('add');
     const [result, setResult] = useState<number[] | string | null>(null);
     const [showResult, setShowResult] = useState<boolean>(false);
@@ -19,19 +21,11 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
             return;
         }
 
-        setArray1(Array(arrayCount).fill(''));
-        setArray2(Array(arrayCount).fill(''));
+        resizeArray1(arrayCount);
+        resizeArray2(arrayCount);
         setResult(null);
         setShowResult(false);
         showToast('Массивы сгенерированы!', 'info');
-    };
-
-    const handleArrayChange = (index: number, value: string, arraySetter: React.Dispatch<React.SetStateAction<string[]>>): void => {
-        arraySetter(prev => {
-            const newArray = [...prev];
-            newArray[index] = value;
-            return newArray;
-        });
     };
 
     const calculateArray = (): void => {
@@ -53,99 +47,86 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
             return;
         }
 
-        if (operation === 'add') {
-            const resultArray = arr1.map((num, i) => num + arr2[i]);
-            setResult(resultArray);
-            showToast('Массивы успешно сложены!', 'success');
-        } else {
-            const combinedArray = [...arr1, ...arr2];
-            const avg = (combinedArray.reduce((acc, num) => acc + num, 0) / combinedArray.length).toFixed(2);
-            setResult(avg);
-            showToast(`Среднее арифметическое: ${avg}`, 'success');
-        }
+        try {
+            if (operation === 'add') {
+                if (arr1.length !== arr2.length) {
+                    showToast('Массивы должны быть одинаковой длины для сложения');
+                    return;
+                }
 
-        setShowResult(true);
+                const resultArray = arr1.map((num, i) => num + arr2[i]);
+                setResult(resultArray);
+                showToast('Массивы успешно сложены!', 'success');
+            } else {
+                const combinedArray = [...arr1, ...arr2];
+                const avg = (combinedArray.reduce((acc, num) => acc + num, 0) / combinedArray.length).toFixed(2);
+                setResult(avg);
+                showToast(`Среднее арифметическое: ${avg}`, 'success');
+            }
+
+            setShowResult(true);
+        } catch (error) {
+            showToast('Произошла ошибка при вычислении', 'error');
+        }
     };
 
-    return (
-        <div>
-            <div className="input-group">
-                <label>Количество элементов (2-10):</label>
+    const renderArrayInputs = (array: string[], updateArray: (index: number, value: string) => void, label: string) => (
+      <InputGroup label={label}>
+          <div className="array-inputs">
+              {array.map((value, index) => (
                 <input
-                    className={'chooseInput'}
-                    type="number"
-                    min="2"
-                    max="10"
-                    value={arrayCount}
-                    onChange={e => setArrayCount(Number(e.target.value))}
+                  key={`${label}-${index}`}
+                  type="number"
+                  value={value}
+                  className="array-input"
+                  placeholder={`Элемент ${index+1}`}
+                  onChange={e => updateArray(index, e.target.value)}
                 />
-                <button onClick={generateArrayInputs}>Сгенерировать</button>
-            </div>
+              ))}
+          </div>
+      </InputGroup>
+    );
 
-            <div className="input-group">
-                <label>Массив 1:</label>
-                <div className="array-inputs">
-                    {array1.map((value, index) => (
-                        <input
-                            key={`arr1-${index}`}
-                            type="number"
-                            value={value}
-                            className="array-input"
-                            placeholder={`Элемент ${index+1}`}
-                            onChange={e => handleArrayChange(
-                                index,
-                                e.target.value,
-                                setArray1
-                            )}
-                        />
-                    ))}
+    return (
+      <div>
+          <InputGroup label="Количество элементов (2-10):">
+              <input
+                className={'chooseInput'}
+                type="number"
+                min="2"
+                max="10"
+                value={arrayCount}
+                onChange={e => setArrayCount(Number(e.target.value))}
+              />
+              <button onClick={generateArrayInputs}>Сгенерировать</button>
+          </InputGroup>
+
+          {renderArrayInputs(array1, updateArray1, "Массив 1:")}
+          {renderArrayInputs(array2, updateArray2, "Массив 2:")}
+
+          <InputGroup label="Операция:">
+              <select
+                value={operation}
+                onChange={e => setOperation(e.target.value as 'add' | 'average')}
+              >
+                  <option value="add">Сложение массивов</option>
+                  <option value="average">Среднее арифметическое</option>
+              </select>
+          </InputGroup>
+
+          <button onClick={calculateArray}>Вычислить</button>
+
+          {showResult && (
+            <div className="result-container">
+                <label>Результат:</label>
+                <div>
+                    {Array.isArray(result)
+                      ? `[${result.join(', ')}]`
+                      : result}
                 </div>
             </div>
-
-            <div className="input-group">
-                <label>Массив 2:</label>
-                <div className="array-inputs">
-                    {array2.map((value, index) => (
-                        <input
-                            key={`arr2-${index}`}
-                            type="number"
-                            value={value}
-                            className="array-input"
-                            placeholder={`Элемент ${index+1}`}
-                            onChange={e => handleArrayChange(
-                                index,
-                                e.target.value,
-                                setArray2
-                            )}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            <div className="input-group">
-                <label>Операция:</label>
-                <select
-                    value={operation}
-                    onChange={e => setOperation(e.target.value as 'add' | 'average')}
-                >
-                    <option value="add">Сложение массивов</option>
-                    <option value="average">Среднее арифметическое</option>
-                </select>
-            </div>
-
-            <button onClick={calculateArray}>Вычислить</button>
-
-            {showResult && (
-                <div className="result-container">
-                    <label>Результат:</label>
-                    <div>
-                        {Array.isArray(result)
-                            ? `[${result.join(', ')}]`
-                            : result}
-                    </div>
-                </div>
-            )}
-        </div>
+          )}
+      </div>
     );
 };
 
