@@ -22,15 +22,5 @@
     "declarationMap": true,
     "sourceMap": true,
     "removeComments": false,
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["./components/*"],
-      "@hooks/*": ["./hooks/*"],
-      "@types/*": ["./types/*"],
-      "@utils/*": ["./utils/*"]
-    }
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "build"]
+  }
 }
