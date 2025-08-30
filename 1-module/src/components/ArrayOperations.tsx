@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { withToast } from "./ToastContext";
 import { InputGroup } from './InputGroup';
 import { useArrayState } from "../hooks/useArrayState";
+import { ResultContainer } from './ResultContainer';
 
 interface ArrayOperationsProps {
     showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
@@ -15,7 +16,7 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
     const [result, setResult] = useState<number[] | string | null>(null);
     const [showResult, setShowResult] = useState<boolean>(false);
 
-    const generateArrayInputs = (): void => {
+    const generateArrayInputs = useCallback((): void => {
         if (arrayCount < 2 || arrayCount > 10) {
             showToast('Количество элементов должно быть от 2 до 10');
             return;
@@ -26,9 +27,9 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
         setResult(null);
         setShowResult(false);
         showToast('Массивы сгенерированы!', 'info');
-    };
+    }, [arrayCount, showToast, resizeArray1, resizeArray2]);
 
-    const calculateArray = (): void => {
+    const calculateArray = useCallback((): void => {
         if (array1.some(val => val === '')) {
             showToast('Заполните все поля в массиве 1');
             return;
@@ -68,9 +69,9 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
         } catch (error) {
             showToast('Произошла ошибка при вычислении', 'error');
         }
-    };
+    }, [array1, array2, operation, showToast]);
 
-    const renderArrayInputs = (array: string[], updateArray: (index: number, value: string) => void, label: string) => (
+    const renderArrayInputs = useCallback((array: string[], updateArray: (index: number, value: string) => void, label: string) => (
       <InputGroup label={label}>
           <div className="array-inputs">
               {array.map((value, index) => (
@@ -85,7 +86,7 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
               ))}
           </div>
       </InputGroup>
-    );
+    ), []);
 
     return (
       <div>
@@ -117,14 +118,11 @@ const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
           <button onClick={calculateArray}>Вычислить</button>
 
           {showResult && (
-            <div className="result-container">
-                <label>Результат:</label>
-                <div>
-                    {Array.isArray(result)
-                      ? `[${result.join(', ')}]`
-                      : result}
-                </div>
-            </div>
+            <ResultContainer label="Результат:">
+                {Array.isArray(result)
+                  ? `[${result.join(', ')}]`
+                  : result}
+            </ResultContainer>
           )}
       </div>
     );

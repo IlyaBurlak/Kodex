@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import {withToast} from "./ToastContext";
+import React, { useState, useCallback } from 'react';
+import { withToast } from "./ToastContext";
+import { InputGroup } from './InputGroup';
+import { ResultContainer } from './ResultContainer';
 
 interface TextOperationsProps {
     showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
@@ -12,7 +14,7 @@ const TextOperations: React.FC<TextOperationsProps> = ({ showToast }) => {
     const [result, setResult] = useState<string>('');
     const [showResult, setShowResult] = useState<boolean>(false);
 
-    const replaceText = (): void => {
+    const replaceText = useCallback((): void => {
         if (!text.trim()) {
             showToast('Введите текст');
             return;
@@ -35,48 +37,44 @@ const TextOperations: React.FC<TextOperationsProps> = ({ showToast }) => {
         setResult(newResult);
         setShowResult(true);
         showToast('Текст успешно преобразован!', 'success');
-    };
+    }, [text, findChar, replaceChar, showToast]);
 
     return (
-        <div>
-            <div className="input-group">
-                <label>Исходный текст:</label>
+      <div>
+          <InputGroup label="Исходный текст:">
                 <textarea
-                    rows={5}
-                    value={text}
-                    onChange={e => setText(e.target.value)}
+                  rows={5}
+                  value={text}
+                  onChange={e => setText(e.target.value)}
                 />
-            </div>
+          </InputGroup>
 
-            <div className="input-group">
-                <label>Символ для замены:</label>
-                <input
-                    type="text"
-                    maxLength={1}
-                    value={findChar}
-                    onChange={e => setFindChar(e.target.value)}
-                />
-            </div>
+          <InputGroup label="Символ для замены:">
+              <input
+                type="text"
+                maxLength={1}
+                value={findChar}
+                onChange={e => setFindChar(e.target.value)}
+              />
+          </InputGroup>
 
-            <div className="input-group">
-                <label>Заменить на:</label>
-                <input
-                    type="text"
-                    maxLength={1}
-                    value={replaceChar}
-                    onChange={e => setReplaceChar(e.target.value)}
-                />
-            </div>
+          <InputGroup label="Заменить на:">
+              <input
+                type="text"
+                maxLength={1}
+                value={replaceChar}
+                onChange={e => setReplaceChar(e.target.value)}
+              />
+          </InputGroup>
 
-            <button onClick={replaceText}>Заменить</button>
+          <button onClick={replaceText}>Заменить</button>
 
-            {showResult && (
-                <div className="result-container">
-                    <label>Результат:</label>
-                    <div className="result-text">{result}</div>
-                </div>
-            )}
-        </div>
+          {showResult && (
+            <ResultContainer label="Результат:">
+                <div className="result-text">{result}</div>
+            </ResultContainer>
+          )}
+      </div>
     );
 };
 

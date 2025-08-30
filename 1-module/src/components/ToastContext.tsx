@@ -52,14 +52,14 @@ export const useToast = () => {
 };
 
 export const withToast = <P extends { showToast?: ToastContextType['showToast'] }>(
-    Component: React.ComponentType<P>
+  Component: React.ComponentType<P>
 ) => {
-    const WithToast: React.FC<Omit<P, 'showToast'>> = (props) => {
+    const WithToast: React.FC<Omit<P, 'showToast'>> = React.memo((props) => {
         const showToast = useToast();
         return <Component {...(props as P)} showToast={showToast} />;
-    };
+    });
 
     WithToast.displayName = `WithToast(${Component.displayName || Component.name || 'Component'})`;
 
-    return React.memo(WithToast);
+    return WithToast;
 };

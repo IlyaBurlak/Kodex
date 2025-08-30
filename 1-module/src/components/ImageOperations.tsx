@@ -1,5 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {withToast} from "./ToastContext";
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { withToast } from "./ToastContext";
+import { InputGroup } from './InputGroup';
+import { ResultContainer } from './ResultContainer';
+import { ImageUploader } from './ImageUploader';
 
 type OperationType = 'merge' | 'crop';
 type ShapeType = 'circle' | 'square' | 'triangle';
@@ -25,22 +28,22 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
         }
     }, []);
 
-    const handleImageUpload = (setPreview: React.Dispatch<React.SetStateAction<string | null>>) =>
-        (e: React.ChangeEvent<HTMLInputElement>): void => {
-            const file = e.target.files?.[0];
-            if (!file) return;
+    const handleImageUpload = useCallback((setPreview: React.Dispatch<React.SetStateAction<string | null>>) =>
+      (e: React.ChangeEvent<HTMLInputElement>): void => {
+          const file = e.target.files?.[0];
+          if (!file) return;
 
-            if (!ALLOWED_FORMATS.includes(file.type)) {
-                showToast(`Недопустимый формат. Разрешены: ${ALLOWED_FORMATS.join(', ')}`);
-                return;
-            }
+          if (!ALLOWED_FORMATS.includes(file.type)) {
+              showToast(`Недопустимый формат. Разрешены: ${ALLOWED_FORMATS.join(', ')}`);
+              return;
+          }
 
-            const reader = new FileReader();
-            reader.onload = (e) => setPreview(e.target?.result as string);
-            reader.readAsDataURL(file);
-        };
+          const reader = new FileReader();
+          reader.onload = (e) => setPreview(e.target?.result as string);
+          reader.readAsDataURL(file);
+      }, [showToast]);
 
-    const processImage = async (): Promise<void> => {
+    const processImage = useCallback(async (): Promise<void> => {
         if (!preview1) {
             showToast('Загрузите изображение 1');
             return;
@@ -73,13 +76,13 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
         } catch (error) {
             showToast(`Ошибка обработки изображения: ${(error as Error).message}`);
         }
-    };
+    }, [preview1, preview2, operation, shape, showToast]);
 
-    const mergeImages = (
-        canvas: HTMLCanvasElement,
-        ctx: CanvasRenderingContext2D,
-        src1: string,
-        src2: string
+    const mergeImages = useCallback((
+      canvas: HTMLCanvasElement,
+      ctx: CanvasRenderingContext2D,
+      src1: string,
+      src2: string
     ): Promise<void> => {
         return new Promise((resolve, reject) => {
             const img1 = new Image();
@@ -108,13 +111,13 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
                 };
             };
         });
-    };
+    }, []);
 
-    const cropImage = (
-        canvas: HTMLCanvasElement,
-        ctx: CanvasRenderingContext2D,
-        src: string,
-        shapeType: ShapeType
+    const cropImage = useCallback((
+      canvas: HTMLCanvasElement,
+      ctx: CanvasRenderingContext2D,
+      src: string,
+      shapeType: ShapeType
     ): Promise<void> => {
         return new Promise((resolve, reject) => {
             const img = new Image();
@@ -159,72 +162,53 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
                 }
             };
         });
-    };
+    }, []);
 
     return (
-        <div className="image-operations">
-            <div className="image-preview-container">
-                <div className="input-group">
-                    <label>Изображение 1:</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload(setPreview1)}
-                    />
-                    {preview1 && (
-                        <div className="image-container">
-                            <img src={preview1} alt="Preview 1" className="preview-image" />
-                        </div>
-                    )}
-                </div>
+      <div className="image-operations">
+          <div className="image-preview-container">
+              <ImageUploader
+                label="Изображение 1:"
+                onImageUpload={handleImageUpload(setPreview1)}
+                preview={preview1}
+              />
 
-                <div className="input-group">
-                    <label>Изображение 2:</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload(setPreview2)}
-                        disabled={operation === 'crop'}
-                    />
-                    {preview2 && operation !== 'crop' && (
-                        <div className="image-container">
-                            <img src={preview2} alt="Preview 2" className="preview-image" />
-                        </div>
-                    )}
-                </div>
-            </div>
+              <ImageUploader
+                label="Изображение 2:"
+                onImageUpload={handleImageUpload(setPreview2)}
+                preview={preview2}
+                disabled={operation === 'crop'}
+              />
+          </div>
 
-            <div className="input-group">
-                <label>Операция:</label>
+          <InputGroup label="Операция:">
+              <select
+                value={operation}
+                onChange={(e) => setOperation(e.target.value as OperationType)}>
+                  <option value="merge">Объединение</option>
+                  <option value="crop">Обрезка</option>
+              </select>
+          </InputGroup>
+
+          {operation === 'crop' && (
+            <InputGroup label="Форма:">
                 <select
-                    value={operation}
-                    onChange={(e) => setOperation(e.target.value as OperationType)}>
-                    <option value="merge">Объединение</option>
-                    <option value="crop">Обрезка</option>
+                  value={shape}
+                  onChange={(e) => setShape(e.target.value as ShapeType)}>
+                    <option value="circle">Круг</option>
+                    <option value="square">Квадрат</option>
+                    <option value="triangle">Треугольник</option>
                 </select>
-            </div>
+            </InputGroup>
+          )}
+          <button onClick={processImage}>Обработать</button>
 
-            {operation === 'crop' && (
-                <div className="input-group">
-                    <label>Форма:</label>
-                    <select
-                        value={shape}
-                        onChange={(e) => setShape(e.target.value as ShapeType)}>
-                        <option value="circle">Круг</option>
-                        <option value="square">Квадрат</option>
-                        <option value="triangle">Треугольник</option>
-                    </select>
-                </div>
-            )}
-            <button onClick={processImage}>Обработать</button>
-
-            {resultImage && (
-                <div className="result-container">
-                    <label>Результат:</label>
-                    <img src={resultImage} alt="Result" className="result-image" />
-                </div>
-            )}
-        </div>
+          {resultImage && (
+            <ResultContainer label="Результат:">
+                <img src={resultImage} alt="Result" className="result-image" />
+            </ResultContainer>
+          )}
+      </div>
     );
 };
 
