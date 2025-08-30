@@ -3,22 +3,12 @@ import { withToast } from "./ToastContext";
 import { InputGroup } from './InputGroup';
 import { ResultContainer } from './ResultContainer';
 import { ImageUploader } from './ImageUploader';
-
-type OperationType = 'merge' | 'crop';
-type ShapeType = 'circle' | 'square' | 'triangle';
-
-interface ImageOperationsProps {
-    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
-}
-
-interface ImageState {
-    preview1: string | null;
-    preview2: string | null;
-}
+import { OperationsProps } from "../types/Operations";
+import { ImageState, OperationType, ShapeType } from "../types/ImageOperations";
 
 const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
+const ImageOperations: React.FC<OperationsProps> = ({ showToast }) => {
     const [images, setImages] = useState<ImageState>({
         preview1: null,
         preview2: null

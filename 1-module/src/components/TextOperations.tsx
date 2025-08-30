@@ -2,12 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { withToast } from "./ToastContext";
 import { InputGroup } from './InputGroup';
 import { ResultContainer } from './ResultContainer';
+import { OperationsProps } from "../types/Operations";
 
-interface TextOperationsProps {
-    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
-}
-
-const TextOperations: React.FC<TextOperationsProps> = ({ showToast }) => {
+const TextOperations: React.FC<OperationsProps> = ({ showToast }) => {
     const [text, setText] = useState<string>('');
     const [findChar, setFindChar] = useState<string>('');
     const [replaceChar, setReplaceChar] = useState<string>('');

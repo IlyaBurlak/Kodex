@@ -1,17 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import Toast from './Toast';
-
-type ToastType = 'error' | 'success' | 'info' | 'warning';
-
-interface ToastItem {
-    id: number;
-    message: string;
-    type: ToastType;
-}
-
-interface ToastContextType {
-    showToast: (message: string, type?: ToastType) => void;
-}
+import { ToastContextType, ToastItem, ToastType } from "../types/Toast";
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
@@ -36,10 +25,10 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     }, [removeToast]);
 
     return (
-        <ToastContext.Provider value={{ showToast }}>
-            {children}
-            <Toast toasts={toasts} removeToast={removeToast} />
-        </ToastContext.Provider>
+      <ToastContext.Provider value={{ showToast }}>
+          {children}
+          <Toast toasts={toasts} removeToast={removeToast} />
+      </ToastContext.Provider>
     );
 };
 

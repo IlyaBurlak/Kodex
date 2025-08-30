@@ -1,11 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { withToast } from "./ToastContext";
+import { OperationsProps } from "../types/CalculatorProps";
 
-interface CalculatorProps {
-    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
-}
 
-const Calculator: React.FC<CalculatorProps> = ({ showToast }) => {
+const Calculator: React.FC<OperationsProps> = ({ showToast }) => {
     const [currentInput, setCurrentInput] = useState<string>('0');
 
     const appendToDisplay = useCallback((value: string): void => {

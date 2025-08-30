@@ -3,12 +3,9 @@ import { withToast } from "./ToastContext";
 import { InputGroup } from './InputGroup';
 import { useArrayState } from "../hooks/useArrayState";
 import { ResultContainer } from './ResultContainer';
+import { OperationsProps } from "../types/CalculatorProps";
 
-interface ArrayOperationsProps {
-    showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
-}
-
-const ArrayOperations: React.FC<ArrayOperationsProps> = ({ showToast }) => {
+const ArrayOperations: React.FC<OperationsProps> = ({ showToast }) => {
     const [arrayCount, setArrayCount] = useState<number>(2);
     const { array: array1, updateArray: updateArray1, resizeArray: resizeArray1 } = useArrayState(2);
     const { array: array2, updateArray: updateArray2, resizeArray: resizeArray2 } = useArrayState(2);
