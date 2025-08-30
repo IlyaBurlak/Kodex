@@ -1,0 +1,48 @@
+@use '../../variables' as *;
+
+.tab-panel {
+  position: relative;
+  margin-bottom: $spacing-xl;
+}
+
+.tabs-container {
+  display: flex;
+  border-bottom: 1px solid $border-light;
+}
+
+.tab {
+  flex: 1;
+  padding: $spacing-md $spacing-xl;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: $text-muted;
+  cursor: pointer;
+  transition: color $transition-medium;
+
+  &:hover {
+    color: $main-blue;
+  }
+
+  &.active {
+    color: $main-blue;
+  }
+}
+
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  width: 50%;
+  background-color: $main-blue;
+  transition: transform $transition-medium ease;
+
+  &.left {
+    transform: translateX(0);
+  }
+
+  &.right {
+    transform: translateX(100%);
+  }
+}
