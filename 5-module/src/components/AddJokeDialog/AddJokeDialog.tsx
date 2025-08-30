@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './AddJokeDialog.scss';
-import { Genre } from '../../types/joke';
+import { Genre, GENRES } from '../../types/joke';
 
 type AddJokeDialogProps = {
   onAddJoke: (text: string, author: string, genre: Genre) => void;
@@ -76,11 +76,11 @@ const AddJokeDialog: React.FC<AddJokeDialogProps> = ({ onAddJoke }) => {
                     value={genre}
                     onChange={(e) => setGenre(e.target.value as Genre)}
                   >
-                    <option value='Программистские'>Программистские</option>
-                    <option value='Математические'>Математические</option>
-                    <option value='Школьные'>Школьные</option>
-                    <option value='Студенческие'>Студенческие</option>
-                    <option value='Семейные'>Семейные</option>
+                    {GENRES.map((genreOption) => (
+                      <option key={genreOption} value={genreOption}>
+                        {genreOption}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './GenreFilter.scss';
-import { GenreWithAll } from '../../types/joke';
+import { ALL_GENRES, GenreWithAll } from "../../types/joke";
 
 type GenreFilterProps = {
   selectedGenre: GenreWithAll;
@@ -8,19 +8,10 @@ type GenreFilterProps = {
 };
 
 const GenreFilter: React.FC<GenreFilterProps> = ({ selectedGenre, onSelect }) => {
-  const genres: GenreWithAll[] = [
-    'all',
-    'Программистские',
-    'Математические',
-    'Школьные',
-    'Студенческие',
-    'Семейные',
-  ];
-
   return (
     <div className='genre-filter'>
       <div className='genre-list'>
-        {genres.map((genre) => (
+        {ALL_GENRES.map((genre) => (
           <button
             key={genre}
             className={`genre-tag ${selectedGenre === genre ? 'active' : ''}`}

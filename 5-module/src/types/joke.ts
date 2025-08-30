@@ -8,5 +8,22 @@ export type Joke = {
   likes: number;
   dislikes: number;
   isFavorite: boolean;
-  genre: string;
+  genre: Genre;
 };
+
+export const GENRES: Genre[] = [
+  'Программистские',
+  'Математические',
+  'Школьные',
+  'Студенческие',
+  'Семейные'
+];
+
+export const ALL_GENRES: GenreWithAll[] = [
+  'all',
+  'Программистские',
+  'Математические',
+  'Школьные',
+  'Студенческие',
+  'Семейные',
+];
