@@ -11,11 +11,18 @@ interface ImageOperationsProps {
     showToast: (message: string, type?: 'error' | 'success' | 'info' | 'warning') => void;
 }
 
+interface ImageState {
+    preview1: string | null;
+    preview2: string | null;
+}
+
 const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
-    const [preview1, setPreview1] = useState<string | null>(null);
-    const [preview2, setPreview2] = useState<string | null>(null);
+    const [images, setImages] = useState<ImageState>({
+        preview1: null,
+        preview2: null
+    });
     const [operation, setOperation] = useState<OperationType>('merge');
     const [shape, setShape] = useState<ShapeType>('circle');
     const [resultImage, setResultImage] = useState<string | null>(null);
@@ -28,7 +35,7 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
         }
     }, []);
 
-    const handleImageUpload = useCallback((setPreview: React.Dispatch<React.SetStateAction<string | null>>) =>
+    const handleImageUpload = useCallback((imageKey: keyof ImageState) =>
       (e: React.ChangeEvent<HTMLInputElement>): void => {
           const file = e.target.files?.[0];
           if (!file) return;
@@ -39,17 +46,22 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
           }
 
           const reader = new FileReader();
-          reader.onload = (e) => setPreview(e.target?.result as string);
+          reader.onload = (e) => {
+              setImages(prev => ({
+                  ...prev,
+                  [imageKey]: e.target?.result as string
+              }));
+          };
           reader.readAsDataURL(file);
       }, [showToast]);
 
     const processImage = useCallback(async (): Promise<void> => {
-        if (!preview1) {
+        if (!images.preview1) {
             showToast('Загрузите изображение 1');
             return;
         }
 
-        if (operation === 'merge' && !preview2) {
+        if (operation === 'merge' && !images.preview2) {
             showToast('Загрузите изображение 2');
             return;
         }
@@ -68,15 +80,15 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
 
         try {
             if (operation === 'merge') {
-                await mergeImages(canvas, ctx, preview1, preview2);
+                await mergeImages(canvas, ctx, images.preview1, images.preview2!);
             } else {
-                await cropImage(canvas, ctx, preview1, shape);
+                await cropImage(canvas, ctx, images.preview1, shape);
             }
             showToast('Изображение успешно обработано!', 'success');
         } catch (error) {
             showToast(`Ошибка обработки изображения: ${(error as Error).message}`);
         }
-    }, [preview1, preview2, operation, shape, showToast]);
+    }, [images, operation, shape, showToast]);
 
     const mergeImages = useCallback((
       canvas: HTMLCanvasElement,
@@ -169,14 +181,14 @@ const ImageOperations: React.FC<ImageOperationsProps> = ({ showToast }) => {
           <div className="image-preview-container">
               <ImageUploader
                 label="Изображение 1:"
-                onImageUpload={handleImageUpload(setPreview1)}
-                preview={preview1}
+                onImageUpload={handleImageUpload('preview1')}
+                preview={images.preview1}
               />
 
               <ImageUploader
                 label="Изображение 2:"
-                onImageUpload={handleImageUpload(setPreview2)}
-                preview={preview2}
+                onImageUpload={handleImageUpload('preview2')}
+                preview={images.preview2}
                 disabled={operation === 'crop'}
               />
           </div>
