@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { ToastProps, ToastItem, ToastType } from '../types/Toast';
+import { ToastProps, ToastItem as ToastItemType, ToastType } from '../../types/Toast';
 
-const ToastItem = React.memo(({ toast, removeToast }: { toast: ToastItem; removeToast: (id: number) => void }) => {
+const ToastItemComponent = React.memo(({ toast, removeToast }: { toast: ToastItemType; removeToast: (id: number) => void }) => {
     const getIcon = (type: ToastType) => {
         const icons: Record<ToastType, string> = {
             success: '✓',
@@ -27,7 +27,7 @@ const ToastItem = React.memo(({ toast, removeToast }: { toast: ToastItem; remove
 const Toast: React.FC<ToastProps> = React.memo(({ toasts, removeToast }) => (
   <div className="toast-container">
       {toasts.map(toast => (
-        <ToastItem
+        <ToastItemComponent
           key={toast.id}
           toast={toast}
           removeToast={removeToast}

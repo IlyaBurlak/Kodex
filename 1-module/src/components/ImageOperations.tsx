@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { withToast } from "./ToastContext";
-import { InputGroup } from './InputGroup';
+import { InputGroup } from './elements/InputGroup';
 import { ResultContainer } from './ResultContainer';
 import { ImageUploader } from './ImageUploader';
 import { OperationsProps } from "../types/Operations";

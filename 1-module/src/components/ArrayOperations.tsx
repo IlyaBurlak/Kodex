@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { withToast } from "./ToastContext";
-import { InputGroup } from './InputGroup';
+import { InputGroup } from './elements/InputGroup';
 import { useArrayState } from "../hooks/useArrayState";
 import { ResultContainer } from './ResultContainer';
-import { OperationsProps } from "../types/CalculatorProps";
+import { OperationsProps } from "../types/Operations";
 
 const ArrayOperations: React.FC<OperationsProps> = ({ showToast }) => {
     const [arrayCount, setArrayCount] = useState<number>(2);

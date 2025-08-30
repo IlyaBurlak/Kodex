@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { withToast } from "./ToastContext";
-import { OperationsProps } from "../types/CalculatorProps";
+import { OperationsProps } from "../types/Operations";
 
 
 const Calculator: React.FC<OperationsProps> = ({ showToast }) => {
