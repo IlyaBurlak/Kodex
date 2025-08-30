@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import TodoList from './components/TodoList';
-import TodoActions from './components/TodoActions';
 import useLocalStorage from "./hooks/useLocalStorage";
-import AddTodo from "./components/AddTodo";
+import { AddTodo } from "./components/AddTodo";
+import { TodoActions } from "./components/TodoActions";
 
 export interface Todo {
     id: string;
