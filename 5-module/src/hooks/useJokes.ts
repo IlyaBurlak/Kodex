@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Genre, Joke } from "../types/joke";
+import { Genre, Joke } from '../types/joke';
 
 const useJokes = () => {
   const [jokes, setJokes] = useState<Joke[]>([

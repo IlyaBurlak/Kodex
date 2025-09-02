@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import './JokeList.scss';
-import { JokeListProps } from "../../types/joke";
+import { JokeListProps } from '../../types/joke';
 import JokeItem from './JokeItem';
-
 
 const MemoizedJokeItem = memo(JokeItem);
 

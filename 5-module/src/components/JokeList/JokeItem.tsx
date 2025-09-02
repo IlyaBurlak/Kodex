@@ -1,7 +1,6 @@
 import React from 'react';
-import { JokeItemProps } from "../../types/joke";
+import { JokeItemProps } from '../../types/joke';
 import { ICONS } from '../../constants/icons';
-
 
 const JokeItem: React.FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
   return (

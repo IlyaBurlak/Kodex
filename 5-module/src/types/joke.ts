@@ -9,7 +9,7 @@ export const GENRES: Genre[] = [
   'Математические',
   'Школьные',
   'Студенческие',
-  'Семейные'
+  'Семейные',
 ];
 
 export const ALL_GENRES: GenreWithAll[] = ['all', ...GENRES];

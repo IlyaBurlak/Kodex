@@ -1,7 +1,6 @@
 import React from 'react';
 import './TabPanel.scss';
-import { TabPanelProps } from "../../types/joke";
-
+import { TabPanelProps } from '../../types/joke';
 
 const TabPanel: React.FC<TabPanelProps> = ({ tabs, activeTab, onTabChange }) => {
   return (
