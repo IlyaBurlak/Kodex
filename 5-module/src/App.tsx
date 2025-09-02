@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC } from 'react';
 import { useMemo, useState } from 'react';
 
 import './App.scss';
@@ -9,7 +9,7 @@ import JokeList from './components/JokeList/JokeList';
 import AddJokeDialog from './components/AddJokeDialog/AddJokeDialog';
 import { GenreWithAll } from './types/joke';
 
-const App: React.FC = () => {
+const App: FC = () => {
   const { jokes, addJoke, toggleFavorite, rateJoke } = useJokes();
   const [activeTab, setActiveTab] = useState(0);
   const [selectedGenre, setSelectedGenre] = useState<GenreWithAll>('all');

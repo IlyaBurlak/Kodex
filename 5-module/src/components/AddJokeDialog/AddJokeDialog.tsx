@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import './AddJokeDialog.scss';
 import { AddJokeDialogProps, Genre, GENRES } from '../../types/joke';
 
-const AddJokeDialog: React.FC<AddJokeDialogProps> = ({ onAddJoke }) => {
+const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [text, setText] = useState('');
   const [author, setAuthor] = useState('');

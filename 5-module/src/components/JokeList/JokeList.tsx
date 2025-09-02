@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import { memo, FC } from 'react';
 import './JokeList.scss';
 import { JokeListProps } from '../../types/joke';
 import JokeItem from './JokeItem';
 
 const MemoizedJokeItem = memo(JokeItem);
 
-const JokeList: React.FC<JokeListProps> = ({ jokes, onToggleFavorite, onRateJoke }) => {
+const JokeList: FC<JokeListProps> = ({ jokes, onToggleFavorite, onRateJoke }) => {
   if (jokes.length === 0) {
     return <div className='empty-list'>Нет анекдотов для отображения</div>;
   }

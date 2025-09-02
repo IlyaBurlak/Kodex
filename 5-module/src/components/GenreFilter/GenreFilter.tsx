@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import './GenreFilter.scss';
 import { ALL_GENRES, GenreFilterProps } from '../../types/joke';
 
-const GenreFilter: React.FC<GenreFilterProps> = ({ selectedGenre, onSelect }) => {
+const GenreFilter: FC<GenreFilterProps> = ({ selectedGenre, onSelect }) => {
   return (
     <div className='genre-filter'>
       <div className='genre-list'>

@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import { JokeItemProps } from '../../types/joke';
 import { ICONS } from '../../constants/icons';
 
-const JokeItem: React.FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
+const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
   return (
     <div className='joke-item'>
       <div className='joke-header'>

@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import './TabPanel.scss';
 import { TabPanelProps } from '../../types/joke';
 
-const TabPanel: React.FC<TabPanelProps> = ({ tabs, activeTab, onTabChange }) => {
+const TabPanel: FC<TabPanelProps> = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div className='tab-panel'>
       <div className='tabs-container'>
