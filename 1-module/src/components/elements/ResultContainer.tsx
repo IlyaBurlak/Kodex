@@ -1,5 +1,5 @@
-import React from 'react';
-import { FC } from 'react';
+import React, { FC }  from 'react';
+
 import '../../styles/components/_results.scss'
 
 interface ResultContainerProps {

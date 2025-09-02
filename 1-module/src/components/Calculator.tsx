@@ -1,4 +1,4 @@
-import React, { useState, useCallback, FC } from 'react';
+import { useState, useCallback, FC } from 'react';
 
 import { withToast } from "./ToastContext";
 import { OperationsProps } from "../types/Operations";

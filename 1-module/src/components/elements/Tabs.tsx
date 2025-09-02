@@ -1,5 +1,4 @@
-import React,{ useState } from 'react';
-import { FC } from 'react';
+import React, { FC, useState } from "react";
 
 import '../../styles/components/_tabs.scss'
 

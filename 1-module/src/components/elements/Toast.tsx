@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { FC }  from 'react';
 import { ToastProps } from '../../types/Toast';
 import ToastItem from './ToastItem';
 import '../../styles/components/_toast.scss';
 
-const Toast: React.FC<ToastProps> = React.memo(({ toasts, removeToast }) => (
+const Toast: FC<ToastProps> = React.memo(({ toasts, removeToast }) => (
   <div className="toast-container">
     {toasts.map(toast => (
       <ToastItem
