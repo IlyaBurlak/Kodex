@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/main.scss'
-
-interface TodoFormProps {
-  initialTitle?: string;
-  initialDescription?: string;
-  onSubmit: (title: string, description: string) => void;
-  onCancel?: () => void;
-  submitText: string;
-}
+import { TodoFormProps } from "../types/todo";
 
 export const TodoForm: React.FC<TodoFormProps> = ({
                                                     initialTitle = '',

@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
-import { Todo } from '../types/todo';
+import { TodoProps } from "../types/todo";
 import { TodoForm } from './TodoForm';
 
-interface TodoItemProps {
-    todo: Todo;
-    onToggle: (id: string) => void;
-    onDelete: (id: string) => void;
-    onEdit: (id: string, title: string, description: string) => void;
-}
-
-export const TodoItem: React.FC<TodoItemProps> = ({
+export const TodoItem: React.FC<TodoProps> = ({
                                                       todo,
                                                       onToggle,
                                                       onDelete,

@@ -1,9 +1,6 @@
 import React from 'react';
 import { TodoForm } from './TodoForm';
-
-interface AddTodoProps {
-  onAdd: (title: string, description: string) => void;
-}
+import { AddTodoProps } from "../types/todo";
 
 export const AddTodo: React.FC<AddTodoProps> = ({ onAdd }) => {
   return <TodoForm onSubmit={onAdd} submitText="Добавить" />;

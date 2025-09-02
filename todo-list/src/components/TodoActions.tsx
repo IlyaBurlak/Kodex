@@ -1,16 +1,5 @@
 import React from 'react';
-import { FilterType } from '../types/todo';
-
-interface TodoActionsProps {
-  filter: FilterType;
-  setFilter: (filter: FilterType) => void;
-  count: {
-    all: number;
-    active: number;
-    completed: number;
-  };
-  onClearCompleted: () => void;
-}
+import { FilterType, TodoActionsProps } from "../types/todo";
 
 export const TodoActions: React.FC<TodoActionsProps> = ({
                                                           filter,
