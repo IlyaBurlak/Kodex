@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, FC } from 'react';
 import { withToast } from "./ToastContext";
 import { InputGroup } from './elements/InputGroup';
 import { ResultContainer } from './elements/ResultContainer';
 import { OperationsProps } from "../types/Operations";
 
-const TextOperations: React.FC<OperationsProps> = ({ showToast }) => {
+const TextOperations:FC<OperationsProps> = ({ showToast }) => {
     const [text, setText] = useState<string>('');
     const [findChar, setFindChar] = useState<string>('');
     const [replaceChar, setReplaceChar] = useState<string>('');

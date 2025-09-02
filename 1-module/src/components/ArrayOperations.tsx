@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, FC } from 'react';
 import { withToast } from "./ToastContext";
 import { InputGroup } from './elements/InputGroup';
 import { useArrayState } from "../hooks/useArrayState";
@@ -6,7 +6,7 @@ import { ResultContainer } from './elements/ResultContainer';
 import { OperationsProps } from "../types/Operations";
 import '../styles/components/_array-inputs.scss'
 
-const ArrayOperations: React.FC<OperationsProps> = ({ showToast }) => {
+const ArrayOperations:FC<OperationsProps> = ({ showToast }) => {
     const [arrayCount, setArrayCount] = useState<number>(2);
     const { array: array1, updateArray: updateArray1, resizeArray: resizeArray1 } = useArrayState(2);
     const { array: array2, updateArray: updateArray2, resizeArray: resizeArray2 } = useArrayState(2);

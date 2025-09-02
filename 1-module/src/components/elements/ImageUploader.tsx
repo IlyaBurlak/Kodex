@@ -1,4 +1,5 @@
 import React from 'react';
+import { FC } from 'react';
 import '../../styles/components/_image-preview.scss'
 import '../../styles/components/_forms.scss'
 
@@ -9,7 +10,7 @@ interface ImageUploaderProps {
   disabled?: boolean;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({
+export const ImageUploader: FC<ImageUploaderProps> = ({
                                                               label,
                                                               onImageUpload,
                                                               preview,

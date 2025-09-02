@@ -1,4 +1,5 @@
 import React from 'react';
+import { FC } from 'react';
 import '../../styles/components/_results.scss'
 
 interface ResultContainerProps {
@@ -7,7 +8,7 @@ interface ResultContainerProps {
   className?: string;
 }
 
-export const ResultContainer: React.FC<ResultContainerProps> = ({
+export const ResultContainer:FC<ResultContainerProps> = ({
                                                                   label,
                                                                   children,
                                                                   className = ''

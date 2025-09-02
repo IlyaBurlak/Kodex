@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Calculator from "./components/Calculator";
 import ArrayOperations from "./components/ArrayOperations";
 import ImageOperations from "./components/ImageOperations";
@@ -6,8 +6,7 @@ import TextOperations from "./components/TextOperations";
 import { ToastProvider } from "./components/ToastContext";
 import { Tabs } from "./components/elements/Tabs";
 
-
-const App: React.FC = () => {
+const App: FC = () => {
     const tabs = [
         {
             key: 'basic',

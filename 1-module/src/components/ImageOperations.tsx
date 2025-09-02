@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, FC  } from 'react';
 import { withToast } from "./ToastContext";
 import { InputGroup } from './elements/InputGroup';
 import { ResultContainer } from './elements/ResultContainer';
@@ -10,7 +10,7 @@ import '../styles/components/_image-preview.scss'
 
 const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-const ImageOperations: React.FC<OperationsProps> = ({ showToast }) => {
+const ImageOperations: FC<OperationsProps> = ({ showToast }) => {
     const [images, setImages] = useState<ImageState>({
         preview1: null,
         preview2: null

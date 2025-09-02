@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, ReactNode, FC } from 'react';
+
 import Toast from './elements/Toast';
 import { ToastContextType, ToastItem, ToastType } from "../types/Toast";
 import '../styles/components/_toast.scss'
@@ -9,7 +10,7 @@ interface ToastProviderProps {
     children: ReactNode;
 }
 
-export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
+export const ToastProvider:FC<ToastProviderProps> = ({ children }) => {
     const [toasts, setToasts] = useState<ToastItem[]>([]);
 
     const removeToast = useCallback((id: number) => {

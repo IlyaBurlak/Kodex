@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, FC } from 'react';
+
 import { withToast } from "./ToastContext";
 import { OperationsProps } from "../types/Operations";
 
@@ -8,7 +9,7 @@ const isOperator = (char: string): boolean => {
     return ['+', '-', '*', '/'].includes(char);
 };
 
-const Calculator: React.FC<OperationsProps> = ({ showToast }) => {
+const Calculator:FC<OperationsProps> = ({ showToast }) => {
     const [currentInput, setCurrentInput] = useState<string>('0');
 
     const appendToDisplay = useCallback((value: string): void => {
