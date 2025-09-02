@@ -1,7 +1,7 @@
-import React from 'react';
+import type { FC } from 'react';
 import { FilterType, TodoActionsProps } from "../types/todo";
 
-export const TodoActions: React.FC<TodoActionsProps> = ({
+export const TodoActions: FC<TodoActionsProps> = ({
                                                           filter,
                                                           setFilter,
                                                           count,

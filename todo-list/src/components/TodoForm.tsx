@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState , FC} from 'react';
 import '../styles/main.scss'
 import { TodoFormProps } from "../types/todo";
 
-export const TodoForm: React.FC<TodoFormProps> = ({
+export const TodoForm: FC<TodoFormProps> = ({
                                                     initialValues = { title: '', description: '' },
                                                     onSubmit,
                                                     onCancel,
                                                     submitText
-                                                  }) => {
+                                                   }) => {
   const [title, setTitle] = useState(initialValues.title || '');
   const [description, setDescription] = useState(initialValues.description || '');
 

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { FC, useState } from "react";
 import {  TodoProps } from "../types/todo";
 import { TodoForm } from './TodoForm';
 
-export const TodoItem: React.FC<TodoProps> = ({
+export const TodoItem: FC<TodoProps> = ({
                                                 todo,
                                                 onToggle,
                                                 onDelete,
