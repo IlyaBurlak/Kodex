@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { withToast } from "./ToastContext";
 import { OperationsProps } from "../types/Operations";
 
+import '../styles/components/_calculator.scss'
+
 const isOperator = (char: string): boolean => {
     return ['+', '-', '*', '/'].includes(char);
 };

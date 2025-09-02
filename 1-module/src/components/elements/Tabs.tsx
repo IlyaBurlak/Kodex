@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import '../../styles/components/_tabs.scss'
+
 interface Tab {
   key: string;
   label: string;

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../styles/components/_results.scss'
 
 interface ResultContainerProps {
   label: string;

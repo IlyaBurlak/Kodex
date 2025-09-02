@@ -31,24 +31,6 @@
   }
 }
 
-.shape-options {
-  margin-top: $spacing-20px;
-  padding: $spacing-15px;
-  background: $light-bg;
-  border-radius: $border-radius;
-}
-
-.shape-preview {
-  width: $shape-preview-size;
-  height: $shape-preview-size;
-  margin: $spacing-15px auto;
-  background: #f0f0f0;
-  border-radius: $border-radius;
-  @include flex-center;
-  overflow: hidden;
-}
-
-
 .result-container {
   margin-top: $spacing-20px;
 

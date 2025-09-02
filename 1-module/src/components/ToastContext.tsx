@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import Toast from './elements/Toast';
 import { ToastContextType, ToastItem, ToastType } from "../types/Toast";
+import '../styles/components/_toast.scss'
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 

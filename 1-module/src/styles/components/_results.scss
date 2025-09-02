@@ -8,15 +8,3 @@
   border-radius: $border-radius;
   border-left: 4px solid $primary-color;
 }
-
-.result-title {
-  font-weight: 600;
-  color: $primary-color;
-  margin-bottom: $spacing-8px;
-}
-
-.error-message {
-  color: $error-color;
-  margin-top: $spacing-8px;
-  font-weight: 500;
-}

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { ToastProps, ToastItem as ToastItemType, ToastType } from '../../types/Toast';
 
+import '../../styles/components/_toast.scss'
+
 const ToastItemComponent = React.memo(({ toast, removeToast }: { toast: ToastItemType; removeToast: (id: number) => void }) => {
     const getIcon = (type: ToastType) => {
         const icons: Record<ToastType, string> = {
