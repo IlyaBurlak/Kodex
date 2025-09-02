@@ -1,3 +1,17 @@
+export const FilterType = {
+  ALL: 'all',
+  ACTIVE: 'active',
+  COMPLETED: 'completed',
+} as const;
+
+export type FilterType = typeof FilterType[keyof typeof FilterType];
+
+export interface TodoCount {
+  all: number;
+  active: number;
+  completed: number;
+}
+
 export interface Todo {
   id: string;
   title: string;
@@ -7,45 +21,33 @@ export interface Todo {
   updatedAt: Date;
 }
 
-export interface AddTodoProps {
-  onAdd: (title: string, description: string) => void;
+interface TodoCommonHandlers {
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string, title: string, description: string) => void;
 }
 
+export interface TodoProps extends TodoCommonHandlers {
+  todo: Todo;
+}
+
+export interface TodoListProps extends TodoCommonHandlers {
+  todos: Todo[];
+}
 
 export interface TodoActionsProps {
   filter: FilterType;
   setFilter: (filter: FilterType) => void;
-  count: {
-    all: number;
-    active: number;
-    completed: number;
-  };
+  count: TodoCount;
   onClearCompleted: () => void;
 }
 
-export interface TodoProps {
-  todo: Todo;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-  onEdit: (id: string, title: string, description: string) => void;
-}
-export interface TodoListProps {
-  todos: Todo[];
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-  onEdit: (id: string, title: string, description: string) => void;
-}
-
-
 export interface TodoFormProps {
-  initialTitle?: string;
-  initialDescription?: string;
+  initialValues?: Pick<Todo, 'title' | 'description'>;
   onSubmit: (title: string, description: string) => void;
   onCancel?: () => void;
   submitText: string;
 }
-
-export type FilterType = 'all' | 'active' | 'completed';
-
-
-
+export interface AddTodoProps {
+  onAdd: (title: string, description: string) => void;
+}

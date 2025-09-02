@@ -3,21 +3,22 @@ import '../styles/main.scss'
 import { TodoFormProps } from "../types/todo";
 
 export const TodoForm: React.FC<TodoFormProps> = ({
-                                                    initialTitle = '',
-                                                    initialDescription = '',
+                                                    initialValues = { title: '', description: '' },
                                                     onSubmit,
                                                     onCancel,
                                                     submitText
                                                   }) => {
-  const [title, setTitle] = useState(initialTitle);
-  const [description, setDescription] = useState(initialDescription);
+  const [title, setTitle] = useState(initialValues.title || '');
+  const [description, setDescription] = useState(initialValues.description || '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim()) {
       onSubmit(title, description);
-      setTitle('');
-      setDescription('');
+      if (!onCancel) {
+        setTitle('');
+        setDescription('');
+      }
     }
   };
 

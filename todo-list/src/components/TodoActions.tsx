@@ -10,7 +10,7 @@ export const TodoActions: React.FC<TodoActionsProps> = ({
   return (
     <div className="todo-actions-container">
       <div className="todo-filter">
-        {(['all', 'active', 'completed'] as FilterType[]).map(
+        {([FilterType.ALL, FilterType.ACTIVE, FilterType.COMPLETED] as FilterType[]).map(
           (filterType) => (
             <button
               key={filterType}
@@ -33,11 +33,11 @@ export const TodoActions: React.FC<TodoActionsProps> = ({
 
 const getFilterText = (filter: FilterType): string => {
   switch (filter) {
-    case 'all':
+    case FilterType.ALL:
       return 'Все';
-    case 'active':
+    case FilterType.ACTIVE:
       return 'В процессе';
-    case 'completed':
+    case FilterType.COMPLETED:
       return 'Выполненные';
     default:
       return '';
