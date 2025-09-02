@@ -1,12 +1,7 @@
 import React from 'react';
-import { Joke } from '../../types/joke';
+import { JokeItemProps } from "../../types/joke";
 import { ICONS } from '../../constants/icons';
 
-type JokeItemProps = {
-  joke: Joke;
-  onToggleFavorite: (id: string) => void;
-  onRateJoke: (id: string, action: 'like' | 'dislike') => void;
-};
 
 const JokeItem: React.FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
   return (

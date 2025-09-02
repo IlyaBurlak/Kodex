@@ -1,13 +1,8 @@
 import React, { memo } from 'react';
 import './JokeList.scss';
-import { Joke } from '../../types/joke';
+import { JokeListProps } from "../../types/joke";
 import JokeItem from './JokeItem';
 
-type JokeListProps = {
-  jokes: Joke[];
-  onToggleFavorite: (id: string) => void;
-  onRateJoke: (id: string, action: 'like' | 'dislike') => void;
-};
 
 const MemoizedJokeItem = memo(JokeItem);
 

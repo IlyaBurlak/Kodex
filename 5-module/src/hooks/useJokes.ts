@@ -1,16 +1,5 @@
 import { useState } from 'react';
-
-export type Joke = {
-  id: string;
-  text: string;
-  author: string;
-  likes: number;
-  dislikes: number;
-  isFavorite: boolean;
-  genre: string;
-};
-
-type Genre = 'Программистские' | 'Математические' | 'Школьные' | 'Студенческие' | 'Семейные';
+import { Genre, Joke } from "../types/joke";
 
 const useJokes = () => {
   const [jokes, setJokes] = useState<Joke[]>([
