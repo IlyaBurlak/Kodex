@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { JokeItemProps } from '../../types/joke';
+
 import { ICONS } from '../../constants/icons';
+import { JokeItemProps } from '../../types/joke';
 
 const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
   return (
@@ -14,25 +15,25 @@ const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => 
 
       <div className='joke-actions'>
         <button
+          aria-label={joke.isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
           className={`favorite-btn ${joke.isFavorite ? 'active' : ''}`}
           onClick={() => onToggleFavorite(joke.id)}
-          aria-label={joke.isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}
         >
           {joke.isFavorite ? ICONS.STAR_FILLED : ICONS.STAR_OUTLINE}
         </button>
 
         <div className='rating-container'>
           <button
+            aria-label='Лайк'
             className='like-btn'
             onClick={() => onRateJoke(joke.id, 'like')}
-            aria-label='Лайк'
           >
             {ICONS.THUMB_UP} {joke.likes}
           </button>
           <button
+            aria-label='Дизлайк'
             className='dislike-btn'
             onClick={() => onRateJoke(joke.id, 'dislike')}
-            aria-label='Дизлайк'
           >
             {ICONS.THUMB_DOWN} {joke.dislikes}
           </button>

@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import './TabPanel.scss';
+
 import { TabPanelProps } from '../../types/joke';
 
 const TabPanel: FC<TabPanelProps> = ({ tabs, activeTab, onTabChange }) => {

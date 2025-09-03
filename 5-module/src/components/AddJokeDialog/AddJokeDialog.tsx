@@ -1,6 +1,8 @@
-import React, { useState, FC } from 'react';
+import React, { FC, useState } from 'react';
+
 import './AddJokeDialog.scss';
-import { AddJokeDialogProps, Genre, GENRES } from '../../types/joke';
+
+import { AddJokeDialogProps, GENRES, Genre } from '../../types/joke';
 
 const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,10 +48,10 @@ const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
                 <label htmlFor='joke-text'>Текст анекдота:</label>
                 <textarea
                   id='joke-text'
+                  placeholder='Расскажите свой анекдот...'
+                  rows={4}
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  rows={4}
-                  placeholder='Расскажите свой анекдот...'
                 />
               </div>
 
@@ -57,11 +59,11 @@ const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
                 <div className='form-group'>
                   <label htmlFor='joke-author'>Автор:</label>
                   <input
-                    type='text'
                     id='joke-author'
+                    placeholder='Ваше имя'
+                    type='text'
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
-                    placeholder='Ваше имя'
                   />
                 </div>
 
@@ -85,8 +87,8 @@ const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
 
               <div className='dialog-actions'>
                 <button
-                  type='button'
                   className='cancel-button'
+                  type='button'
                   onClick={() => {
                     setIsOpen(false);
                     setError('');
@@ -94,7 +96,7 @@ const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
                 >
                   Отмена
                 </button>
-                <button type='submit' className='submit-button'>
+                <button className='submit-button' type='submit'>
                   Опубликовать
                 </button>
               </div>

@@ -1,5 +1,7 @@
-import { memo, FC } from 'react';
+import { FC, memo } from 'react';
+
 import './JokeList.scss';
+
 import { JokeListProps } from '../../types/joke';
 import JokeItem from './JokeItem';
 
@@ -16,8 +18,8 @@ const JokeList: FC<JokeListProps> = ({ jokes, onToggleFavorite, onRateJoke }) =>
         <MemoizedJokeItem
           key={joke.id}
           joke={joke}
-          onToggleFavorite={onToggleFavorite}
           onRateJoke={onRateJoke}
+          onToggleFavorite={onToggleFavorite}
         />
       ))}
     </div>

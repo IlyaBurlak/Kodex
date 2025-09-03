@@ -1,12 +1,12 @@
-import { FC } from 'react';
-import { useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import './App.scss';
-import useJokes from './hooks/useJokes';
-import TabPanel from './components/TabPanel/TabPanel';
+
+import AddJokeDialog from './components/AddJokeDialog/AddJokeDialog';
 import GenreFilter from './components/GenreFilter/GenreFilter';
 import JokeList from './components/JokeList/JokeList';
-import AddJokeDialog from './components/AddJokeDialog/AddJokeDialog';
+import TabPanel from './components/TabPanel/TabPanel';
+import useJokes from './hooks/useJokes';
 import { GenreWithAll } from './types/joke';
 
 const App: FC = () => {
@@ -32,11 +32,11 @@ const App: FC = () => {
       </header>
 
       <main>
-        <TabPanel tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+        <TabPanel activeTab={activeTab} tabs={tabs} onTabChange={setActiveTab} />
 
         <GenreFilter selectedGenre={selectedGenre} onSelect={setSelectedGenre} />
 
-        <JokeList jokes={filteredJokes} onToggleFavorite={toggleFavorite} onRateJoke={rateJoke} />
+        <JokeList jokes={filteredJokes} onRateJoke={rateJoke} onToggleFavorite={toggleFavorite} />
 
         <AddJokeDialog onAddJoke={addJoke} />
       </main>

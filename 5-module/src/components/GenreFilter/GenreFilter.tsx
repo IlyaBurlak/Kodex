@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import './GenreFilter.scss';
+
 import { ALL_GENRES, GenreFilterProps } from '../../types/joke';
 
 const GenreFilter: FC<GenreFilterProps> = ({ selectedGenre, onSelect }) => {

@@ -17,5 +17,6 @@
   },
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.alwaysShowStatus": true,
-  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.useFlatConfig": true
 }
