@@ -1,0 +1,111 @@
+@use '../style/Variables' as v;
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+
+  &__hero {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 20px;
+  }
+
+  &__title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: v.$primary-color;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, v.$primary-color, #4a7bc8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__subtitle {
+    font-size: 1.2rem;
+    color: v.$text-light;
+    margin-bottom: 32px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .search-section {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    flex-grow: 1;
+
+    .searchbar {
+      margin-bottom: 20px;
+
+      input {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+.home-page .word-list {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.home-page .word-item {
+  max-width: 900px;
+}
+
+@media (max-width: 968px) {
+  .home-page {
+    .search-section {
+      max-width: 100%;
+    }
+
+    .word-list,
+    .word-item {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    padding: 16px 12px;
+
+    &__title {
+      font-size: 2.2rem;
+    }
+
+    &__subtitle {
+      font-size: 1.1rem;
+    }
+
+    &__illustration {
+      width: 250px;
+      height: 150px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page {
+    &__title {
+      font-size: 1.8rem;
+    }
+
+    &__illustration {
+      width: 200px;
+      height: 120px;
+    }
+
+    .search-section {
+      .searchbar input {
+        width: 100%;
+      }
+    }
+  }
+}

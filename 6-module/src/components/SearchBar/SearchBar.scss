@@ -1,0 +1,10 @@
+@use '../../style/variables' as *;
+
+.searchbar input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+

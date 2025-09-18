@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { fetchSuggestions, setQuery } from '../features/search/searchSlice';
-import { useAppDispatch } from '../hooks';
-import { useDebounce } from '../hooks/useDebounce';
+import { fetchSuggestions, setQuery } from '../../features/search/searchSlice';
+import { useAppDispatch } from '../../hooks';
+import { useDebounce } from '../../hooks/useDebounce';
+import './SearchBar.scss';
 
 export function SearchBar() {
   const dispatch = useAppDispatch();

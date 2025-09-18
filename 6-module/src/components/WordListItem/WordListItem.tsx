@@ -1,7 +1,8 @@
 import { memo, useEffect, useState } from 'react';
-import { toggleFavorite } from '../features/favorites/favoritesSlice';
-import { fetchWordDetails } from '../features/words/wordCacheSlice';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { toggleFavorite } from '../../features/favorites/favoritesSlice';
+import { fetchWordDetails } from '../../features/words/wordCacheSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import './WordListItem.scss';
 
 function truncate(text: string, max: number) {
   if (text.length <= max) {
@@ -58,7 +59,6 @@ export function WordListItem({ item }: { item: any }) {
             <div className='loading'>Loading details...</div>
           ) : (
             <>
-              {/* Произношение */}
               {cachedData.phonetics && cachedData.phonetics.length > 0 && (
                 <div className='phonetic-section'>
                   <h3>Pronunciation</h3>
@@ -82,7 +82,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Краткие определения */}
               {cachedData.shortdef && cachedData.shortdef.length > 0 && (
                 <div className='short-definitions'>
                   <h3>Short Definitions</h3>
@@ -94,7 +93,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Детальные определения */}
               {cachedData.definitions && cachedData.definitions.length > 0 && (
                 <div className='definitions'>
                   <h3>Detailed Definitions</h3>
@@ -116,7 +114,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Идиомы */}
               {cachedData.idioms && cachedData.idioms.length > 0 && (
                 <div className='idioms'>
                   <h3>Idioms & Phrases</h3>
@@ -142,7 +139,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Этимология */}
               {cachedData.et && (
                 <div className='etymology'>
                   <h3>Etymology</h3>
@@ -150,7 +146,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Синонимы */}
               {cachedData.syns && cachedData.syns.length > 0 && (
                 <div className='synonyms'>
                   <h3>Synonyms</h3>
@@ -164,7 +159,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Антонимы */}
               {cachedData.ants && cachedData.ants.length > 0 && (
                 <div className='antonyms'>
                   <h3>Antonyms</h3>
@@ -178,7 +172,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Иллюстрации */}
               {cachedData.art && (
                 <div className='illustration'>
                   <h3>Illustration</h3>
@@ -186,7 +179,6 @@ export function WordListItem({ item }: { item: any }) {
                 </div>
               )}
 
-              {/* Связанные слова */}
               {cachedData.uros && cachedData.uros.length > 0 && (
                 <div className='related-words'>
                   <h3>Related Words</h3>

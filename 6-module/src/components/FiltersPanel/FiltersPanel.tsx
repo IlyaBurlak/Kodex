@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import './FiltersPanel.scss';
 
 const PARTS_OF_SPEECH = [
   'noun',
