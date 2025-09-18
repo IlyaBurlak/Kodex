@@ -1,7 +1,26 @@
+$border-color: #e0e0e0;
+$background-light: #f9f9f9;
+$background-hover: #f0f0f0;
+$text-color: #333;
+$text-light: #666;
+$primary-color: #2c5aa0;
+$warning-bg: #fff3cd;
+$warning-border: #ffeaa7;
+$warning-text: #856404;
+$star-color: #ffc107;
+$tag-bg: #e0e7ff;
+$tag-color: #3730a3;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .topbar {
@@ -10,14 +29,16 @@ body {
   align-items: center;
   padding: 12px 16px;
   border-bottom: 1px solid #eee;
-}
-.topbar .brand {
-  font-weight: 600;
-  text-decoration: none;
-  color: #111;
-}
-.topbar .nav-links a {
-  margin-left: 12px;
+
+  .brand {
+    font-weight: 600;
+    text-decoration: none;
+    color: #111;
+  }
+
+  .nav-links a {
+    margin-left: 12px;
+  }
 }
 
 .page {
@@ -39,16 +60,19 @@ body {
   padding: 8px 10px;
   border: 1px solid #eee;
   border-radius: 8px;
+
+  &-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  &-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
 }
-.filters-title {
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-.filters-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-}
+
 .filter-item {
   display: inline-flex;
   align-items: center;
@@ -59,48 +83,240 @@ body {
   list-style: none;
   padding: 0;
 }
-.word-item {
-  border-bottom: 1px solid #eee;
-  padding: 8px 0;
-}
-.word-item .summary {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-}
-.word-item .word {
-  font-weight: 600;
-}
-.word-item .meaning {
-  color: #666;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.word-item .star {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-.word-item .star.active {
-  color: #f5a623;
-}
-.word-item .details {
-  margin: 6px 0 0 0;
-  color: #333;
-}
-body {
-  margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+// Элемент слова
+.word-item {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+  .summary {
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: $background-hover;
+    }
+  }
+
+  .word {
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 8px;
+  }
+
+  .pos {
+    color: $text-light;
+    font-style: italic;
+    margin-right: 12px;
+    font-size: 14px;
+  }
+
+  .meaning {
+    flex-grow: 1;
+    color: #444;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .star {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.2s;
+
+    &.active {
+      color: $star-color;
+    }
+
+    &:hover {
+      color: $star-color;
+    }
+  }
+
+  .details {
+    padding: 16px;
+    border-top: 1px solid $border-color;
+    background-color: #fafafa;
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: $text-light;
+    }
+
+    .phonetic-section {
+      margin-bottom: 16px;
+    }
+
+    .phonetic-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .transcription {
+      margin-right: 10px;
+      font-family: monospace;
+    }
+
+    .audio-button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: $border-color;
+      }
+    }
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: $text-color;
+      border-bottom: 1px solid $border-color;
+      padding-bottom: 4px;
+    }
+
+    h4 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .short-definitions ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .short-definitions li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .definition-item {
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .def-number {
+      font-weight: bold;
+      margin-right: 6px;
+    }
+
+    .def-text {
+      line-height: 1.5;
+    }
+
+    .examples {
+      margin-top: 8px;
+      padding-left: 16px;
+    }
+
+    .example {
+      font-style: italic;
+      color: $text-light;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .idioms {
+      margin-top: 20px;
+    }
+
+    .idiom-item {
+      margin-bottom: 16px;
+      padding: 12px;
+      background-color: $background-light;
+      border-radius: 6px;
+    }
+
+    .idiom-phrase {
+      color: $primary-color;
+      margin-bottom: 8px;
+    }
+
+    .idiom-definition {
+      margin-bottom: 8px;
+    }
+
+    .idiom-examples {
+      margin-top: 6px;
+      padding-left: 12px;
+    }
+
+    .etymology p {
+      margin: 0;
+      font-style: italic;
+      color: $text-light;
+      line-height: 1.5;
+    }
+
+    .word-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .word-tag {
+      background-color: $tag-bg;
+      color: $tag-color;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .illustration img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      border: 1px solid $border-color;
+    }
+
+    .related-words ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .related-words li {
+      margin-bottom: 6px;
+    }
+
+    .offensive-warning {
+      background-color: $warning-bg;
+      border: 1px solid $warning-border;
+      border-radius: 4px;
+      padding: 12px;
+      margin-top: 16px;
+
+      h3 {
+        color: $warning-text;
+        border-bottom: none;
+        margin-bottom: 8px;
+      }
+
+      p {
+        margin: 0;
+        color: $warning-text;
+      }
+    }
+  }
 }
