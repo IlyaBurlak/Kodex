@@ -30,10 +30,8 @@ export const fetchSuggestions = createAsyncThunk<SearchItem[], string>(
     const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to fetch');
     const data = await response.json();
-    // eslint-disable-next-line no-console
     console.log('[MW] suggestions raw response for query=', query, data);
 
-    // Map API response to SearchItem; limit 10 and sort by word
     const mapped: SearchItem[] = (data as any[])
       .filter((e) => typeof e === 'object' && typeof e?.meta?.id === 'string')
       .map((e) => {

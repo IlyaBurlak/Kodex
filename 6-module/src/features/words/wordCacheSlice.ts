@@ -27,7 +27,6 @@ const extractDefinitions = (sseq: any[]): any[] => {
           if (type === 'text') {
             definition.definition += content + ' ';
           } else if (type === 'vis') {
-            // Примеры использования
             content.forEach((vis: any) => {
               if (vis.t) {
                 definition.examples.push(vis.t);
