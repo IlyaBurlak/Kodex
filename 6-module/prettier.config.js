@@ -6,14 +6,22 @@ const config = {
   useTabs: false,
   semi: true,
   singleQuote: true,
-  trailingComma: 'all',
+  trailingComma: 'es5',
   bracketSpacing: true,
   jsxSingleQuote: true,
   arrowParens: 'always',
   bracketSameLine: false,
   endOfLine: 'auto',
-  importOrder: ['<THIRD_PARTY_MODULES>', '^react', '', '<TYPES>', '<TYPES>^[.]', '^[.]'],
-  importOrderCaseSensitive: false,
+  importOrder: [
+    '^react',
+    '^@reduxjs/toolkit',
+    '^react-redux',
+    '^react-router-dom',
+    '<THIRD_PARTY_MODULES>',
+    '^[./]',
+  ],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
 };
 
 export default config;
