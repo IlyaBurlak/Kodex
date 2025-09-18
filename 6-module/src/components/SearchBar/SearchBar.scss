@@ -1,10 +1,32 @@
 @use '../../style/variables' as *;
+@use 'sass:color';
 
-.searchbar input {
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.searchbar {
+  margin-bottom: 24px;
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.2s ease;
+    background: #fff;
+    color: $text-color;
+
+    &::placeholder {
+      color: $text-light;
+      font-weight: 400;
+    }
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+
+    &:hover {
+      border-color: color.adjust($border-color, $lightness: -10%);
+    }
+  }
 }
-

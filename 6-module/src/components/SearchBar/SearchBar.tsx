@@ -38,7 +38,7 @@ export function SearchBar() {
     <div className='searchbar'>
       <input
         aria-label='Search'
-        placeholder='Search words...'
+        placeholder='Search for words...'
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />

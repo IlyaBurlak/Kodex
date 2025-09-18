@@ -9,8 +9,8 @@ export function HomePage() {
         <div className='home-page__illustration' />
         <h1 className='home-page__title'>Word Explorer</h1>
         <p className='home-page__subtitle'>
-          Discover definitions, pronunciations, and examples for English words. Start your
-          linguistic journey today!
+          Check out definitions, pronunciations, and examples of English words. Honestly, I just
+          wanted a catchy phrase.
         </p>
       </div>
 

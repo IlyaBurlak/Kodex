@@ -37,7 +37,7 @@ export function FiltersPanel() {
 
   return (
     <div className='filters'>
-      <div className='filters-title'>Filters</div>
+      <div className='filters-title'>Filter by part of speech</div>
       <div className='filters-group'>
         {PARTS_OF_SPEECH.map((pos) => {
           const id = `pos-${pos}`;
