@@ -35,7 +35,7 @@
 
   .meaning {
     flex-grow: 1;
-    color: #444;
+    color: $text-meaning;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -46,7 +46,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: #ccc;
+    color: $background-light;
     transition: color 0.2s;
 
     &.active {
@@ -61,7 +61,7 @@
   .details {
     padding: 16px;
     border-top: 1px solid $border-color;
-    background-color: #fafafa;
+    background-color:$background-details ;
 
     .loading {
       text-align: center;
@@ -113,7 +113,7 @@
     h4 {
       margin: 0 0 8px 0;
       font-size: 14px;
-      color: #444;
+      color: $text-meaning;
     }
 
     .short-definitions ul {

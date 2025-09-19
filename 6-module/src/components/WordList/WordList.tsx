@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import type { SearchItem } from '../../features/search/searchSlice';
 import { fetchWordDetails } from '../../features/words/wordCacheSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { SearchItem } from '../../types/word';
 import { WordListItem } from '../WordListItem/WordListItem';
 
 export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean }) {

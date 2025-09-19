@@ -1,27 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MERRIAM_API_KEY, MERRIAM_BASE_URL } from '../../config';
-
-export type PartOfSpeech = string;
-
-export interface SearchItem {
-  word: string;
-  fl?: PartOfSpeech;
-  phonetic?: string;
-  shortdef?: string[];
-}
-
-export interface SearchState {
-  query: string;
-  items: SearchItem[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error?: string;
-}
-
-const initialState: SearchState = {
-  query: '',
-  items: [],
-  status: 'idle',
-};
+import { initialState, PartOfSpeech, SearchItem } from '../../types/word';
 
 export const fetchSuggestions = createAsyncThunk<SearchItem[], string>(
   'search/fetchSuggestions',

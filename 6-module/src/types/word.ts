@@ -40,3 +40,36 @@ export interface WordItem {
   stems?: string[];
   offensive?: boolean;
 }
+
+export type PartOfSpeech = string;
+
+export interface SearchItem {
+  word: string;
+  fl?: PartOfSpeech;
+  phonetic?: string;
+  shortdef?: string[];
+}
+
+export interface SearchState {
+  query: string;
+  items: SearchItem[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error?: string;
+}
+
+export const initialState: SearchState = {
+  query: '',
+  items: [],
+  status: 'idle',
+};
+export interface Pronunciation {
+  mw?: string;
+  sound?: {
+    audio?: string;
+  };
+}
+
+export interface UroItem {
+  ure: string;
+  fl: string;
+}

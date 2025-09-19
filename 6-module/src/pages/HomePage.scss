@@ -1,4 +1,4 @@
-@use '../style/Variables' as v;
+@use '../style/Variables' as *;
 
 .home-page {
   display: flex;
@@ -15,9 +15,9 @@
   &__title {
     font-size: 3rem;
     font-weight: 700;
-    color: v.$primary-color;
+    color: $primary-color;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, v.$primary-color, #4a7bc8);
+    background: $primary-color;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -25,7 +25,7 @@
 
   &__subtitle {
     font-size: 1.2rem;
-    color: v.$text-light;
+    color: $text-light;
     margin-bottom: 32px;
     line-height: 1.6;
     max-width: 600px;

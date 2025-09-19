@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #fff;
+  background-color: $white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
@@ -14,11 +14,11 @@
   &__brand {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: $black;
     text-decoration: none;
 
     &:hover {
-      color: #007bff;
+      color: $blue;
     }
   }
 
@@ -27,20 +27,20 @@
     gap: 2rem;
 
     a {
-      color: #666;
+      color: $text-light;
       text-decoration: none;
       padding: 0.5rem 1rem;
       border-radius: 4px;
       transition: all 0.3s ease;
 
       &:hover {
-        color: #007bff;
-        background-color: #f8f9fa;
+        color: $blue;
+        background-color: $background-hover;
       }
 
       &.active {
-        color: #007bff;
-        background-color: #e3f2fd;
+        color: $blue;
+        background-color: $background-light;
         font-weight: 500;
       }
     }

@@ -1,17 +1,5 @@
-import { Phonetic, WordItem } from '../../../types/word';
+import { Phonetic, Pronunciation, UroItem, WordItem } from '../../../types/word';
 import { cleanMerriamWebsterText } from '../../../utils/cleanMerriamWebsterText';
-
-interface Pronunciation {
-  mw?: string;
-  sound?: {
-    audio?: string;
-  };
-}
-
-interface UroItem {
-  ure: string;
-  fl: string;
-}
 
 export const mapPhonetics = (prs: Pronunciation[] | undefined): Phonetic[] => {
   return (prs || []).map((pr: Pronunciation) => ({
