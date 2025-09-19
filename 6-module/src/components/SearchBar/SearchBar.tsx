@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchSuggestions, setQuery } from '../../features/search/searchSlice';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { useDebounce } from '../../hooks/useDebounce';
 import './SearchBar.scss';
 

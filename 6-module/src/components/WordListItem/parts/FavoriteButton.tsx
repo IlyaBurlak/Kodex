@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { toggleFavorite } from '../../../features/favorites/favoritesSlice';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch } from '../../../hooks/hooks';
 
 interface FavoriteButtonProps {
   isFav: boolean;

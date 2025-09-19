@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { favoritesReducer } from './features/favorites/favoritesSlice';
-import { searchReducer } from './features/search/searchSlice';
-import { wordCacheReducer } from './features/words/wordCacheSlice';
+import { favoritesReducer } from '../features/favorites/favoritesSlice';
+import { searchReducer } from '../features/search/searchSlice';
+import { wordCacheReducer } from '../features/words/wordCacheSlice';
 
 const FAVORITES_STORAGE_KEY = 'dictionary_favorites_v1';
 

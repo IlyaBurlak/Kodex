@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import './WordListItem.scss';
 import { fetchWordDetails } from '../../features/words/wordCacheSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { WordItem } from '../../types/word';
 import { truncate } from '../../utils/truncate';
 import {
