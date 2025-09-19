@@ -3,11 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import './index.scss';
-import * as dotenv from 'dotenv';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-dotenv.config();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -18,4 +14,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-reportWebVitals();
