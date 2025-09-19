@@ -10,3 +10,5 @@ export const EtymologySection = memo(({ etymology }: EtymologySectionProps) => (
     <p>{etymology}</p>
   </Section>
 ));
+
+EtymologySection.displayName = 'EtymologySection';
