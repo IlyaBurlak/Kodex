@@ -4,6 +4,7 @@
     "react-dom": "^19.1.0"
   },
   "scripts": {
+    "type:check" : "tsc -noEmit",
     "start": "webpack serve --mode development",
     "build": "webpack --mode production"
   },

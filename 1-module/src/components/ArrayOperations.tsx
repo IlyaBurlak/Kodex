@@ -53,7 +53,7 @@ const ArrayOperations:FC<OperationsProps> = ({ showToast }) => {
                     return;
                 }
 
-                const resultArray = arr1.map((num, i) => num + arr2[i]);
+                const resultArray = arr1.map((num, i) => num + arr2[i]!);
                 setResult(resultArray);
                 showToast('Массивы успешно сложены!', 'success');
             } else {
