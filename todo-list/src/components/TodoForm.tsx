@@ -11,6 +11,8 @@ export const TodoForm: FC<TodoFormProps> = ({
   const [title, setTitle] = useState(initialValues.title || '');
   const [description, setDescription] = useState(initialValues.description || '');
 
+  const isSubmitDisabled = !title.trim();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim()) {
@@ -37,7 +39,12 @@ export const TodoForm: FC<TodoFormProps> = ({
         rows={3}
       />
       <div className="form-actions">
-        <button type="submit">{submitText}</button>
+        <button
+          type="submit"
+          disabled={isSubmitDisabled}
+        >
+          {submitText}
+        </button>
         {onCancel && (
           <button type="button" onClick={onCancel}>
             Отмена
