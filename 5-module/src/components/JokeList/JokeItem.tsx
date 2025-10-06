@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { ICONS } from '../../constants/icons';
 import { JokeItemProps } from '../../types/joke';
 
-const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
+export const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
   return (
     <div className='joke-item'>
       <div className='joke-header'>
@@ -42,5 +42,3 @@ const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => 
     </div>
   );
 };
-
-export default JokeItem;

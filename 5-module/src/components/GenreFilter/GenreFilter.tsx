@@ -4,7 +4,7 @@ import './GenreFilter.scss';
 
 import { ALL_GENRES, GenreFilterProps } from '../../types/joke';
 
-const GenreFilter: FC<GenreFilterProps> = ({ selectedGenre, onSelect }) => {
+export const GenreFilter: FC<GenreFilterProps> = ({ selectedGenre, onSelect }) => {
   return (
     <div className='genre-filter'>
       <div className='genre-list'>
@@ -21,5 +21,3 @@ const GenreFilter: FC<GenreFilterProps> = ({ selectedGenre, onSelect }) => {
     </div>
   );
 };
-
-export default GenreFilter;

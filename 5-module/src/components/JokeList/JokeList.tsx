@@ -3,11 +3,11 @@ import { FC, memo } from 'react';
 import './JokeList.scss';
 
 import { JokeListProps } from '../../types/joke';
-import JokeItem from './JokeItem';
+import { JokeItem } from './JokeItem';
 
 const MemoizedJokeItem = memo(JokeItem);
 
-const JokeList: FC<JokeListProps> = ({ jokes, onToggleFavorite, onRateJoke }) => {
+export const JokeList: FC<JokeListProps> = ({ jokes, onToggleFavorite, onRateJoke }) => {
   if (jokes.length === 0) {
     return <div className='empty-list'>Нет анекдотов для отображения</div>;
   }
@@ -25,5 +25,3 @@ const JokeList: FC<JokeListProps> = ({ jokes, onToggleFavorite, onRateJoke }) =>
     </div>
   );
 };
-
-export default JokeList;

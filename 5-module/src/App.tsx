@@ -2,12 +2,12 @@ import { FC, useMemo, useState } from 'react';
 
 import './App.scss';
 
-import AddJokeDialog from './components/AddJokeDialog/AddJokeDialog';
-import GenreFilter from './components/GenreFilter/GenreFilter';
-import JokeList from './components/JokeList/JokeList';
-import TabPanel from './components/TabPanel/TabPanel';
-import useJokes from './hooks/useJokes';
 import { GenreWithAll } from './types/joke';
+import useJokes from './hooks/useJokes';
+import { TabPanel } from './components/TabPanel/TabPanel';
+import { GenreFilter } from './components/GenreFilter/GenreFilter';
+import { JokeList } from './components/JokeList/JokeList';
+import { AddJokeDialog } from './components/AddJokeDialog/AddJokeDialog';
 
 const App: FC = () => {
   const { jokes, addJoke, toggleFavorite, rateJoke } = useJokes();

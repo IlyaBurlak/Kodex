@@ -4,7 +4,7 @@ import './TabPanel.scss';
 
 import { TabPanelProps } from '../../types/joke';
 
-const TabPanel: FC<TabPanelProps> = ({ tabs, activeTab, onTabChange }) => {
+export const TabPanel: FC<TabPanelProps> = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div className='tab-panel'>
       <div className='tabs-container'>
@@ -22,5 +22,3 @@ const TabPanel: FC<TabPanelProps> = ({ tabs, activeTab, onTabChange }) => {
     </div>
   );
 };
-
-export default TabPanel;

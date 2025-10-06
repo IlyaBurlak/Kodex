@@ -4,7 +4,7 @@ import './AddJokeDialog.scss';
 
 import { AddJokeDialogProps, GENRES, Genre } from '../../types/joke';
 
-const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
+export const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [text, setText] = useState('');
   const [author, setAuthor] = useState('');
@@ -107,5 +107,3 @@ const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
     </div>
   );
 };
-
-export default AddJokeDialog;
