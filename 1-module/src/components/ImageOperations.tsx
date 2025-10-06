@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback, FC  } from 'react';
+import { useEffect, useRef, useState, useCallback, FC  } from 'react';
 import { withToast } from "./ToastContext";
 import { InputGroup } from './elements/InputGroup';
 import { ResultContainer } from './elements/ResultContainer';
