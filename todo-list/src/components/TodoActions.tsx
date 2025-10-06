@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { FilterType, TodoActionsProps } from "../types/todo";
-
+import '../styles/TodoActions.scss'
 export const TodoActions: FC<TodoActionsProps> = ({
                                                           filter,
                                                           setFilter,

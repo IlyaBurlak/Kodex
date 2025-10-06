@@ -1,6 +1,7 @@
 import React, { useState , FC} from 'react';
 import '../styles/main.scss'
 import { TodoFormProps } from "../types/todo";
+import '../styles/TodoForm.scss'
 
 export const TodoForm: FC<TodoFormProps> = ({
                                                     initialValues = { title: '', description: '' },

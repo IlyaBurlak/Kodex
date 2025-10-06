@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { TodoItem } from "./TodoItem";
 import { TodoListProps } from "../types/todo";
+import '../styles/TodoList.scss'
 
 const TodoList: FC<TodoListProps> = ({
                                              todos,
