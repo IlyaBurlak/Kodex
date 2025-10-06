@@ -1,11 +1,7 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export default {
+module.exports = {
   devServer: {
     compress: true,
     historyApiFallback: true,
