@@ -1,16 +1,21 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
+  devServer: {
+    compress: true,
+    historyApiFallback: true,
+    hot: true,
+    port: 3000,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+  },
   entry: './src/index.tsx',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    clean: true,
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  },
   module: {
     rules: [
       {
@@ -24,18 +29,17 @@ module.exports = {
       },
     ],
   },
+  output: {
+    clean: true,
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
   ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    compress: true,
-    port: 3000,
-    hot: true,
-    historyApiFallback: true,
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
 };

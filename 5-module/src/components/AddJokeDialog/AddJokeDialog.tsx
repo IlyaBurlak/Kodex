@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 
 import './AddJokeDialog.scss';
 
@@ -11,7 +11,7 @@ const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
   const [genre, setGenre] = useState<Genre>('Программистские');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (!text.trim() || !author.trim()) {

@@ -1,13 +1,13 @@
 const eslint = require('@eslint/js');
-const prettierPluginConfigsRecommended = require('eslint-plugin-prettier/recommended');
+const prettierRecommended = require('eslint-plugin-prettier/recommended');
 const reactPlugin = require('eslint-plugin-react');
-const reactHooksPlugin = require('eslint-plugin-react-hooks');
+const reactHooks = require('eslint-plugin-react-hooks');
 const globals = require('globals');
 const tseslint = require('typescript-eslint');
 
 module.exports = tseslint.config(
   {
-    ignores: ['dist/', 'coverage/'],
+    ignores: ['dist/', 'coverage/', 'eslint.config.js'],
   },
   {
     files: ['**/*.{ts,tsx}'],
@@ -24,15 +24,16 @@ module.exports = tseslint.config(
   reactPlugin.configs.flat.recommended,
   {
     plugins: {
-      'react-hooks': reactHooksPlugin,
+      'react-hooks': reactHooks,
     },
-    rules: reactHooksPlugin.configs.recommended.rules,
+    rules: reactHooks.configs.recommended.rules,
   },
-  prettierPluginConfigsRecommended,
+  prettierRecommended,
   {
     languageOptions: {
       globals: {
         ...globals.browser,
+        ...globals.node, // Add Node.js globals
       },
     },
     rules: {
@@ -44,6 +45,7 @@ module.exports = tseslint.config(
         },
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-require-imports': 'off',
       'no-console': ['error', { allow: ['error', 'info', 'warn'] }],
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
