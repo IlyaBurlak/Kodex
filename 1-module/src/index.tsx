@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import React from 'react';
 import './styles/base/_reset.scss'
 import './styles/base/_global.scss'
 import './styles/components/_app-container.scss'
+import { StrictMode } from "react";
 
 const container = document.getElementById('root');
 
@@ -13,7 +13,7 @@ if (!container) {
 
 const root = createRoot(container);
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <App />
-  </React.StrictMode>
+  </StrictMode>
 );

@@ -1,4 +1,4 @@
-import React, { FC }  from 'react';
+import { FC }  from 'react';
 
 interface InputGroupProps {
   label: string;
@@ -6,7 +6,7 @@ interface InputGroupProps {
   className?: string;
 }
 
-export const InputGroup:FC<InputGroupProps> = ({ label, children, className = '' }) => {
+const InputGroup:FC<InputGroupProps> = ({ label, children, className = '' }) => {
   return (
     <div className={`input-group ${className}`}>
       <label>{label}</label>
@@ -14,3 +14,4 @@ export const InputGroup:FC<InputGroupProps> = ({ label, children, className = ''
     </div>
   );
 };
+export default InputGroup;

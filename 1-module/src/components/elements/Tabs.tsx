@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 
 import '../../styles/components/_tabs.scss'
 
@@ -13,7 +13,7 @@ interface TabsProps {
   defaultTab?: string;
 }
 
-export const Tabs:FC<TabsProps> = ({ tabs, defaultTab }) => {
+const Tabs:FC<TabsProps> = ({ tabs, defaultTab }) => {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.key);
 
   const activeTabContent = tabs.find(tab => tab.key === activeTab)?.content;
@@ -38,3 +38,5 @@ export const Tabs:FC<TabsProps> = ({ tabs, defaultTab }) => {
     </>
   );
 };
+
+export default Tabs;

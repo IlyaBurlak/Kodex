@@ -1,4 +1,4 @@
-import React, { FC }  from 'react';
+import { FC, memo } from "react";
 import { ToastItem as ToastItemType, ToastType } from '../../types/Toast';
 
 export interface ToastItemProps {
@@ -6,7 +6,7 @@ export interface ToastItemProps {
   removeToast: (id: number) => void;
 }
 
-const ToastItem: FC<ToastItemProps> = React.memo(({ toast, removeToast }) => {
+const ToastItem: FC<ToastItemProps> = memo(({ toast, removeToast }) => {
   const getIcon = (type: ToastType) => {
     const icons: Record<ToastType, string> = {
       success: '✓',

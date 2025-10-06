@@ -1,15 +1,15 @@
-import React, { FC }  from 'react';
+import { ChangeEvent, FC } from "react";
 import '../../styles/components/_image-preview.scss'
 import '../../styles/components/_forms.scss'
 
 interface ImageUploaderProps {
   label: string;
-  onImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onImageUpload: (e: ChangeEvent<HTMLInputElement>) => void;
   preview: string | null;
   disabled?: boolean;
 }
 
-export const ImageUploader: FC<ImageUploaderProps> = ({
+const ImageUploader: FC<ImageUploaderProps> = ({
                                                               label,
                                                               onImageUpload,
                                                               preview,
@@ -32,3 +32,5 @@ export const ImageUploader: FC<ImageUploaderProps> = ({
     </div>
   );
 };
+
+export default ImageUploader;

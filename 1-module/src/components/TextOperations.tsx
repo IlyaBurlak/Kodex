@@ -1,8 +1,8 @@
 import { useState, useCallback, FC } from 'react';
 import { withToast } from "./ToastContext";
-import { InputGroup } from './elements/InputGroup';
-import { ResultContainer } from './elements/ResultContainer';
 import { OperationsProps } from "../types/Operations";
+import InputGroup from "./elements/InputGroup";
+import ResultContainer from './elements/ResultContainer';
 
 const TextOperations:FC<OperationsProps> = ({ showToast }) => {
     const [text, setText] = useState<string>('');

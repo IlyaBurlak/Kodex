@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, useCallback, FC  } from 'react';
 import { withToast } from "./ToastContext";
-import { InputGroup } from './elements/InputGroup';
-import { ResultContainer } from './elements/ResultContainer';
-import { ImageUploader } from './elements/ImageUploader';
 import { OperationsProps } from "../types/Operations";
 import { ImageState, OperationType, ShapeType } from "../types/ImageOperations";
 
 import '../styles/components/_image-preview.scss'
+import InputGroup from './elements/InputGroup';
+import ImageUploader from "./elements/ImageUploader";
+import ResultContainer from "./elements/ResultContainer";
 
 const ALLOWED_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 

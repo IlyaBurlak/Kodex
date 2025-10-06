@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode, FC } from 'react';
+import { createContext, useContext, useState, useCallback, ReactNode, FC, ComponentType, memo } from 'react';
 
 import Toast from './elements/Toast';
 import { ToastContextType, ToastItem, ToastType } from "../types/Toast";
@@ -10,7 +10,7 @@ interface ToastProviderProps {
     children: ReactNode;
 }
 
-export const ToastProvider:FC<ToastProviderProps> = ({ children }) => {
+export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
     const [toasts, setToasts] = useState<ToastItem[]>([]);
 
     const removeToast = useCallback((id: number) => {
@@ -43,9 +43,9 @@ export const useToast = () => {
 };
 
 export const withToast = <P extends { showToast?: ToastContextType['showToast'] }>(
-  Component: React.ComponentType<P>
+  Component: ComponentType<P>
 ) => {
-    const WithToast: React.FC<Omit<P, 'showToast'>> = React.memo((props) => {
+    const WithToast: FC<Omit<P, 'showToast'>> = memo((props) => {
         const showToast = useToast();
         return <Component {...(props as P)} showToast={showToast} />;
     });
