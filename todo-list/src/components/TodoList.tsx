@@ -3,7 +3,7 @@ import { TodoItem } from "./TodoItem";
 import { TodoListProps } from "../types/todo";
 import '../styles/TodoList.scss'
 
-const TodoList: FC<TodoListProps> = ({
+export const TodoList: FC<TodoListProps> = ({
                                              todos,
                                              onToggle,
                                              onDelete,
@@ -28,4 +28,3 @@ const TodoList: FC<TodoListProps> = ({
   );
 };
 
-export default TodoList;

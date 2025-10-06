@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from "react";
-import TodoList from './components/TodoList';
 import useLocalStorage from "./hooks/useLocalStorage";
 import { AddTodo } from "./components/AddTodo";
 import { TodoActions } from "./components/TodoActions";
 import { FilterType, Todo } from "./types/todo";
+import { TodoList } from "./components/TodoList";
 
 
 const APP_STORAGE_KEY = 'todo-app-data';
