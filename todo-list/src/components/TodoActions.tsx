@@ -1,26 +1,37 @@
 import type { FC } from 'react';
 import { FilterType, TodoActionsProps } from "../types/todo";
-import '../styles/TodoActions.scss'
+import '../styles/TodoActions.scss';
+
+const FILTER_BUTTONS = [
+  FilterType.ALL,
+  FilterType.ACTIVE,
+  FilterType.COMPLETED,
+] as const;
+
+const FILTER_TEXTS: Record<FilterType, string> = {
+  [FilterType.ALL]: 'Все',
+  [FilterType.ACTIVE]: 'В процессе',
+  [FilterType.COMPLETED]: 'Выполненные',
+};
+
 export const TodoActions: FC<TodoActionsProps> = ({
-                                                          filter,
-                                                          setFilter,
-                                                          count,
-                                                          onClearCompleted
-                                                        }) => {
+                                                    filter,
+                                                    setFilter,
+                                                    count,
+                                                    onClearCompleted
+                                                  }) => {
   return (
     <div className="todo-actions-container">
       <div className="todo-filter">
-        {([FilterType.ALL, FilterType.ACTIVE, FilterType.COMPLETED] as FilterType[]).map(
-          (filterType) => (
-            <button
-              key={filterType}
-              className={filter === filterType ? 'active' : ''}
-              onClick={() => setFilter(filterType)}
-            >
-              {getFilterText(filterType)} ({count[filterType]})
-            </button>
-          )
-        )}
+        {FILTER_BUTTONS.map((filterType) => (
+          <button
+            key={filterType}
+            className={filter === filterType ? 'active' : ''}
+            onClick={() => setFilter(filterType)}
+          >
+            {FILTER_TEXTS[filterType]} ({count[filterType]})
+          </button>
+        ))}
       </div>
       {count.completed > 0 && (
         <button className="clear-completed" onClick={onClearCompleted}>
@@ -29,17 +40,4 @@ export const TodoActions: FC<TodoActionsProps> = ({
       )}
     </div>
   );
-};
-
-const getFilterText = (filter: FilterType): string => {
-  switch (filter) {
-    case FilterType.ALL:
-      return 'Все';
-    case FilterType.ACTIVE:
-      return 'В процессе';
-    case FilterType.COMPLETED:
-      return 'Выполненные';
-    default:
-      return '';
-  }
 };
