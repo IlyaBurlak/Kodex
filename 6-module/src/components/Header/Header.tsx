@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import './Header.scss';
 
-function Header() {
+export function Header() {
   return (
     <nav className='header'>
       <Link className='header__brand' to='/'>
@@ -16,5 +16,3 @@ function Header() {
     </nav>
   );
 }
-
-export default Header;

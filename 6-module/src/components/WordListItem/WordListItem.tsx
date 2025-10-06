@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './WordListItem.scss';
 import { fetchWordDetails } from '../../features/words/wordCacheSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -72,5 +72,3 @@ export function WordListItem({ item }: { item: WordItem }) {
     </li>
   );
 }
-
-export default memo(WordListItem);

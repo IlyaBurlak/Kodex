@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import StarredPage from './pages/StarredPage';
 import './App.scss';
-import Header from './components/Header/Header';
+import { Header } from './components/Header/Header';
+import { StarredPage } from './pages/StarredPage';
 
-function App() {
+export function App() {
   return (
     <BrowserRouter>
       <div className='app'>
@@ -19,5 +19,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

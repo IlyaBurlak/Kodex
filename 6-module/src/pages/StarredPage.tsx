@@ -1,6 +1,6 @@
-import FiltersPanel from '../components/FiltersPanel/FiltersPanel';
-import SearchBar from '../components/SearchBar/SearchBar';
-import WordList from '../components/WordList/WordList';
+import { FiltersPanel } from '../components/FiltersPanel/FiltersPanel';
+import { SearchBar } from '../components/SearchBar/SearchBar';
+import { WordList } from '../components/WordList/WordList';
 
 export function StarredPage() {
   return (
@@ -11,5 +11,3 @@ export function StarredPage() {
     </div>
   );
 }
-
-export default StarredPage;

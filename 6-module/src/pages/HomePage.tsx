@@ -1,6 +1,6 @@
-import SearchBar from '../components/SearchBar/SearchBar';
-import WordList from '../components/WordList/WordList';
 import './HomePage.scss';
+import { SearchBar } from '../components/SearchBar/SearchBar';
+import { WordList } from '../components/WordList/WordList';
 
 export function HomePage() {
   return (

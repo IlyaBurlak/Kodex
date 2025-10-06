@@ -53,5 +53,3 @@ export function FiltersPanel() {
     </div>
   );
 }
-
-export default FiltersPanel;

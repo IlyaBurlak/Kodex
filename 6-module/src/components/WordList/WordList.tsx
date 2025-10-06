@@ -53,5 +53,3 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
     </ul>
   );
 }
-
-export default WordList;
