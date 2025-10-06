@@ -8,7 +8,7 @@ export const Examples = memo(({ examples }: ExamplesProps) => (
   <div className='examples'>
     {examples.map((ex, exIdx) => (
       <div key={exIdx} className='example'>
-        "{ex}"
+        &#34;{ex}&#34;
       </div>
     ))}
   </div>
