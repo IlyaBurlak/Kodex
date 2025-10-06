@@ -1,8 +1,6 @@
 @use './variables' as *;
 @use "sass:color";
 
-
-
 .todo-list {
   display: flex;
   flex-direction: column;

@@ -1,4 +1,4 @@
-import React, { useState , FC} from 'react';
+import { useState , FC} from 'react';
 import '../styles/main.scss'
 import { TodoFormProps } from "../types/todo";
 import '../styles/TodoForm.scss'

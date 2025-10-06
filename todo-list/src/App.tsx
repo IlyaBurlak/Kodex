@@ -1,14 +1,14 @@
-import React, { useCallback, useMemo, useState } from "react";
-import useLocalStorage from "./hooks/useLocalStorage";
+import { useCallback, useMemo, useState } from "react";
 import { AddTodo } from "./components/AddTodo";
 import { TodoActions } from "./components/TodoActions";
 import { FilterType, Todo } from "./types/todo";
 import { TodoList } from "./components/TodoList";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 
 const APP_STORAGE_KEY = 'todo-app-data';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
     const [todos, setTodos] = useLocalStorage<Todo[]>(APP_STORAGE_KEY, [
         {
             id: '1',
@@ -108,5 +108,3 @@ const App: React.FC = () => {
         </div>
     );
 };
-
-export default App;
