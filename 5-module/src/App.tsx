@@ -9,7 +9,7 @@ import { GenreFilter } from './components/GenreFilter/GenreFilter';
 import { JokeList } from './components/JokeList/JokeList';
 import { AddJokeDialog } from './components/AddJokeDialog/AddJokeDialog';
 
-const App: FC = () => {
+export const App: FC = () => {
   const { jokes, addJoke, toggleFavorite, rateJoke } = useJokes();
   const [activeTab, setActiveTab] = useState(0);
   const [selectedGenre, setSelectedGenre] = useState<GenreWithAll>('all');
@@ -43,5 +43,3 @@ const App: FC = () => {
     </div>
   );
 };
-
-export default App;

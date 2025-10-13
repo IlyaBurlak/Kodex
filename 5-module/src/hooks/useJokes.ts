@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Genre, Joke } from '../types/joke';
 
-const useJokes = () => {
+export const useJokes = () => {
   const [jokes, setJokes] = useState<Joke[]>([
     {
       id: '1',
@@ -63,5 +63,3 @@ const useJokes = () => {
     rateJoke,
   };
 };
-
-export default useJokes;
