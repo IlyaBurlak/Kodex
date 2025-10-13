@@ -1,0 +1,82 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+
+.calculator {
+  width: 100%;
+  max-width: $calculator-width;
+  @include card-style;
+  margin: 0 auto;
+
+  .calculator {
+    width: 100%;
+  }
+}
+
+.display {
+  padding: $spacing-20px;
+  text-align: right;
+  background: rgba(0, 0, 0, 0.05);
+  margin-bottom: $spacing-15px;
+  border-radius: $border-radius;
+
+  input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 2rem;
+    color: #333;
+    text-align: right;
+    padding: $spacing-8px 0;
+  }
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-8px;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: $spacing-15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: $transition;
+  background: white;
+  border-radius: $border-radius;
+  box-shadow: $button-shadow;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &.operator {
+    background: #f0f0f0;
+    color: $primary-color;
+    font-weight: bold;
+
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+
+  &.equals {
+    background: $primary-color;
+    color: white;
+    grid-column: span 2;
+
+    &:hover {
+      background: #5a6fd1;
+    }
+  }
+
+  &.clear {
+    color: $error-color;
+
+    &:hover {
+      background: #ffecec;
+    }
+  }
+}

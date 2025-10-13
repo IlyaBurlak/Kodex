@@ -1,0 +1,23 @@
+{
+  "email": {
+    "allowedDomains": [
+      "n"
+    ],
+    "validateFormat": false
+  },
+  "password": {
+    "minLength": 12,
+    "requireSpecial": false,
+    "requireNumber": false,
+    "requireUpper": false,
+    "requireLower": false,
+    "forbiddenPatterns": [
+      "password",
+      "qwerty",
+      "123456",
+      "abc123"
+    ],
+    "maxRepeatingChars": 3,
+    "maxSequentialChars": 3
+  }
+}
