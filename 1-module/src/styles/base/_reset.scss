@@ -1,0 +1,15 @@
+@use '../abstracts/mixins' as *;
+@use '../abstracts/variables' as *;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  padding: $spacing-20px;
+}
