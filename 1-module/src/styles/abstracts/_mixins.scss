@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+@mixin focus-style {
+  border-color: $primary-color;
+  box-shadow: $focus-shadow;
+  outline: none;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card-style {
+  background: $white;
+  border-radius: $border-radius-lg;
+  backdrop-filter: blur(10px);
+}
