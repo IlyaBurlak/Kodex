@@ -2,33 +2,60 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MERRIAM_API_KEY, MERRIAM_BASE_URL } from '../../config';
 import { initialState, PartOfSpeech, SearchItem } from '../../types/word';
 
+const buildMwUrl = (query: string) =>
+  `${MERRIAM_BASE_URL}/${encodeURIComponent(query)}?key=${MERRIAM_API_KEY}`;
+
+const isValidMwEntry = (entry: unknown): boolean =>
+  typeof entry === 'object' &&
+  entry !== null &&
+  typeof (entry as { meta?: { id?: unknown } }).meta?.id === 'string';
+
+const mapMwEntryToSearchItem = (entry: unknown): SearchItem | null => {
+  if (!isValidMwEntry(entry)) return null;
+
+  const e = entry as {
+    meta?: { id?: unknown };
+    fl?: unknown;
+    hwi?: { prs?: unknown };
+    shortdef?: unknown;
+  };
+
+  const rawId = String(e.meta?.id ?? '');
+  const word = rawId.split(':')[0] ?? '';
+  if (!word) return null;
+
+  const fl: PartOfSpeech | undefined = typeof e.fl === 'string' ? e.fl : undefined;
+
+  const prs = e.hwi?.prs;
+  let phonetic: string | undefined;
+  if (Array.isArray(prs)) {
+    const first = prs[0] as { mw?: unknown } | undefined;
+    phonetic = typeof first?.mw === 'string' ? first.mw : undefined;
+  } else {
+    phonetic = undefined;
+  }
+
+  const shortdef: string[] | undefined = Array.isArray(e.shortdef)
+    ? (e.shortdef as string[])
+    : undefined;
+
+  return { word, fl, phonetic, shortdef } as SearchItem;
+};
+
 export const fetchSuggestions = createAsyncThunk<SearchItem[], string>(
   'search/fetchSuggestions',
   async (query: string) => {
-    const url = `${MERRIAM_BASE_URL}/${encodeURIComponent(query)}?key=${MERRIAM_API_KEY}`;
+    const url = buildMwUrl(query);
     const response = await fetch(url);
-    if (!response.ok) throw new Error('Failed to fetch');
+    if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
     const data = await response.json();
-    console.log('[MW] suggestions raw response for query=', query, data);
-
-    const mapped: SearchItem[] = (data as any[])
-      .filter((e) => typeof e === 'object' && typeof e?.meta?.id === 'string')
-      .map((e) => {
-        const word: string = String(e.meta.id).split(':')[0] ?? '';
-        const fl: PartOfSpeech | undefined = typeof e.fl === 'string' ? e.fl : undefined;
-        const phonetic: string | undefined = Array.isArray(e.hwi?.prs)
-          ? e.hwi.prs[0]?.mw
-          : undefined;
-        const shortdef: string[] | undefined = Array.isArray(e.shortdef)
-          ? (e.shortdef as string[])
-          : undefined;
-        return { word, fl, phonetic, shortdef } as SearchItem;
-      })
-      .filter((i) => i.word.length > 0)
+    const items: SearchItem[] = (Array.isArray(data) ? data : [])
+      .map(mapMwEntryToSearchItem)
+      .filter((it): it is SearchItem => it !== null)
       .sort((a, b) => a.word.localeCompare(b.word))
       .slice(0, 10);
 
-    return mapped;
+    return items;
   }
 );
 
