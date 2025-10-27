@@ -1,9 +1,14 @@
 import { FC } from 'react';
+import { IconType } from 'react-icons';
 
 import { ICONS } from '../../constants/icons';
 import { JokeItemProps } from '../../types/joke';
 
 export const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
+  const StarIcon = (joke.isFavorite ? ICONS.STAR_FILLED : ICONS.STAR_OUTLINE) as IconType;
+  const ThumbUp = ICONS.THUMB_UP as IconType;
+  const ThumbDown = ICONS.THUMB_DOWN as IconType;
+
   return (
     <div className='joke-item'>
       <div className='joke-header'>
@@ -19,7 +24,7 @@ export const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke
           className={`favorite-btn ${joke.isFavorite ? 'active' : ''}`}
           onClick={() => onToggleFavorite(joke.id)}
         >
-          {joke.isFavorite ? ICONS.STAR_FILLED : ICONS.STAR_OUTLINE}
+          <StarIcon />
         </button>
 
         <div className='rating-container'>
@@ -28,14 +33,14 @@ export const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke
             className='like-btn'
             onClick={() => onRateJoke(joke.id, 'like')}
           >
-            {ICONS.THUMB_UP} {joke.likes}
+            <ThumbUp /> <span className='count'>{joke.likes}</span>
           </button>
           <button
             aria-label='Дизлайк'
             className='dislike-btn'
             onClick={() => onRateJoke(joke.id, 'dislike')}
           >
-            {ICONS.THUMB_DOWN} {joke.dislikes}
+            <ThumbDown /> <span className='count'>{joke.dislikes}</span>
           </button>
         </div>
       </div>
