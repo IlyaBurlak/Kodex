@@ -1,19 +1,29 @@
 import { FC } from 'react';
-import { IconType } from 'react-icons';
 
 import { ICONS } from '../../constants/icons';
-import { JokeItemProps } from '../../types/joke';
+import { JokeItemProps, genreClassMap } from '../../types/joke';
 
 export const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke }) => {
-  const StarIcon = (joke.isFavorite ? ICONS.STAR_FILLED : ICONS.STAR_OUTLINE) as IconType;
-  const ThumbUp = ICONS.THUMB_UP as IconType;
-  const ThumbDown = ICONS.THUMB_DOWN as IconType;
+  const StarIcon = joke.isFavorite ? ICONS.STAR_FILLED : ICONS.STAR_OUTLINE;
+  const ThumbUp = ICONS.THUMB_UP;
+  const ThumbDown = ICONS.THUMB_DOWN;
+
+  const userRating = joke.userRating || null;
+  const genreClass = genreClassMap[joke.genre];
+
+  const handleRateClick = (type: 'like' | 'dislike') => {
+    if (userRating === type) {
+      onRateJoke(joke.id, null);
+    } else {
+      onRateJoke(joke.id, type);
+    }
+  };
 
   return (
     <div className='joke-item'>
       <div className='joke-header'>
         <span className='joke-author'>@{joke.author}</span>
-        <span className={`joke-genre ${joke.genre.toLowerCase()}`}>{joke.genre}</span>
+        <span className={`joke-genre ${genreClass}`}>{joke.genre}</span>
       </div>
 
       <p className='joke-text'>{joke.text}</p>
@@ -30,15 +40,15 @@ export const JokeItem: FC<JokeItemProps> = ({ joke, onToggleFavorite, onRateJoke
         <div className='rating-container'>
           <button
             aria-label='Лайк'
-            className='like-btn'
-            onClick={() => onRateJoke(joke.id, 'like')}
+            className={`like-btn ${userRating === 'like' ? 'active' : ''}`}
+            onClick={() => handleRateClick('like')}
           >
             <ThumbUp /> <span className='count'>{joke.likes}</span>
           </button>
           <button
             aria-label='Дизлайк'
-            className='dislike-btn'
-            onClick={() => onRateJoke(joke.id, 'dislike')}
+            className={`dislike-btn ${userRating === 'dislike' ? 'active' : ''}`}
+            onClick={() => handleRateClick('dislike')}
           >
             <ThumbDown /> <span className='count'>{joke.dislikes}</span>
           </button>

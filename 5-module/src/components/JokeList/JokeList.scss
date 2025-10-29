@@ -35,7 +35,6 @@
   border-radius: $border-radius-md;
   background-color: $hover-light;
 
-  /* Цвета жанров */
   &.programming {
     background-color: #e3f2fd;
   }
@@ -101,16 +100,45 @@
   &:hover {
     background-color: $hover-lighter;
   }
+
+  &.active {
+    color: $white;
+    border-color: transparent;
+
+    .count {
+      color: $white;
+    }
+  }
 }
 
-.like-btn:hover {
-  color: $main-blue;
-  border-color: $main-blue;
+.like-btn {
+  &:hover {
+    color: $main-blue;
+    border-color: $main-blue;
+  }
+
+  &.active {
+    background-color: $main-blue;
+
+    &:hover {
+      background-color: rgba($main-blue, 0.8);
+    }
+  }
 }
 
-.dislike-btn:hover {
-  color: $error-red;
-  border-color: $error-red;
+.dislike-btn {
+  &:hover {
+    color: $error-red;
+    border-color: $error-red;
+  }
+
+  &.active {
+    background-color: $error-red;
+
+    &:hover {
+      background-color: rgba($error-red, 0.8);
+    }
+  }
 }
 
 .empty-list {

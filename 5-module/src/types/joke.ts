@@ -1,28 +1,34 @@
 export type EntityID = string;
-export type RatingAction = 'like' | 'dislike';
+export type RatingAction = 'like' | 'dislike' | null;
 
-export type Genre = 'Программистские' | 'Математические' | 'Школьные' | 'Студенческие' | 'Семейные';
+const GENRE_DATA = [
+  { label: 'Программистские', class: 'programming' },
+  { label: 'Математические', class: 'math' },
+  { label: 'Школьные', class: 'school' },
+  { label: 'Студенческие', class: 'student' },
+  { label: 'Семейные', class: 'family' },
+] as const;
+
+export type Genre = (typeof GENRE_DATA)[number]['label'];
 export type GenreWithAll = 'all' | Genre;
 
-export const GENRES: Genre[] = [
-  'Программистские',
-  'Математические',
-  'Школьные',
-  'Студенческие',
-  'Семейные',
-];
-
+export const GENRES = GENRE_DATA.map((item) => item.label) as Genre[];
 export const ALL_GENRES: GenreWithAll[] = ['all', ...GENRES];
+
+export const genreClassMap = GENRE_DATA.reduce(
+  (acc, item) => {
+    acc[item.label] = item.class;
+    return acc;
+  },
+  {} as Record<Genre, string>,
+);
 
 interface BaseEntity {
   id: EntityID;
 }
 
-interface Rateable {
+interface JokeActions {
   onRateJoke: (id: EntityID, action: RatingAction) => void;
-}
-
-interface FavoriteToggle {
   onToggleFavorite: (id: EntityID) => void;
 }
 
@@ -33,6 +39,7 @@ export interface Joke extends BaseEntity {
   dislikes: number;
   isFavorite: boolean;
   genre: Genre;
+  userRating: 'like' | 'dislike' | null;
 }
 
 export interface AddJokeDialogProps {
@@ -44,11 +51,11 @@ export interface GenreFilterProps {
   onSelect: (genre: GenreWithAll) => void;
 }
 
-export interface JokeItemProps extends FavoriteToggle, Rateable {
+export interface JokeItemProps extends JokeActions {
   joke: Joke;
 }
 
-export interface JokeListProps extends FavoriteToggle, Rateable {
+export interface JokeListProps extends JokeActions {
   jokes: Joke[];
 }
 
