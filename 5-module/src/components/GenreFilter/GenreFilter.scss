@@ -1,0 +1,31 @@
+@use '../../variables' as *;
+
+.genre-filter {
+  margin: $spacing-xl 0;
+}
+
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+}
+
+.genre-tag {
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-xl;
+  border: 1px solid $border-light;
+  background-color: $hover-lighter;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $hover-light;
+  }
+
+  &.active {
+    background-color: $main-blue;
+    color: $white;
+    border-color: $main-blue;
+  }
+}
