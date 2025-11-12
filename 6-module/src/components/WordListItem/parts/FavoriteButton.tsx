@@ -1,13 +1,17 @@
 import { memo } from 'react';
 import { toggleFavorite } from '../../../features/favorites/favoritesSlice';
+import { upsertWord } from '../../../features/words/wordCacheSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
+import { WordItem } from '../../../types/word';
 
 interface FavoriteButtonProps {
   isFav: boolean;
-  word: string;
+  id: string;
+  word?: string;
+  item?: WordItem;
 }
 
-export const FavoriteButton = memo(({ isFav, word }: FavoriteButtonProps) => {
+export const FavoriteButton = memo(({ isFav, id, word, item }: FavoriteButtonProps) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -16,7 +20,14 @@ export const FavoriteButton = memo(({ isFav, word }: FavoriteButtonProps) => {
       className={`star ${isFav ? 'active' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
-        dispatch(toggleFavorite(word));
+        if (!isFav) {
+          if (item) {
+            dispatch(upsertWord(item));
+          } else if (word) {
+            dispatch(upsertWord({ word, meta: { uuid: id } } as any));
+          }
+        }
+        dispatch(toggleFavorite({ uuid: id, word, data: item }));
       }}
     >
       ★

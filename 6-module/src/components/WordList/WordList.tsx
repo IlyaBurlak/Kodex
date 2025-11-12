@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchWordDetails } from '../../features/words/wordCacheSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -22,7 +22,14 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
 
   let baseList: SearchItem[] = items;
   if (onlyFavorites) {
-    const favItems: SearchItem[] = favs.map((word) => cache[word] ?? { word });
+    const favItems: SearchItem[] = favs.map((fav) => {
+      const uuid = (fav as any).uuid;
+      if ((fav as any).data) return (fav as any).data as SearchItem;
+      const found = Object.values(cache).find((v) => v?.meta?.uuid === uuid);
+      if (found) return found as SearchItem;
+      const word = (fav as any).word ?? '';
+      return { word, meta: { uuid } } as unknown as SearchItem;
+    });
     if (q) {
       const qq = q.toLowerCase();
       baseList = favItems.filter((item) => {
@@ -37,11 +44,23 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
     }
   }
 
+  const requestedWordsRef = useRef<Set<string>>(new Set());
+
   useEffect(() => {
     if (!onlyFavorites || q) return;
-    const missing = favs.filter((w) => !cache[w]);
-    missing.forEach((w) => dispatch(fetchWordDetails(w)));
-  }, [onlyFavorites, q, favs, cache, dispatch]);
+    const requestedRef = requestedWordsRef.current;
+    const missing = (favs as any[]).filter(
+      (f) => !Object.values(cache).some((v) => v?.meta?.uuid === f.uuid)
+    );
+    missing.forEach((f) => {
+      const preferredWord = f.word ?? items.find((it) => (it as any).meta?.uuid === f.uuid)?.word;
+      if (!preferredWord) return;
+      if (requestedRef.has(preferredWord)) return;
+      if (cache[preferredWord]) return;
+      requestedRef.add(preferredWord);
+      dispatch(fetchWordDetails(preferredWord));
+    });
+  }, [onlyFavorites, q, favs, cache, dispatch, items]);
 
   let filtered: SearchItem[] = baseList;
   if (selectedPos.length > 0) {
@@ -56,7 +75,7 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
   return (
     <ul className='word-list'>
       {sorted.map((i) => (
-        <WordListItem key={i.word} item={i} />
+        <WordListItem key={(i as any).meta.uuid} item={i} />
       ))}
     </ul>
   );

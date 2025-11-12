@@ -5,19 +5,22 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { useDebounce } from '../../hooks/useDebounce';
 import './SearchBar.scss';
 
-export function SearchBar() {
+export function SearchBar({ remoteSearch = true }: { remoteSearch?: boolean }) {
   const dispatch = useAppDispatch();
   const [params, setParams] = useSearchParams();
   const [value, setValue] = useState<string>(params.get('q') ?? '');
 
   useEffect(() => {
-    dispatch(setQuery(value));
-    if (value.trim().length === 0) {
-      dispatch(clear());
+    if (remoteSearch) {
+      dispatch(setQuery(value));
+      if (value.trim().length === 0) {
+        dispatch(clear());
+      }
     }
-  }, [value, dispatch]);
+  }, [value, dispatch, remoteSearch]);
 
   function runSearch(q: string) {
+    if (!remoteSearch) return;
     if (q.trim().length === 0) return;
     dispatch(fetchSuggestions(q));
   }

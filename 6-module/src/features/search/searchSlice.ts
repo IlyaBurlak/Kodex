@@ -39,7 +39,16 @@ const mapMwEntryToSearchItem = (entry: unknown): SearchItem | null => {
     ? (e.shortdef as string[])
     : undefined;
 
-  return { word, fl, phonetic, shortdef } as SearchItem;
+  const meta =
+    typeof e.meta === 'object' && e.meta !== null ? (e.meta as { uuid?: unknown }) : undefined;
+
+  return {
+    word,
+    fl,
+    phonetic,
+    shortdef,
+    meta: meta ? { uuid: String(meta.uuid) } : undefined,
+  } as SearchItem;
 };
 
 export const fetchSuggestions = createAsyncThunk<SearchItem[], string>(

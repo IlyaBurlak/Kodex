@@ -24,7 +24,8 @@ export function WordListItem({ item }: { item: WordItem }) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const isFav = favs.includes(item.word);
+  const itemUuid = (item as any).meta?.uuid;
+  const isFav = itemUuid ? favs.some((f: any) => f.uuid === itemUuid) : false;
   const short = item.shortdef?.[0] ?? '';
   const cachedData = cache[item.word] || item;
 
@@ -43,7 +44,7 @@ export function WordListItem({ item }: { item: WordItem }) {
         <span className='word'>{item.word}</span>
         {item.fl && <span className='pos'>{item.fl}</span>}
         {short && <span className='meaning'>{truncate(short, 60)}</span>}
-        <FavoriteButton isFav={isFav} word={item.word} />
+        <FavoriteButton isFav={isFav} id={(item as any).meta?.uuid} word={item.word} item={item} />
       </div>
 
       {open && (

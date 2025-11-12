@@ -39,6 +39,9 @@ export interface WordItem {
   uros?: RelatedWord[];
   stems?: string[];
   offensive?: boolean;
+  meta?: {
+    uuid?: string;
+  };
 }
 
 export type PartOfSpeech = string;
@@ -48,6 +51,9 @@ export interface SearchItem {
   fl?: PartOfSpeech;
   phonetic?: string;
   shortdef?: string[];
+  meta?: {
+    uuid?: string;
+  };
 }
 
 export interface SearchState {

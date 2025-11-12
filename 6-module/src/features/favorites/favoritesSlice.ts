@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { WordItem } from '../../types/word';
+
+export interface FavoriteEntry {
+  uuid: string;
+  word?: string;
+  data?: WordItem;
+}
 
 export interface FavoritesState {
-  words: string[];
+  words: FavoriteEntry[];
 }
 
 const initialState: FavoritesState = {
@@ -12,13 +19,15 @@ const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    toggleFavorite(state, action: PayloadAction<string>) {
-      const w = action.payload;
-      const exists = state.words.includes(w);
-      state.words = exists ? state.words.filter((x) => x !== w) : [...state.words, w];
+    toggleFavorite(state, action: PayloadAction<FavoriteEntry>) {
+      const entry = action.payload;
+      const exists = state.words.some((w) => w.uuid === entry.uuid);
+      state.words = exists
+        ? state.words.filter((x) => x.uuid !== entry.uuid)
+        : [...state.words, entry];
     },
     removeFavorite(state, action: PayloadAction<string>) {
-      state.words = state.words.filter((x) => x !== action.payload);
+      state.words = state.words.filter((x) => x.uuid !== action.payload);
     },
     clearFavorites(state) {
       state.words = [];

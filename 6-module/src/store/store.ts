@@ -5,12 +5,12 @@ import { wordCacheReducer } from '../features/words/wordCacheSlice';
 
 const FAVORITES_STORAGE_KEY = 'dictionary_favorites_v1';
 
-function loadFavoritesFromStorage(): string[] | undefined {
+function loadFavoritesFromStorage(): { uuid: string; word?: string }[] | undefined {
   try {
     const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
     if (!raw) return undefined;
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as string[]) : undefined;
+    return Array.isArray(parsed) ? (parsed as { uuid: string; word?: string }[]) : undefined;
   } catch {
     return undefined;
   }

@@ -48,6 +48,7 @@ export const fetchWordDetailsFromApi = async (word: string): Promise<WordItem | 
       uros,
       stems: entry.meta?.stems || [],
       offensive: entry.meta?.offensive || false,
+      meta: entry.meta ? { uuid: String((entry.meta as any).uuid) } : undefined,
     };
 
     return wordItem;
