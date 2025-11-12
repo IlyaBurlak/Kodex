@@ -1,0 +1,61 @@
+@use './variables' as *;
+@use "sass:color";
+
+.todo-actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  background: #f8fbff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+
+  .todo-filter {
+    display: flex;
+    gap: 8px;
+
+    button {
+      padding: 8px 18px;
+      background: white;
+      border: 1px solid #e1e8f0;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      font-weight: 500;
+      color: #6a7c94;
+
+      &:hover {
+        border-color: $primary-color;
+        color: $primary-color;
+      }
+
+      &.active {
+        background: linear-gradient(to right, $primary-color, $secondary-color);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 10px rgba($primary-color, 0.2);
+      }
+    }
+  }
+
+  .clear-completed {
+    padding: 8px 18px;
+    background: rgba($danger-color, 0.08);
+    color: $danger-color;
+    border: 1px solid rgba($danger-color, 0.2);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+
+    &:hover {
+      background: $danger-color;
+      color: white;
+      border-color: $danger-color;
+      box-shadow: 0 4px 10px rgba($danger-color, 0.2);
+    }
+  }
+}
