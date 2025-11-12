@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { fetchSuggestions, setQuery } from '../../features/search/searchSlice';
+import { clear, fetchSuggestions, setQuery } from '../../features/search/searchSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useDebounce } from '../../hooks/useDebounce';
 import './SearchBar.scss';
@@ -12,6 +12,9 @@ export function SearchBar() {
 
   useEffect(() => {
     dispatch(setQuery(value));
+    if (value.trim().length === 0) {
+      dispatch(clear());
+    }
   }, [value, dispatch]);
 
   function runSearch(q: string) {
