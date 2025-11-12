@@ -22,10 +22,18 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
 
   let baseList: SearchItem[] = items;
   if (onlyFavorites) {
+    const favItems: SearchItem[] = favs.map((word) => cache[word] ?? { word });
     if (q) {
-      baseList = items.filter((item) => favs.includes(item.word));
+      const qq = q.toLowerCase();
+      baseList = favItems.filter((item) => {
+        if (item.word.toLowerCase().includes(qq)) return true;
+        if (Array.isArray(item.shortdef)) {
+          return item.shortdef.join(' ').toLowerCase().includes(qq);
+        }
+        return false;
+      });
     } else {
-      baseList = favs.map((word) => cache[word] ?? { word });
+      baseList = favItems;
     }
   }
 
