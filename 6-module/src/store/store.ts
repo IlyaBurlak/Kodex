@@ -1,7 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { favoritesReducer } from '../features/favorites/favoritesSlice';
-import { searchReducer } from '../features/search/searchSlice';
-import { wordCacheReducer } from '../features/words/wordCacheSlice';
+import { configureStore, type ReducersMapObject } from '@reduxjs/toolkit';
+import {
+  initialState as dictionaryInitialState,
+  dictionaryReducer,
+  type DictionaryState,
+} from '../features/dictionarySlice';
 
 const FAVORITES_STORAGE_KEY = 'dictionary_favorites_v1';
 
@@ -16,15 +18,16 @@ function loadFavoritesFromStorage(): { uuid: string; word?: string }[] | undefin
   }
 }
 
+const reducers: ReducersMapObject<{ dictionary: DictionaryState }> = {
+  dictionary: dictionaryReducer,
+};
+
 export const store = configureStore({
-  reducer: {
-    search: searchReducer,
-    favorites: favoritesReducer,
-    wordCache: wordCacheReducer,
-  },
+  reducer: reducers,
   preloadedState: {
-    favorites: {
-      words: loadFavoritesFromStorage() ?? [],
+    dictionary: {
+      ...dictionaryInitialState,
+      favorites: loadFavoritesFromStorage() ?? [],
     },
   },
 });
@@ -32,8 +35,8 @@ export const store = configureStore({
 store.subscribe(() => {
   try {
     const state = store.getState();
-    const words = state.favorites.words;
-    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(words));
+    const favs = state.dictionary?.favorites ?? [];
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favs));
   } catch (err) {
     console.warn('Failed to persist favorites to localStorage', err);
   }

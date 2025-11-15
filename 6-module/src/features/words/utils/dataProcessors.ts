@@ -24,7 +24,7 @@ export const processSenseData = (senseData: SenseData): ProcessedSenseData => {
 };
 
 export const extractDefinitionsFromSenseGroup = (
-  senseGroup: Array<['sense', SenseData] | [string, unknown]>
+  senseGroup: Array<['sense', SenseData]>
 ): Definition[] => {
   const definitions: Definition[] = [];
 
@@ -32,12 +32,12 @@ export const extractDefinitionsFromSenseGroup = (
     const [senseType, senseData] = item;
     if (senseType !== 'sense') return;
 
-    const { definitionText, examples } = processSenseData(senseData as SenseData);
+    const { definitionText, examples } = processSenseData(senseData);
 
     if (!definitionText && examples.length === 0) return;
 
     definitions.push({
-      number: (senseData as SenseData).sn,
+      number: senseData.sn,
       definition: definitionText,
       examples: examples.length > 0 ? examples : undefined,
     });
@@ -46,9 +46,7 @@ export const extractDefinitionsFromSenseGroup = (
   return definitions;
 };
 
-export const extractDefinitions = (
-  sseq: Array<Array<['sense', SenseData] | [string, unknown]>>
-): Definition[] => {
+export const extractDefinitions = (sseq: Array<Array<['sense', SenseData]>>): Definition[] => {
   return sseq.flatMap((senseGroup) => extractDefinitionsFromSenseGroup(senseGroup));
 };
 
@@ -57,12 +55,12 @@ export const extractIdiomDefinitions = (
 ): Idiom['definitions'] => {
   const definitions: Idiom['definitions'] = [];
 
-  def.sseq?.forEach((senseGroup: Array<['sense', SenseData] | [string, unknown]>) => {
-    senseGroup.forEach((item: ['sense', SenseData] | [string, unknown]) => {
+  def.sseq?.forEach((senseGroup: Array<['sense', SenseData]>) => {
+    senseGroup.forEach((item: ['sense', SenseData]) => {
       const [senseType, senseData] = item;
       if (senseType !== 'sense') return;
 
-      const { definitionText, examples } = processSenseData(senseData as SenseData);
+      const { definitionText, examples } = processSenseData(senseData);
 
       if (!definitionText && examples.length === 0) return;
 

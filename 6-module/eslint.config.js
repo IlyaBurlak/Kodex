@@ -9,7 +9,12 @@ import tsParser from '@typescript-eslint/parser';
 
 export default tseslint.config(
   {
-    ignores: ['dist/', 'coverage/', 'node_modules/'],
+    ignores: [
+      'dist/',
+      'coverage/',
+      'node_modules/',
+      '**/*.d.ts'
+    ],
   },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -53,6 +58,7 @@ export default tseslint.config(
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
         },
       ],
       '@typescript-eslint/no-explicit-any': 'warn',

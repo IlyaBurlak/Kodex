@@ -18,10 +18,11 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
+    "declarationMap": false,
     "sourceMap": true,
-    "removeComments": false
+    "removeComments": false,
+    "outDir": "./dist"
   },
   "include": ["src"]
 }

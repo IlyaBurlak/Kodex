@@ -1,6 +1,5 @@
 import { memo } from 'react';
-import { toggleFavorite } from '../../../features/favorites/favoritesSlice';
-import { upsertWord } from '../../../features/words/wordCacheSlice';
+import { toggleFavorite, upsertWord } from '../../../features/dictionarySlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { WordItem } from '../../../types/word';
 

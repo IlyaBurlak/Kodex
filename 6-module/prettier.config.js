@@ -20,8 +20,8 @@ const config = {
     '<THIRD_PARTY_MODULES>',
     '^[./]',
   ],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true,
+  importOrderParserPlugins: ['typescript', 'jsx'],
+  importOrderTypeScriptVersion: '4.4.0',
 };
 
 export default config;

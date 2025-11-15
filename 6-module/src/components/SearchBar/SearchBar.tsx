@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { clear, fetchSuggestions, setQuery } from '../../features/search/searchSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useDebounce } from '../../hooks/useDebounce';
 import './SearchBar.scss';
+import { clearSearch, setQuery } from '../../features/dictionarySlice';
+import { fetchSuggestions } from '../../features/searchThunks';
 
 export function SearchBar({ remoteSearch = true }: { remoteSearch?: boolean }) {
   const dispatch = useAppDispatch();
@@ -14,7 +15,7 @@ export function SearchBar({ remoteSearch = true }: { remoteSearch?: boolean }) {
     if (remoteSearch) {
       dispatch(setQuery(value));
       if (value.trim().length === 0) {
-        dispatch(clear());
+        dispatch(clearSearch());
       }
     }
   }, [value, dispatch, remoteSearch]);

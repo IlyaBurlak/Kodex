@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import './WordListItem.scss';
-import { FavoriteEntry } from '../../features/favorites/favoritesSlice';
-import { fetchWordDetails } from '../../features/words/wordCacheSlice';
+import { FavoriteEntry } from '../../features/dictionarySlice';
+import { fetchWordDetails } from '../../features/searchThunks';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { WordItem } from '../../types/word';
+import { SearchItem, WordItem } from '../../types/word';
 import { truncate } from '../../utils/truncate';
 import {
   DefinitionsSection,
@@ -18,26 +18,32 @@ import {
   WordListSection,
 } from './parts';
 
-export function WordListItem({ item }: { item: WordItem }) {
+export function WordListItem({ item }: { item: WordItem | SearchItem }) {
   const dispatch = useAppDispatch();
-    const favs: FavoriteEntry[] = useAppSelector((state) => state.favorites.words);
-  const cache = useAppSelector((state) => state.wordCache.byWord);
+  const favs: FavoriteEntry[] = useAppSelector((state) => state.dictionary.favorites);
+  const cache = useAppSelector((state) => state.dictionary.wordCache);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const itemUuid = item.meta?.uuid;
   const isFav = itemUuid ? favs.some((fav) => fav.uuid === itemUuid) : false;
   const short = item.shortdef?.[0] ?? '';
-  const cachedData = cache[item.word] || item;
+  const cachedDataRaw = cache[item.word] ?? item;
+
+  const isWordItem = (candidate: object | null): candidate is WordItem =>
+    typeof candidate === 'object' && candidate !== null && 'word' in candidate;
 
   useEffect(() => {
-    if (open && !cachedData.detailed) {
-      setIsLoading(true);
-      dispatch(fetchWordDetails(item.word))
-        .unwrap()
-        .finally(() => setIsLoading(false));
+    if (open) {
+      const hasDetails = isWordItem(cachedDataRaw) && !!cachedDataRaw.detailed;
+      if (!hasDetails) {
+        setIsLoading(true);
+        dispatch(fetchWordDetails(item.word))
+          .unwrap()
+          .finally(() => setIsLoading(false));
+      }
     }
-  }, [open, cachedData.detailed, dispatch, item.word]);
+  }, [open, cachedDataRaw, dispatch, item.word]);
 
   return (
     <li className='word-item'>
@@ -54,19 +60,35 @@ export function WordListItem({ item }: { item: WordItem }) {
             <div className='loading'>Loading details...</div>
           ) : (
             <>
-              {cachedData.phonetics && <PhoneticSection phonetics={cachedData.phonetics} />}
-              {cachedData.shortdef && <ShortDefinitionsSection definitions={cachedData.shortdef} />}
-              {cachedData.definitions && (
-                <DefinitionsSection definitions={cachedData.definitions} />
+              {isWordItem(cachedDataRaw) && (
+                <>
+                  {cachedDataRaw.phonetics && (
+                    <PhoneticSection phonetics={cachedDataRaw.phonetics} />
+                  )}
+                  {cachedDataRaw.shortdef && (
+                    <ShortDefinitionsSection definitions={cachedDataRaw.shortdef} />
+                  )}
+                  {cachedDataRaw.definitions && (
+                    <DefinitionsSection definitions={cachedDataRaw.definitions} />
+                  )}
+                  {cachedDataRaw.idioms && <IdiomsSection idioms={cachedDataRaw.idioms} />}
+                  {cachedDataRaw.et && <EtymologySection etymology={cachedDataRaw.et} />}
+                  {cachedDataRaw.syns && (
+                    <WordListSection title='Synonyms' words={cachedDataRaw.syns} />
+                  )}
+                  {cachedDataRaw.ants && (
+                    <WordListSection title='Antonyms' words={cachedDataRaw.ants} />
+                  )}
+                  {cachedDataRaw.art && (
+                    <IllustrationSection art={cachedDataRaw.art} alt={item.word} />
+                  )}
+                  {cachedDataRaw.uros && <RelatedWordsSection uros={cachedDataRaw.uros} />}
+                  {cachedDataRaw.stems && (
+                    <WordListSection title='Word Forms' words={cachedDataRaw.stems} />
+                  )}
+                  {cachedDataRaw.offensive && <OffensiveWarningSection />}
+                </>
               )}
-              {cachedData.idioms && <IdiomsSection idioms={cachedData.idioms} />}
-              {cachedData.et && <EtymologySection etymology={cachedData.et} />}
-              {cachedData.syns && <WordListSection title='Synonyms' words={cachedData.syns} />}
-              {cachedData.ants && <WordListSection title='Antonyms' words={cachedData.ants} />}
-              {cachedData.art && <IllustrationSection art={cachedData.art} alt={item.word} />}
-              {cachedData.uros && <RelatedWordsSection uros={cachedData.uros} />}
-              {cachedData.stems && <WordListSection title='Word Forms' words={cachedData.stems} />}
-              {cachedData.offensive && <OffensiveWarningSection />}
             </>
           )}
         </div>

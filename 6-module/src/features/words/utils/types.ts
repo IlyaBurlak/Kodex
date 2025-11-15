@@ -6,7 +6,7 @@ export interface SenseData {
 export interface DroData {
   drp: string;
   def?: Array<{
-    sseq?: Array<Array<['sense', SenseData] | [string, unknown]>>;
+    sseq?: Array<Array<['sense', SenseData]>>;
   }>;
 }
 
@@ -27,7 +27,7 @@ export interface MerriamWebsterEntry {
   };
   fl?: string;
   def?: Array<{
-    sseq?: Array<Array<['sense', SenseData] | [string, unknown]>>;
+    sseq?: Array<Array<['sense', SenseData]>>;
   }>;
   dros?: DroData[];
   shortdef?: string[];

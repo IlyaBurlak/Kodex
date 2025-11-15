@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 interface ListSectionProps<T> {
   title: string;
   items: T[];
-  renderItem: (item: T, index: number) => ReactNode;
+  renderItem: (_item: T, _index: number) => ReactNode;
   className?: string;
 }
 

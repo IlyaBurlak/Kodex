@@ -19,7 +19,8 @@ export const fetchWordDetailsFromApi = async (word: string): Promise<WordItem | 
 
     const data = (await response.json()) as MerriamWebsterEntry[];
     const entry = data.find(
-      (e): e is MerriamWebsterEntry => typeof e === 'object' && typeof e?.meta?.id === 'string'
+      (candidate): candidate is MerriamWebsterEntry =>
+        typeof candidate === 'object' && typeof candidate?.meta?.id === 'string'
     );
 
     if (!entry) return undefined;

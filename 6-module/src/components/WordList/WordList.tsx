@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FavoriteEntry } from '../../features/favorites/favoritesSlice';
-import { fetchWordDetails } from '../../features/words/wordCacheSlice';
+import { FavoriteEntry } from '../../features/dictionarySlice';
+import { fetchWordDetails } from '../../features/searchThunks';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { SearchItem } from '../../types/word';
 import { WordListItem } from '../WordListItem/WordListItem';
 
 export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean }) {
   const dispatch = useAppDispatch();
-  const items = useAppSelector((state) => state.search.items);
-  const favs: FavoriteEntry[] = useAppSelector((state) => state.favorites.words);
-  const cache = useAppSelector((state) => state.wordCache.byWord);
+  const items = useAppSelector((state) => state.dictionary.searchResults);
+  const favs: FavoriteEntry[] = useAppSelector((state) => state.dictionary.favorites);
+  const cache = useAppSelector((state) => state.dictionary.wordCache);
   const [params] = useSearchParams();
   const query = params.get('q') ?? '';
   const posParam = onlyFavorites ? (params.get('pos') ?? '') : '';
