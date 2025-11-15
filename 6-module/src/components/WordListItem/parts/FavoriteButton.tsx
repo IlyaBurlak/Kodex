@@ -24,7 +24,8 @@ export const FavoriteButton = memo(({ isFav, id, word, item }: FavoriteButtonPro
           if (item) {
             dispatch(upsertWord(item));
           } else if (word) {
-            dispatch(upsertWord({ word, meta: { uuid: id } } as any));
+            const payload: WordItem = { word, meta: { uuid: id } };
+            dispatch(upsertWord(payload));
           }
         }
         dispatch(toggleFavorite({ uuid: id, word, data: item }));

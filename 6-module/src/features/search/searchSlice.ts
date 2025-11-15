@@ -1,24 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MERRIAM_API_KEY, MERRIAM_BASE_URL } from '../../config';
 import { initialState, PartOfSpeech, SearchItem } from '../../types/word';
+import { MerriamWebsterEntry } from '../words/utils/types';
 
 const buildMwUrl = (query: string) =>
   `${MERRIAM_BASE_URL}/${encodeURIComponent(query)}?key=${MERRIAM_API_KEY}`;
 
-const isValidMwEntry = (entry: unknown): boolean =>
+const isValidMwEntry = (entry: unknown): entry is MerriamWebsterEntry =>
   typeof entry === 'object' &&
   entry !== null &&
-  typeof (entry as { meta?: { id?: unknown } }).meta?.id === 'string';
+  typeof (entry as MerriamWebsterEntry).meta?.id === 'string';
 
 const mapMwEntryToSearchItem = (entry: unknown): SearchItem | null => {
   if (!isValidMwEntry(entry)) return null;
 
-  const rawEntry = entry as {
-    meta?: { id?: unknown };
-    fl?: unknown;
-    hwi?: { prs?: unknown };
-    shortdef?: unknown;
-  };
+  const rawEntry = entry as MerriamWebsterEntry;
 
   const rawId = String(rawEntry.meta?.id ?? '');
   const word = rawId.split(':')[0] ?? '';
@@ -27,30 +23,20 @@ const mapMwEntryToSearchItem = (entry: unknown): SearchItem | null => {
   const fl: PartOfSpeech | undefined = typeof rawEntry.fl === 'string' ? rawEntry.fl : undefined;
 
   const prs = rawEntry.hwi?.prs;
-  let phonetic: string | undefined;
-  if (Array.isArray(prs)) {
-    const first = prs[0] as { mw?: unknown } | undefined;
-    phonetic = typeof first?.mw === 'string' ? first.mw : undefined;
-  } else {
-    phonetic = undefined;
-  }
+  const phonetic: string | undefined =
+    Array.isArray(prs) && prs.length > 0 && typeof prs[0]?.mw === 'string' ? prs[0]!.mw : undefined;
 
   const shortdef: string[] | undefined = Array.isArray(rawEntry.shortdef)
-    ? (rawEntry.shortdef as string[])
+    ? rawEntry.shortdef
     : undefined;
-
-  const meta =
-    typeof rawEntry.meta === 'object' && rawEntry.meta !== null
-      ? (rawEntry.meta as { uuid?: unknown })
-      : undefined;
 
   return {
     word,
     fl,
     phonetic,
     shortdef,
-    meta: meta ? { uuid: String(meta.uuid) } : undefined,
-  } as SearchItem;
+    meta: rawEntry.meta?.uuid ? { uuid: String(rawEntry.meta.uuid) } : undefined,
+  } satisfies SearchItem;
 };
 
 export const fetchSuggestions = createAsyncThunk<SearchItem[], string>(

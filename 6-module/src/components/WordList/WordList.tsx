@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { FavoriteEntry } from '../../features/favorites/favoritesSlice';
 import { fetchWordDetails } from '../../features/words/wordCacheSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { SearchItem } from '../../types/word';
@@ -8,7 +9,7 @@ import { WordListItem } from '../WordListItem/WordListItem';
 export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean }) {
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.search.items);
-  const favs = useAppSelector((state) => state.favorites.words);
+  const favs: FavoriteEntry[] = useAppSelector((state) => state.favorites.words);
   const cache = useAppSelector((state) => state.wordCache.byWord);
   const [params] = useSearchParams();
   const query = params.get('q') ?? '';
@@ -23,12 +24,24 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
   let baseList: SearchItem[] = items;
   if (onlyFavorites) {
     const favItems: SearchItem[] = favs.map((fav) => {
-      const uuid = (fav as any).uuid;
-      if ((fav as any).data) return (fav as any).data as SearchItem;
+      const uuid = fav.uuid;
+      if (fav.data)
+        return {
+          word: fav.data.word,
+          fl: fav.data.fl,
+          shortdef: fav.data.shortdef,
+          meta: fav.data.meta,
+        } satisfies SearchItem;
       const found = Object.values(cache).find((cacheEntry) => cacheEntry?.meta?.uuid === uuid);
-      if (found) return found as SearchItem;
-      const word = (fav as any).word ?? '';
-      return { word, meta: { uuid } } as unknown as SearchItem;
+      if (found)
+        return {
+          word: found.word,
+          fl: found.fl,
+          shortdef: found.shortdef,
+          meta: found.meta,
+        } satisfies SearchItem;
+      const word = fav.word ?? '';
+      return { word, meta: { uuid } } satisfies SearchItem;
     });
     if (query) {
       const queryLower = query.toLowerCase();
@@ -49,14 +62,13 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
   useEffect(() => {
     if (!onlyFavorites || query) return;
     const requestedRef = requestedWordsRef.current;
-    const missing = (favs as any[]).filter(
+    const missing = favs.filter(
       (favEntry) =>
         !Object.values(cache).some((cacheEntry) => cacheEntry?.meta?.uuid === favEntry.uuid)
     );
     missing.forEach((favEntry) => {
       const preferredWord =
-        favEntry.word ??
-        items.find((listItem) => (listItem as any).meta?.uuid === favEntry.uuid)?.word;
+        favEntry.word ?? items.find((listItem) => listItem.meta?.uuid === favEntry.uuid)?.word;
       if (!preferredWord) return;
       if (requestedRef.has(preferredWord)) return;
       if (cache[preferredWord]) return;
@@ -78,7 +90,7 @@ export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean })
   return (
     <ul className='word-list'>
       {sorted.map((item) => (
-        <WordListItem key={(item as any).meta.uuid} item={item} />
+        <WordListItem key={item.meta?.uuid} item={item} />
       ))}
     </ul>
   );

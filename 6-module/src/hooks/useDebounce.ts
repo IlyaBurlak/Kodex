@@ -9,7 +9,7 @@ export function useDebounce<T extends (...args: any[]) => void>(fn: T, delayMs: 
   useEffect(() => () => clearTimeout(timeoutRef.current), []);
 
   return useMemo(() => {
-    const debounced = ((...args: any[]) => {
+    const debounced = ((...args: Parameters<T>) => {
       if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
       timeoutRef.current = window.setTimeout(() => saved.current(...args), delayMs);
     }) as T;

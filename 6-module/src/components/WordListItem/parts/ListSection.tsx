@@ -1,19 +1,17 @@
-import { memo, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-interface ListSectionProps {
+interface ListSectionProps<T> {
   title: string;
-  items: any[];
-  renderItem: (item: any, index: number) => ReactNode;
+  items: T[];
+  renderItem: (item: T, index: number) => ReactNode;
   className?: string;
 }
 
-export const ListSection = memo(
-  ({ title, items, renderItem, className = '' }: ListSectionProps) => (
+export function ListSection<T>({ title, items, renderItem, className = '' }: ListSectionProps<T>) {
+  return (
     <div className={className}>
       <h3>{title}</h3>
-      {items.map((item, index) => renderItem(item, index))}
+      {items.map((child, index) => renderItem(child, index))}
     </div>
-  )
-);
-
-ListSection.displayName = 'ListSection';
+  );
+}

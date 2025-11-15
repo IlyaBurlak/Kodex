@@ -13,6 +13,7 @@ export interface DroData {
 export interface MerriamWebsterEntry {
   meta: {
     id: string;
+    uuid?: string;
     stems?: string[];
     offensive?: boolean;
   };

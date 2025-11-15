@@ -20,7 +20,9 @@ export const mapRelatedWords = (uros: UroItem[] | undefined): WordItem['uros'] =
 };
 
 export const mapSynonymsAntonyms = (items: string[][] | undefined): string[] | undefined => {
-  return items?.flat().filter((item: any): item is string => typeof item === 'string') || undefined;
+  return (
+    items?.flat().filter((val: unknown): val is string => typeof val === 'string') || undefined
+  );
 };
 
 export const mapShortDefinitions = (shortdef: string[] | undefined): string[] | undefined => {
