@@ -19,10 +19,10 @@ export function SearchBar({ remoteSearch = true }: { remoteSearch?: boolean }) {
     }
   }, [value, dispatch, remoteSearch]);
 
-  function runSearch(q: string) {
+  function runSearch(query: string) {
     if (!remoteSearch) return;
-    if (q.trim().length === 0) return;
-    dispatch(fetchSuggestions(q));
+    if (query.trim().length === 0) return;
+    dispatch(fetchSuggestions(query));
   }
 
   const debouncedSearch = useDebounce(runSearch, 400);

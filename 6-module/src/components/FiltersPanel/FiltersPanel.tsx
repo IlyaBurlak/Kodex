@@ -19,14 +19,16 @@ export function FiltersPanel() {
     const raw = params.get('pos') ?? '';
     return raw
       .split(',')
-      .map((s) => s.trim().toLowerCase())
+      .map((posStr) => posStr.trim().toLowerCase())
       .filter(Boolean);
   }, [params]);
 
   function togglePos(pos: string) {
     const next = new URLSearchParams(params);
     const exists = selected.includes(pos);
-    const list = exists ? selected.filter((p) => p !== pos) : [...selected, pos];
+    const list = exists
+      ? selected.filter((selectedPosItem) => selectedPosItem !== pos)
+      : [...selected, pos];
     if (list.length) {
       next.set('pos', list.join(','));
     } else {

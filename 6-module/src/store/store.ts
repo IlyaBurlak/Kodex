@@ -34,8 +34,8 @@ store.subscribe(() => {
     const state = store.getState();
     const words = state.favorites.words;
     localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(words));
-  } catch (e) {
-    console.warn('Failed to persist favorites to localStorage', e);
+  } catch (err) {
+    console.warn('Failed to persist favorites to localStorage', err);
   }
 });
 

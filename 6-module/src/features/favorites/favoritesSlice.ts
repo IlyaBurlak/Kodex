@@ -21,19 +21,13 @@ const favoritesSlice = createSlice({
   reducers: {
     toggleFavorite(state, action: PayloadAction<FavoriteEntry>) {
       const entry = action.payload;
-      const exists = state.words.some((w) => w.uuid === entry.uuid);
+      const exists = state.words.some((existing) => existing.uuid === entry.uuid);
       state.words = exists
-        ? state.words.filter((x) => x.uuid !== entry.uuid)
+        ? state.words.filter((existing) => existing.uuid !== entry.uuid)
         : [...state.words, entry];
-    },
-    removeFavorite(state, action: PayloadAction<string>) {
-      state.words = state.words.filter((x) => x.uuid !== action.payload);
-    },
-    clearFavorites(state) {
-      state.words = [];
     },
   },
 });
 
-export const { toggleFavorite, removeFavorite, clearFavorites } = favoritesSlice.actions;
+export const { toggleFavorite } = favoritesSlice.actions;
 export const favoritesReducer = favoritesSlice.reducer;

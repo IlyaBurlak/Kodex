@@ -19,13 +19,13 @@ import {
 
 export function WordListItem({ item }: { item: WordItem }) {
   const dispatch = useAppDispatch();
-  const favs = useAppSelector((s) => s.favorites.words);
-  const cache = useAppSelector((s) => s.wordCache.byWord);
+  const favs = useAppSelector((state) => state.favorites.words);
+  const cache = useAppSelector((state) => state.wordCache.byWord);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const itemUuid = (item as any).meta?.uuid;
-  const isFav = itemUuid ? favs.some((f: any) => f.uuid === itemUuid) : false;
+  const isFav = itemUuid ? favs.some((fav: any) => fav.uuid === itemUuid) : false;
   const short = item.shortdef?.[0] ?? '';
   const cachedData = cache[item.word] || item;
 
@@ -40,7 +40,7 @@ export function WordListItem({ item }: { item: WordItem }) {
 
   return (
     <li className='word-item'>
-      <div className='summary' onClick={() => setOpen((v) => !v)}>
+      <div className='summary' onClick={() => setOpen((prev) => !prev)}>
         <span className='word'>{item.word}</span>
         {item.fl && <span className='pos'>{item.fl}</span>}
         {short && <span className='meaning'>{truncate(short, 60)}</span>}

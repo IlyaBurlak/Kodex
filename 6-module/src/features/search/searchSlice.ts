@@ -13,20 +13,20 @@ const isValidMwEntry = (entry: unknown): boolean =>
 const mapMwEntryToSearchItem = (entry: unknown): SearchItem | null => {
   if (!isValidMwEntry(entry)) return null;
 
-  const e = entry as {
+  const rawEntry = entry as {
     meta?: { id?: unknown };
     fl?: unknown;
     hwi?: { prs?: unknown };
     shortdef?: unknown;
   };
 
-  const rawId = String(e.meta?.id ?? '');
+  const rawId = String(rawEntry.meta?.id ?? '');
   const word = rawId.split(':')[0] ?? '';
   if (!word) return null;
 
-  const fl: PartOfSpeech | undefined = typeof e.fl === 'string' ? e.fl : undefined;
+  const fl: PartOfSpeech | undefined = typeof rawEntry.fl === 'string' ? rawEntry.fl : undefined;
 
-  const prs = e.hwi?.prs;
+  const prs = rawEntry.hwi?.prs;
   let phonetic: string | undefined;
   if (Array.isArray(prs)) {
     const first = prs[0] as { mw?: unknown } | undefined;
@@ -35,12 +35,14 @@ const mapMwEntryToSearchItem = (entry: unknown): SearchItem | null => {
     phonetic = undefined;
   }
 
-  const shortdef: string[] | undefined = Array.isArray(e.shortdef)
-    ? (e.shortdef as string[])
+  const shortdef: string[] | undefined = Array.isArray(rawEntry.shortdef)
+    ? (rawEntry.shortdef as string[])
     : undefined;
 
   const meta =
-    typeof e.meta === 'object' && e.meta !== null ? (e.meta as { uuid?: unknown }) : undefined;
+    typeof rawEntry.meta === 'object' && rawEntry.meta !== null
+      ? (rawEntry.meta as { uuid?: unknown })
+      : undefined;
 
   return {
     word,
