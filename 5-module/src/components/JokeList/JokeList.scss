@@ -1,0 +1,149 @@
+@use '../../variables' as *;
+
+.joke-list {
+  display: grid;
+  gap: $spacing-xl;
+  margin-top: $spacing-xl;
+}
+
+.joke-item {
+  background-color: $white;
+  border-radius: $border-radius-md;
+  padding: $spacing-xl;
+  box-shadow: $shadow-default;
+  transition: transform $transition-fast;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.joke-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.joke-author {
+  font-weight: bold;
+  color: $main-blue;
+}
+
+.joke-genre {
+  font-size: 0.8rem;
+  padding: 4px $spacing-sm;
+  border-radius: $border-radius-md;
+  background-color: $hover-light;
+
+  &.programming {
+    background-color: #e3f2fd;
+  }
+  &.math {
+    background-color: #e8f5e9;
+  }
+  &.school {
+    background-color: #fff3e0;
+  }
+  &.student {
+    background-color: #f3e5f5;
+  }
+  &.family {
+    background-color: #ffecb3;
+  }
+}
+
+.joke-text {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: $spacing-lg;
+}
+
+.joke-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.favorite-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all $transition-medium;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &.active {
+    color: gold;
+  }
+}
+
+.rating-container {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.like-btn,
+.dislike-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid $border-light;
+  border-radius: $border-radius-xl;
+  padding: 5px $spacing-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $hover-lighter;
+  }
+
+  &.active {
+    color: $white;
+    border-color: transparent;
+
+    .count {
+      color: $white;
+    }
+  }
+}
+
+.like-btn {
+  &:hover {
+    color: $main-blue;
+    border-color: $main-blue;
+  }
+
+  &.active {
+    background-color: $main-blue;
+
+    &:hover {
+      background-color: rgba($main-blue, 0.8);
+    }
+  }
+}
+
+.dislike-btn {
+  &:hover {
+    color: $error-red;
+    border-color: $error-red;
+  }
+
+  &.active {
+    background-color: $error-red;
+
+    &:hover {
+      background-color: rgba($error-red, 0.8);
+    }
+  }
+}
+
+.empty-list {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: $text-muted;
+}

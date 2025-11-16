@@ -1,0 +1,109 @@
+import { FC, FormEvent, useState } from 'react';
+
+import './AddJokeDialog.scss';
+
+import { AddJokeDialogProps, GENRES, Genre } from '../../types/joke';
+
+export const AddJokeDialog: FC<AddJokeDialogProps> = ({ onAddJoke }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [text, setText] = useState('');
+  const [author, setAuthor] = useState('');
+  const [genre, setGenre] = useState<Genre>('Программистские');
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!text.trim() || !author.trim()) {
+      setError('Все поля обязательны для заполнения');
+      return;
+    }
+
+    if (text.length < 10) {
+      setError('Анекдот должен содержать не менее 10 символов');
+      return;
+    }
+
+    onAddJoke(text, author, genre);
+    setText('');
+    setAuthor('');
+    setGenre('Программистские');
+    setError('');
+    setIsOpen(false);
+  };
+
+  return (
+    <div className='add-joke-dialog'>
+      <button className='add-button' onClick={() => setIsOpen(true)}>
+        + Добавить анекдот
+      </button>
+
+      {isOpen && (
+        <div className='dialog-backdrop'>
+          <div className='dialog-content'>
+            <h2>Добавить новый анекдот</h2>
+
+            <form onSubmit={handleSubmit}>
+              <div className='form-group'>
+                <label htmlFor='joke-text'>Текст анекдота:</label>
+                <textarea
+                  id='joke-text'
+                  placeholder='Расскажите свой анекдот...'
+                  rows={4}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />
+              </div>
+
+              <div className='form-row'>
+                <div className='form-group'>
+                  <label htmlFor='joke-author'>Автор:</label>
+                  <input
+                    id='joke-author'
+                    placeholder='Ваше имя'
+                    type='text'
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                  />
+                </div>
+
+                <div className='form-group'>
+                  <label htmlFor='joke-genre'>Жанр:</label>
+                  <select
+                    id='joke-genre'
+                    value={genre}
+                    onChange={(e) => setGenre(e.target.value as Genre)}
+                  >
+                    {GENRES.map((genreOption) => (
+                      <option key={genreOption} value={genreOption}>
+                        {genreOption}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {error && <div className='error-message'>{error}</div>}
+
+              <div className='dialog-actions'>
+                <button
+                  className='cancel-button'
+                  type='button'
+                  onClick={() => {
+                    setIsOpen(false);
+                    setError('');
+                  }}
+                >
+                  Отмена
+                </button>
+                <button className='submit-button' type='submit'>
+                  Опубликовать
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

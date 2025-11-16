@@ -1,7 +1,5 @@
-.idea
-.gitignore
-/dist
 /node_modules
+/dist
 
 .idea
 .vscode
