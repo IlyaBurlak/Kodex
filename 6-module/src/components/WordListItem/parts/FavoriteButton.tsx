@@ -17,8 +17,8 @@ export const FavoriteButton = memo(({ isFav, id, word, item }: FavoriteButtonPro
     <button
       aria-label={isFav ? 'Unstar' : 'Star'}
       className={`star ${isFav ? 'active' : ''}`}
-      onClick={(e) => {
-        e.stopPropagation();
+      onClick={(event) => {
+        event.stopPropagation();
         if (!isFav) {
           if (item) {
             dispatch(upsertWord(item));

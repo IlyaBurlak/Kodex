@@ -4,7 +4,11 @@ import { SearchItem, WordItem } from '../../types/word';
 import { WordDetails } from './parts/WordDetails';
 import { WordSummary } from './parts/WordSummary';
 
-export function WordListItem({ item }: { item: WordItem | SearchItem }) {
+export type WordListItemProps = {
+  item: WordItem | SearchItem;
+};
+
+export function WordListItem({ item }: WordListItemProps) {
   const { open, setOpen, isFav, short, cachedDataRaw, isLoading, isWordItem } =
     useWordItemData(item);
 

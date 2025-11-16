@@ -6,7 +6,11 @@ import './SearchBar.scss';
 import { clearSearch, setQuery } from '../../features/dictionarySlice';
 import { fetchSuggestions } from '../../features/searchThunks';
 
-export function SearchBar({ remoteSearch = true }: { remoteSearch?: boolean }) {
+export type SearchBarProps = {
+  remoteSearch?: boolean;
+};
+
+export function SearchBar({ remoteSearch = true }: SearchBarProps) {
   const dispatch = useAppDispatch();
   const [params, setParams] = useSearchParams();
   const [value, setValue] = useState<string>(params.get('q') ?? '');
@@ -47,7 +51,7 @@ export function SearchBar({ remoteSearch = true }: { remoteSearch?: boolean }) {
         aria-label='Search'
         placeholder='Search for words...'
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(event) => setValue(event.target.value)}
       />
     </div>
   );

@@ -13,7 +13,11 @@ import {
   sortItemsAlphabetically,
 } from './utils/wordListUtils';
 
-export function WordList({ onlyFavorites = false }: { onlyFavorites?: boolean }) {
+export type WordListProps = {
+  onlyFavorites?: boolean;
+};
+
+export function WordList({ onlyFavorites = false }: WordListProps) {
   const dispatch = useAppDispatch();
   const [params] = useSearchParams();
 

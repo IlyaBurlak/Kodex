@@ -6,14 +6,14 @@ interface AudioButtonProps {
 
 export const AudioButton = memo(({ audioUrl }: AudioButtonProps) => {
   const playAudio = () => {
-    new Audio(audioUrl).play().catch((e) => console.error('Audio playback failed:', e));
+    new Audio(audioUrl).play().catch((err) => console.error('Audio playback failed:', err));
   };
 
   return (
     <button
       className='audio-button'
-      onClick={(e) => {
-        e.stopPropagation();
+      onClick={(event) => {
+        event.stopPropagation();
         playAudio();
       }}
       aria-label='Listen pronunciation'
