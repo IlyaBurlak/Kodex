@@ -23,7 +23,6 @@ export function WordListItem({ item }: { item: WordItem | SearchItem }) {
   const favs: FavoriteEntry[] = useAppSelector((state) => state.dictionary.favorites);
   const cache = useAppSelector((state) => state.dictionary.wordCache);
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const itemUuid = item.meta?.uuid;
   const isFav = itemUuid ? favs.some((fav) => fav.uuid === itemUuid) : false;
@@ -33,14 +32,14 @@ export function WordListItem({ item }: { item: WordItem | SearchItem }) {
   const isWordItem = (candidate: object | null): candidate is WordItem =>
     typeof candidate === 'object' && candidate !== null && 'word' in candidate;
 
+  const loadingWords = useAppSelector((state) => state.dictionary.loadingWords);
+  const isLoading = Boolean(loadingWords[item.word]);
+
   useEffect(() => {
     if (open) {
       const hasDetails = isWordItem(cachedDataRaw) && !!cachedDataRaw.detailed;
       if (!hasDetails) {
-        setIsLoading(true);
-        dispatch(fetchWordDetails(item.word))
-          .unwrap()
-          .finally(() => setIsLoading(false));
+        dispatch(fetchWordDetails(item.word));
       }
     }
   }, [open, cachedDataRaw, dispatch, item.word]);
