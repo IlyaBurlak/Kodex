@@ -1,5 +1,5 @@
-export const cleanMerriamWebsterText = (text: string): string => {
-  let cleaned = text
+export const cleanMerriamWebsterText = (text: string): string =>
+  text
     .replace(/\{sx\|([^}|]+)\|\|[^}]*\}/g, '$1')
     .replace(/\{bc\}/g, '')
     .replace(/\{it\}/g, '')
@@ -14,6 +14,3 @@ export const cleanMerriamWebsterText = (text: string): string => {
     .replace(/\{[^}]*\}/g, '')
     .replace(/\s+/g, ' ')
     .trim();
-
-  return cleaned;
-};

@@ -56,26 +56,9 @@ export interface SearchItem {
   };
 }
 
-export interface SearchState {
-  query: string;
-  items: SearchItem[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error?: string;
-}
-
-export const initialState: SearchState = {
-  query: '',
-  items: [],
-  status: 'idle',
-};
 export interface Pronunciation {
   mw?: string;
   sound?: {
     audio?: string;
   };
-}
-
-export interface UroItem {
-  ure: string;
-  fl: string;
 }

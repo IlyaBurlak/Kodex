@@ -3,14 +3,13 @@ import { RootState } from '../../store/store';
 import { SearchItem } from '../../types/word';
 import { FavoriteEntry } from '../dictionarySlice';
 
-const selectFavorites = (state: RootState) => state.dictionary.favorites;
-const selectWordCache = (state: RootState) => state.dictionary.wordCache;
-const selectSearchResults = (state: RootState) => state.dictionary.searchResults;
-
 export const selectFavoritesItems = createSelector(
-  [selectFavorites, selectWordCache],
-  (favs, cache): SearchItem[] => {
-    return favs.map((fav: FavoriteEntry) => {
+  [
+    (state: RootState) => state.dictionary.favorites,
+    (state: RootState) => state.dictionary.wordCache,
+  ],
+  (favorites, cache): SearchItem[] =>
+    favorites.map((fav: FavoriteEntry) => {
       const uuid = fav.uuid;
 
       if (fav.data) {
@@ -22,7 +21,9 @@ export const selectFavoritesItems = createSelector(
         };
       }
 
-      const found = Object.values(cache).find((cacheEntry) => cacheEntry?.meta?.uuid === uuid);
+      const found = Object.values(cache).find(
+        (cacheEntry) => (cacheEntry as SearchItem)?.meta?.uuid === uuid
+      ) as SearchItem | undefined;
 
       if (found) {
         return {
@@ -35,13 +36,12 @@ export const selectFavoritesItems = createSelector(
 
       const word = fav.word ?? '';
       return { word, meta: { uuid } };
-    });
-  }
+    })
 );
 
 export const selectBaseList = createSelector(
   [
-    selectSearchResults,
+    (state: RootState) => state.dictionary.searchResults,
     selectFavoritesItems,
     (_state: RootState, onlyFavorites: boolean, query: string) => ({ onlyFavorites, query }),
   ],

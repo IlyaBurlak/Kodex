@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
 
-// eslint-disable-next-line no-unused-vars
 export function useDebounce<T extends (...args: never[]) => void>(fn: T, delayMs: number) {
   const timeoutRef = useRef<number | undefined>(undefined);
   const saved = useRef<T>(fn);
