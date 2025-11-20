@@ -5,12 +5,12 @@
   padding: 2rem 1rem;
 
   &.loading {
-    color: #666;
+    color: $text-light;
     font-style: italic;
   }
 
   &.empty {
-    color: #888;
+    color: $text-light;
   }
 
   p {
