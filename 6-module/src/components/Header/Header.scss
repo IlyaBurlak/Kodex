@@ -1,0 +1,65 @@
+@use '../../style/variables' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $black;
+    text-decoration: none;
+
+    &:hover {
+      color: $blue;
+    }
+  }
+
+  &__nav-links {
+    display: flex;
+    gap: 2rem;
+
+    a {
+      color: $text-light;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $blue;
+        background-color: $background-hover;
+      }
+
+      &.active {
+        color: $blue;
+        background-color: $background-light;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__nav-links {
+      gap: 1rem;
+
+      a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

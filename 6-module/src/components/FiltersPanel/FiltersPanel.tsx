@@ -1,0 +1,57 @@
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import './FiltersPanel.scss';
+
+const PARTS_OF_SPEECH = [
+  'noun',
+  'verb',
+  'adjective',
+  'adverb',
+  'pronoun',
+  'preposition',
+  'conjunction',
+  'interjection',
+];
+
+export function FiltersPanel() {
+  const [params, setParams] = useSearchParams();
+  const selected: string[] = useMemo(() => {
+    const raw = params.get('pos') ?? '';
+    return raw
+      .split(',')
+      .map((posStr) => posStr.trim().toLowerCase())
+      .filter(Boolean);
+  }, [params]);
+
+  function togglePos(pos: string) {
+    const next = new URLSearchParams(params);
+    const exists = selected.includes(pos);
+    const list = exists
+      ? selected.filter((selectedPosItem) => selectedPosItem !== pos)
+      : [...selected, pos];
+    if (list.length) {
+      next.set('pos', list.join(','));
+    } else {
+      next.delete('pos');
+    }
+    setParams(next);
+  }
+
+  return (
+    <div className='filters'>
+      <div className='filters-title'>Filter by part of speech</div>
+      <div className='filters-group'>
+        {PARTS_OF_SPEECH.map((pos) => {
+          const id = `pos-${pos}`;
+          const checked = selected.includes(pos);
+          return (
+            <label key={pos} className='filter-item' htmlFor={id}>
+              <input checked={checked} id={id} onChange={() => togglePos(pos)} type='checkbox' />
+              <span>{pos}</span>
+            </label>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
